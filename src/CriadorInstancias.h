@@ -40,6 +40,9 @@ class CriadorInstancias{
         void SorteiaNumProcessos();
         void SorteiaNumMaquinas();
 
+        Maquina* get_primeira_maquina(){return this->primeira_maquina;}
+        Maquina* get_ultima_maquina(){return this->ultima_maquina;}
+
         void GeraMaquinas();
         void GeraProcesos();
 

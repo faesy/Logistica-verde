@@ -2,6 +2,7 @@
 #define Construtor_H_INCLUDED
 #include "CriadorInstancias.h"
 #include "Solucao.h"
+#include "Lista.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ class Construtor{
     private:
 
     CriadorInstancias* instancia;
-    //Lista* lista;
+    Lista* lista;
     Solucao* solucao;
     float media_Custo_Minuto;
     float media_Consumo_por_tempo;
@@ -29,10 +30,7 @@ class Construtor{
     void Calcular_media_Consumo_por_tempo();
     void Calcular_media_trabalho_por_tempo();
     void Calcular_Custo_Minuto();
-    void Adicionar_na_Lista(int id_maquina);
-    void Remove_na_Lista(int id_maquina);
-    int Sorteia_na_Lista();
-    void Zera_Lista();
+    
 };
 
 #endif 
