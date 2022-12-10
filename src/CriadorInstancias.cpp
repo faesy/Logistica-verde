@@ -55,7 +55,7 @@ void CriadorInstancias::GeraProcesos(){
     for(int i=0; i<n;i++){//para cada processo
         quantidadeTrabalho = 100 + rand() % 4900;
         Processo* processo = new Processo();
-
+        processo->set_id(i);
         processo->set_qt(quantidadeTrabalho);
 
         int j=0;
@@ -129,6 +129,33 @@ this->b=alfa*(soma/(m*m));
 void CriadorInstancias::GeraKpadrao(){
 
 this->k=6;
+
+
+for(int i=0;i<1440;i++){
+    if(i>=0 && i <200){
+    this->intervalos[i]=0.140;
+    }
+
+    if(i>=200 && i <500){
+    this->intervalos[i]=0.220;
+    }
+
+    if(i>=500 && i <650){
+    this->intervalos[i]=0.140;
+    }
+
+    if(i>=650 && i <800){
+    this->intervalos[i]=0.220;
+    }
+
+    if(i>=800 && i <900){
+    this->intervalos[i]=0.140;
+    }
+
+    if(i>=900 && i <1440){
+    this->intervalos[i]=0.140;
+    }
+}
 
 Intervalo* intervalo1 = new Intervalo();
 intervalo1->set_tk(200);

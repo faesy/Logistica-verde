@@ -8,6 +8,8 @@ class Processo{
 
     // Attributes
     private:
+        int id;
+
         float qt;//quantidade de trabalho cm3
 
         int num_maquinas;
@@ -23,6 +25,8 @@ class Processo{
         ~Processo();
 
         void set_qt(float a);
+        void set_id(int a){this->id=a;}
+        int get_id(){return this->id;}
         float get_qt();
 
         void set_num_maquinas(int a);

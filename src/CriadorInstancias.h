@@ -15,6 +15,7 @@ class CriadorInstancias{
         int n; //num de processos
         int k; //num de intervalos de preço
         int b; //Tempo limite
+       float intervalos[1440];
 
         float e1=0.3;
         float e2=0.2;
