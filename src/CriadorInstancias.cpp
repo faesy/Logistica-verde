@@ -22,28 +22,28 @@ CriadorInstancias::CriadorInstancias(){
     ultimo_intervalo=NULL;
 
     SorteiaNumProcessos();
-    cout<<"Num de Processos Sorteados: "<<n<<endl;
+    //cout<<"Num de Processos Sorteados: "<<n<<endl;
     SorteiaNumMaquinas();
-    cout<<"Num de maquinas Sorteadas: "<<m<<endl;
+    ///cout<<"Num de maquinas Sorteadas: "<<m<<endl;
     GeraMaquinas();
-    int i=1;
-    for(Maquina* a=this->primeira_maquina;a!=NULL;a=a->get_prox_Maquina()){
-        cout<<"Maquina: "<<i<< " Velocidade de Processamento: "<<a->get_vp()<<" Gasto de Energia: "<<a->get_ge()<<endl;
-        i++;
-    }
+    //int i=1;
+    //for(Maquina* a=this->primeira_maquina;a!=NULL;a=a->get_prox_Maquina()){
+    //    cout<<"Maquina: "<<i<< " Velocidade de Processamento: "<<a->get_vp()<<" Gasto de Energia: "<<a->get_ge()<<endl;
+    //    i++;
+    //}
     GeraProcesos();
-    i=1;
-    for(Processo* b=this->primeiro_processo;b!=NULL;b=b->get_prox_Processo()){
-        cout<<"Processo: "<<i<<" Quantidade de trabalho: "<<b->get_qt()<<endl;
+    //i=1;
+    //for(Processo* b=this->primeiro_processo;b!=NULL;b=b->get_prox_Processo()){
+    //    cout<<"Processo: "<<b->get_id()<<" Quantidade de trabalho: "<<b->get_qt()<<endl;
         //for(k=0;k<m;k++){
         //    cout<<"Tempo de processamento na maquina "<<k<<" : "<<b->tempos_processamento[k]<<endl; 
         //    cout<<"Gasto de energia na maquina "<<k<<" : "<<b->custos_energia[k]<<endl; 
         //}
         //i++;
-    }
+    //}
     GeraKpadrao();
     Calcula_b();
-    cout<<"Tempo limite da instancia: "<<b<<endl;
+    //cout<<"Tempo limite da instancia: "<<b<<endl;
     int instanteDeInicio = calcInicioDia();
 
 }
@@ -257,6 +257,7 @@ tipoMaquina = rand() % 4;
 }while(tipoMaquina != 0 && tipoMaquina != 1 && tipoMaquina != 2 && tipoMaquina != 3);
 
 Maquina* maquina = new Maquina(tipoMaquina);
+maquina->set_id(i);
 
 if(this->primeira_maquina==NULL){ //caso essa seja a primeira maquina adicionada
     this->primeira_maquina=maquina; //essa maquina = primeira maquina

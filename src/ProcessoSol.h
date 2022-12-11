@@ -7,12 +7,14 @@ class ProcessoSol{
 
     // Attributes
     private:
+    
+
+    public:
+
     int id;
 
     ProcessoSol* prox_processoSol;
     ProcessoSol* ant_processoSol;
-
-    public:
     
 };
 

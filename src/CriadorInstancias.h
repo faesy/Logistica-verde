@@ -3,6 +3,7 @@
 #include "Maquina.h"
 #include "Processo.h"
 #include "Intervalo.h"
+#include <iostream>
 
 using namespace std;
 
@@ -15,7 +16,6 @@ class CriadorInstancias{
         int n; //num de processos
         int k; //num de intervalos de preço
         int b; //Tempo limite
-       float intervalos[1440];
 
         float e1=0.3;
         float e2=0.2;
@@ -34,6 +34,7 @@ class CriadorInstancias{
 
     public:
         // Constructor
+        float intervalos[1440];
         CriadorInstancias();
         ~CriadorInstancias();
     
@@ -42,6 +43,9 @@ class CriadorInstancias{
 
         Maquina* get_primeira_maquina(){return this->primeira_maquina;}
         Maquina* get_ultima_maquina(){return this->ultima_maquina;}
+
+        Processo* get_primeiro_Processo(){return this->primeiro_processo;}
+        Processo* get_ultimo_Processo(){return this->ultimo_processo;}
 
         void GeraMaquinas();
         void GeraProcesos();
@@ -56,6 +60,19 @@ class CriadorInstancias{
         int get_b(){return this->b;}
 
         int calcInicioDia();
+
+        Processo* buscaProcesso(int id){
+
+            for(Processo* a=this->primeiro_processo;a!=NULL;a=a->get_prox_Processo()){
+                if (id=a->get_id())
+                {
+                    return a;
+                }
+                
+            }
+            return NULL;
+
+        }
         
         }; 
 

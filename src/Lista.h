@@ -9,15 +9,18 @@ class Lista{
 
     // Attributes
     private:
-    ElementoDaLista* primeiro_elemento;
-    ElementoDaLista* ultimo_elemento;
 
 
     public:
-    void Adicionar_na_Lista(int id_maquina);
-    void Remove_na_Lista(int id_maquina);
+    int tamanho;
+    ElementoDaLista* primeiro_elemento;
+    ElementoDaLista* ultimo_elemento;
+    Lista();
+    void Adicionar_na_Lista(int id_maquina,int qtd);
+    void Remove_na_Lista(int id_maquina,int qtd);
     int Sorteia_na_Lista();
     void Zera_Lista();
+    void Imprime();
     
 };
 

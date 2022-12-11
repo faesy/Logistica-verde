@@ -9,7 +9,12 @@ class MaquinaSol{
 
     // Attributes
     private:
+
+    public:
+
     int id;
+
+    int min_Atual;
 
     MaquinaSol* prox_maquinaSol;
     MaquinaSol* ant_maquinaSol;
@@ -17,7 +22,7 @@ class MaquinaSol{
     ProcessoSol* primeiro_processoSol;
     ProcessoSol* ultimo_processoSol;
 
-    public:
+    MaquinaSol(){}
     
 };
 

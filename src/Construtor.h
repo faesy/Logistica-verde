@@ -11,7 +11,6 @@ class Construtor{
 
     // Attributes
     private:
-
     CriadorInstancias* instancia;
     Lista* lista;
     Solucao* solucao;
@@ -20,16 +19,25 @@ class Construtor{
     float media_trabalho_por_tempo;
 
     public:
+    float importanciaVelocidade=0.25;
+    float importanciaMakespam=1;
+    float importanciaConsumo=0.5;
+    float importanciaGasto=0.25;
     Construtor(CriadorInstancias* a);
+    void embaralhar(int *vet, int vetSize);
+    void Imprime();
 
     //Funções de Manipulação de Solução
     void Adiciona_Basico();
-    void Adiciona_Processo_Na_Maquina();
+    void Adiciona_Processo_Na_Maquina(int id_processo,int id_maquina);
+    void AdicionaPontos(int id_Processo);
+    void RemovePontos(int id_Processo);
 
     //Funções de sortear na lista
     void Calcular_media_Consumo_por_tempo();
     void Calcular_media_trabalho_por_tempo();
     void Calcular_Custo_Minuto();
+    
     
 };
 

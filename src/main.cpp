@@ -14,6 +14,7 @@ Matheus Cardoso Faesy 202065065A
 #include "Graph.h"
 #include "Node.h"
 #include "Edge.h"
+#include "Construtor.h"
 #include "CriadorInstancias.h"
 #include <chrono>
 #include <thread>
@@ -189,8 +190,21 @@ int mainMenu(ofstream &output_file, Graph *graph)
 int main(int argc, char const *argv[])
 {
     srand((unsigned)time(NULL));
-    CriadorInstancias a;
+    for(int i=0;i<1;i++){
+    CriadorInstancias* a=new CriadorInstancias();
 
+    Construtor* b=new Construtor(a);
+    }
+
+    cout<<"foi"<<endl;
+
+    //for(ElementoDaLista* b=a->primeiro_elemento;b!=NULL;b=b->prox_elemento){
+    //    cout<<b->id<<endl;
+    //}
+
+
+
+    ///cout<<a->tamanho<<endl;
     /*
     // Verificação se todos os parâmetros do programa foram entrados
     if (argc != 3)

@@ -8,11 +8,10 @@ class ElementoDaLista{
 
     // Attributes
     private:
+    public:
+    int id;
     ElementoDaLista* prox_elemento;
     ElementoDaLista* ant_elemento;
-    
-
-    public:
     
 };
 
