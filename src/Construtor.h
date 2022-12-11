@@ -11,6 +11,8 @@ class Construtor{
 
     // Attributes
     private:
+
+    public:
     CriadorInstancias* instancia;
     Lista* lista;
     Solucao* solucao;
@@ -18,11 +20,11 @@ class Construtor{
     float media_Consumo_por_tempo;
     float media_trabalho_por_tempo;
 
-    public:
     float importanciaVelocidade=0.25;
     float importanciaMakespam=1;
     float importanciaConsumo=0.5;
     float importanciaGasto=0.25;
+
     Construtor(CriadorInstancias* a);
     void embaralhar(int *vet, int vetSize);
     void Imprime();
@@ -37,7 +39,7 @@ class Construtor{
     void Calcular_media_Consumo_por_tempo();
     void Calcular_media_trabalho_por_tempo();
     void Calcular_Custo_Minuto();
-    
+
     
 };
 

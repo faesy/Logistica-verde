@@ -187,9 +187,9 @@ int mainMenu(ofstream &output_file, Graph *graph)
 int main(int argc, char const *argv[])
 {
     srand((unsigned)time(NULL));
-    for(int i=0;i<500;i++){
     CriadorInstancias* a=new CriadorInstancias();
 
+    for(int i=0;i<5000;i++){
     Construtor* b=new Construtor(a);
     }
 

@@ -45,7 +45,7 @@ for(MaquinaSol* a=this->solucao->primeira_maquina;a!=NULL;a=a->prox_maquinaSol){
 
     this->solucao->makespam=makespam;
 
-Imprime();
+//Imprime();
 
 
 }
