@@ -11,9 +11,6 @@ Matheus Cardoso Faesy 202065065A
 #include <iomanip>
 #include <stdlib.h>
 #include <chrono>
-#include "Graph.h"
-#include "Node.h"
-#include "Edge.h"
 #include "Construtor.h"
 #include "CriadorInstancias.h"
 #include <chrono>
