@@ -54,6 +54,9 @@ class CriadorInstancias{
         int get_n(){return this->n;}
         int get_k(){return this->k;}
         int get_b(){return this->b;}
+
+        int calcInicioDia();
+        
         }; 
 
 #endif 
