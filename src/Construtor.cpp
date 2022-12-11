@@ -402,12 +402,13 @@ void Construtor::Adiciona_Processo_Na_Maquina(int id_processo,int id_maquina){
                         i->ultimo_processoSol->prox_processoSol=processo;
 
                         i->ultimo_processoSol=processo;
+
                         solucao->custoEnergia=solucao->custoEnergia+k->custos_energia[i->id];
                         float customedioEnergia=0;
                         for(int f=0;f < k->tempos_processamento[i->id];f++){
                             customedioEnergia=customedioEnergia+instancia->intervalos[(i->min_Atual+f)%1440];
                         }
-                        customedioEnergia=customedioEnergia/(int)k->tempos_processamento[i->id];
+                        customedioEnergia=customedioEnergia/(float)k->tempos_processamento[i->id];
                         solucao->custoMonetario=solucao->custoMonetario+k->custos_energia[i->id]*customedioEnergia;
 
                         i->min_Atual=(i->min_Atual+k->tempos_processamento[i->id]);
