@@ -204,6 +204,10 @@ void Construtor::RemovePontos(int id_Processo)
         this->lista->Remove_na_Lista(maquinas_com_maior_consumo2[j], ((this->instancia->get_m()) - j) * importanciaf2);
         this->lista->Remove_na_Lista(maquinas_com_maior_gasto2[j], ((this->instancia->get_m()) - j) * importanciaf3);
     }
+
+    if(this->lista->primeiro_elemento==NULL){
+        this->lista->Adicionar_na_Lista(rand()%this->instancia->get_m(),1);
+    }
 }
 
 void Construtor::AdicionaPontos(int id_Processo)
