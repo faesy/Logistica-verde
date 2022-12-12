@@ -25,6 +25,7 @@ public:
     void addSolucaoAListaIndexada(Solucao *solucao);
     void preencheListasPorRequisito(Solucao *solucao);
     void selecionaPopulacao();
+    void selecionaPopulacao2();
     bool verificaSeJaTem(int id);
     int insereSolNaPopDadoPosicaoJaConhecida(int posicaoOndeSeraAdicionado, int idASerAdicionado);
     void insereEmLista1(int id, int posicao);

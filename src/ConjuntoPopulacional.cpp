@@ -131,8 +131,8 @@ Solucao *ConjuntoPopulacional::getSolucaoPorIndex(int id)
 
 void ConjuntoPopulacional::insereEmLista1(int id, int posicao)
 {
-    int valorNovo = id;                     // o valor novo na posição sera o novo id
-    int valorVelho = this->lista1[posicao]; // o antigo id naquela posição é salvo como um valor velho
+    int valorNovo = id;                          // o valor novo na posição sera o novo id
+    int valorVelho = this->lista1[posicao];      // o antigo id naquela posição é salvo como um valor velho
     for (int i = posicao; i < tamanhoLista; i++) // apartir da posição olhada se realiza a atualizaçao dos dados no array
     {
 
@@ -142,7 +142,6 @@ void ConjuntoPopulacional::insereEmLista1(int id, int posicao)
             valorNovo = valorVelho; // atualização do ultimo valor
             valorVelho = this->lista1[i + 1];
         }
-        
     }
 }
 void ConjuntoPopulacional::insereEmLista2(int id, int posicao)
@@ -159,7 +158,6 @@ void ConjuntoPopulacional::insereEmLista2(int id, int posicao)
             valorNovo = valorVelho; // atualização do ultimo valor
             valorVelho = this->lista2[i + 1];
         }
-        
     }
 }
 void ConjuntoPopulacional::insereEmLista3(int id, int posicao)
@@ -176,7 +174,37 @@ void ConjuntoPopulacional::insereEmLista3(int id, int posicao)
             valorNovo = valorVelho; // atualização do ultimo valor
             valorVelho = this->lista3[i + 1];
         }
-       
+    }
+}
+
+void ConjuntoPopulacional::selecionaPopulacao2()
+{
+    float alpha = 0.3;
+
+    bool *lista1bool = new bool[this->tamanhoLista];
+    bool *lista2bool = new bool[this->tamanhoLista];
+    bool *lista3bool = new bool[this->tamanhoLista];
+
+    for (int i = 0; i < this->tamanhoLista; i++)
+    {
+        lista1bool[i] = false;
+        lista2bool[i] = false;
+        lista3bool[i] = false;
+    }
+    for (int i = 0; i < (alpha * tamanhoLista); i++)
+    {
+
+        lista1bool[this->lista1[i]] = true;
+        lista2bool[this->lista2[i]] = true;
+        lista3bool[this->lista3[i]] = true;
+    }
+    int j = 0;
+    for (int i = 0; i < this->tamanhoLista; i++)
+    {
+        if (lista1bool[i] && lista2bool[i] && lista3bool[i])
+        {
+           j = insereSolNaPopDadoPosicaoJaConhecida(j, i);
+        }
     }
 }
 
@@ -186,48 +214,40 @@ void ConjuntoPopulacional::selecionaPopulacao()
     int ondeParou = 0;
     int i = 0;
     int j = 0;
-    while (j < (alpha*tamanhoLista))
+    while (j < (alpha * tamanhoLista))
     {
         if (this->lista1[j] == this->lista2[j] && this->lista1[j] == this->lista3[j] && this->lista2[j] == this->lista3[j])
         {
             i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista1[j]);
-           
-          
         }
         else if (this->lista1[j] == this->lista2[j] && this->lista1[j] != this->lista3[j] && this->lista2[j] != this->lista3[j])
         {
-           i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista1[j]);
+            i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista1[j]);
 
-           i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista3[j]);
-          
+            i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista3[j]);
         }
         else if (this->lista1[j] != this->lista2[j] && this->lista1[j] != this->lista3[j] && this->lista2[j] == this->lista3[j])
         {
-           i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista1[j]);
-           
-           i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista3[j]);
-           
-          
+            i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista1[j]);
+
+            i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista3[j]);
         }
         else if (this->lista1[j] != this->lista2[j] && this->lista1[j] == this->lista3[j] && this->lista2[j] != this->lista3[j])
         {
             i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista1[j]);
-           
+
             i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista2[j]);
-           
-          
         }
         // else
         // {
         //     i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista1[j]);
-           
+
         //     i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista2[j]);
-           
+
         //     i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista3[j]);
-           
-            
+
         // }
-        this->tamanhoPop = i ;
+        this->tamanhoPop = i;
         j++;
     }
 }
@@ -251,8 +271,9 @@ int ConjuntoPopulacional::insereSolNaPopDadoPosicaoJaConhecida(int posicaoOndeSe
         this->populacao[posicaoOndeSeraAdicionado] = idASerAdicionado;
         return posicaoOndeSeraAdicionado + 1;
     }
-    else{
-       return posicaoOndeSeraAdicionado;
+    else
+    {
+        return posicaoOndeSeraAdicionado;
     }
 }
 
