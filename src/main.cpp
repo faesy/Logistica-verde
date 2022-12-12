@@ -189,7 +189,7 @@ int main(int argc, char const *argv[])
 {
     srand((unsigned)time(NULL));  
 
-    int numeroDeSolucoesTotais = 60; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
+    int numeroDeSolucoesTotais = 5000; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
 
     cout << "foi" << endl;
     CriadorInstancias *a = new CriadorInstancias();

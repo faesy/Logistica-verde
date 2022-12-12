@@ -218,16 +218,16 @@ void ConjuntoPopulacional::selecionaPopulacao()
            
           
         }
-        else
-        {
-            i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista1[j]);
+        // else
+        // {
+        //     i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista1[j]);
            
-            i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista2[j]);
+        //     i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista2[j]);
            
-            i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista3[j]);
+        //     i = insereSolNaPopDadoPosicaoJaConhecida(i, this->lista3[j]);
            
             
-        }
+        // }
         this->tamanhoPop = i ;
         j++;
     }
