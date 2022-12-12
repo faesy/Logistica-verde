@@ -4,34 +4,43 @@
 
 using namespace std;
 
-
-class Solucao{
+class Solucao
+{
 
     // Attributes
-    private:
+private:
+    Solucao *prox_Solucao;
+    Solucao *ant_Solucao;
 
-    public:
+public:
     int id;
     int custoEnergia;
     int makespam;
     int custoMonetario;
-    Solucao(){
-        custoEnergia=0;
-        makespam=0;
-        custoMonetario=0;
+    Solucao()
+    {
+        custoEnergia = 0;
+        makespam = 0;
+        custoMonetario = 0;
     }
-    MaquinaSol* primeira_maquina;
-    MaquinaSol* ultima_maquina;
-    MaquinaSol* procura_maquina(int id){
-    for(MaquinaSol* i=this->primeira_maquina;i !=NULL;i=i->prox_maquinaSol){
-        if(i->id==id){
-            return i;
+    MaquinaSol *primeira_maquina;
+    MaquinaSol *ultima_maquina;
+    MaquinaSol *procura_maquina(int id)
+    {
+        for (MaquinaSol *i = this->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
+        {
+            if (i->id == id)
+            {
+                return i;
+            }
         }
+        return NULL;
     }
-    return NULL;
-    }
-    
-    
+
+    void set_prox_solucao(Solucao *a);
+    void set_ant_solucao(Solucao *a);
+    Solucao *get_prox_solucao();
+    Solucao *get_ant_solucao();
 };
 
-#endif 
+#endif

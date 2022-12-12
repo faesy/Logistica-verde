@@ -13,6 +13,7 @@ Matheus Cardoso Faesy 202065065A
 #include <chrono>
 #include "Construtor.h"
 #include "CriadorInstancias.h"
+#include "ConjuntoPopulacional.h"
 #include <chrono>
 #include <thread>
 #include <time.h>
@@ -91,7 +92,7 @@ int menu()
     cout << "MENU" << endl;
     cout << "----" << endl;
     cout << "[1] Algoritmo ILS" << endl;
-    
+
     cout << "[0] Sair" << endl;
 
     cin >> selecao;
@@ -107,26 +108,26 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
     // Algoritmo Guloso;
     case 1:
     {
-        
+
         int clo = clock();
         Graph *melhorSol;
         float media;
         cout<< "Executando ILS 10x"<<endl;
         for (int i = 0; i < 10; i++)
         {
-             
-            
+
+
             output_file << "ILS "<<i<< endl;
 
             Graph *novoGraph = graph->ils(output_file);
-           
+
             if (i == 0)
             {
                 melhorSol = novoGraph;
                 media = novoGraph->getNumRotulos();
             }
             else
-            {   
+            {
                 media = novoGraph->getNumRotulos() + media;
 
                 if (novoGraph->getNumRotulos() < melhorSol->getNumRotulos())
@@ -144,8 +145,8 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
 
             output_file << "Quantidade minima de rotulos: " << novoGraph->getNumRotulos() << endl;
 
-           
-            
+
+
         }
         output_file << "Melhor Quantidade minima de rotulos: " << melhorSol->getNumRotulos() << endl;
         output_file << "Media rotulos: " << media/10 << endl;
@@ -154,7 +155,7 @@ void selecionar(int selecao, Graph *graph, ofstream &output_file)
         melhorSol->printGraph(output_file);
         break;
     }
-    
+
     default:
     {
         cout << " Error!!! invalid option!!" << endl;
@@ -186,22 +187,35 @@ int mainMenu(ofstream &output_file, Graph *graph)
 */
 int main(int argc, char const *argv[])
 {
-    srand((unsigned)time(NULL));
-    CriadorInstancias* a=new CriadorInstancias();
+    srand((unsigned)time(NULL));  
 
-    for(int i=0;i<5000;i++){
-    Construtor* b=new Construtor(a);
+    int numeroDeSolucoesTotais = 60; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
+
+    cout << "foi" << endl;
+    CriadorInstancias *a = new CriadorInstancias();
+      cout << "foi" << endl;
+    ConjuntoPopulacional *populacao = new ConjuntoPopulacional(numeroDeSolucoesTotais);
+      cout << "foi" << endl;
+    for (int i = 0; i < numeroDeSolucoesTotais; i++)
+    {
+        
+        Construtor *b = new Construtor(a);
+        b->solucao->id = i;
+        populacao->preencheListasPorRequisito(b->solucao);
     }
+    cout << "foi" << endl;
+    populacao->printListas123();
+    populacao->selecionaPopulacao();
+    cout << "tamanho da pop: " << populacao->getTamanhoPop() << endl << endl;
+    populacao->printPopListaIndexSol();
+    cout<<endl;
+    
 
-    cout<<"foi"<<endl;
+    // for(ElementoDaLista* b=a->primeiro_elemento;b!=NULL;b=b->prox_elemento){
+    //     cout<<b->id<<endl;
+    // }
 
-    //for(ElementoDaLista* b=a->primeiro_elemento;b!=NULL;b=b->prox_elemento){
-    //    cout<<b->id<<endl;
-    //}
-
-
-
-    ///cout<<a->tamanho<<endl;
+    /// cout<<a->tamanho<<endl;
     /*
     // Verificação se todos os parâmetros do programa foram entrados
     if (argc != 3)
@@ -231,7 +245,7 @@ int main(int argc, char const *argv[])
 
     if (input_file.is_open())
     {
-        
+
         graph = leituraInstancia(input_file, output_file);
     }
     else
