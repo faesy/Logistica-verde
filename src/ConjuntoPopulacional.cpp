@@ -179,7 +179,6 @@ void ConjuntoPopulacional::insereEmLista3(int id, int posicao)
 
 void ConjuntoPopulacional::selecionaPopulacao2()
 {
-    float alpha = 0.6;
 
     bool *lista1bool = new bool[this->tamanhoLista];
     bool *lista2bool = new bool[this->tamanhoLista];
@@ -191,7 +190,7 @@ void ConjuntoPopulacional::selecionaPopulacao2()
         lista2bool[i] = false;
         lista3bool[i] = false;
     }
-    for (int k = 0; k < (alpha * tamanhoLista); k++)
+    for (int k = 0; k < (alfa * tamanhoLista); k++)
     {
 
         lista1bool[this->lista1[k]] = true;

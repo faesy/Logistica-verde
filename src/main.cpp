@@ -199,7 +199,7 @@ int main(int argc, char const *argv[])
 
      
 
-    int numeroDeSolucoesTotais = 500; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
+    int numeroDeSolucoesTotais = 10; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
 
     CriadorInstancias *a = new CriadorInstancias();
     srand(time(NULL));

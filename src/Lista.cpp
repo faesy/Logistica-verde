@@ -50,10 +50,26 @@ if(this->primeiro_elemento==NULL){
 
 void Lista::Remove_na_Lista(int id_maquina,int qtd){
 
+    if (qtd==0)
+    {
+        return;
+    }
+    
+    if(this->primeiro_elemento==NULL && this->ultimo_elemento==NULL){
+        return;
+    }
     for(int i=0;i<qtd;i++){
         int contador=0;
     for(ElementoDaLista* i=this->primeiro_elemento;i!=NULL;i=i->prox_elemento){
         if(i->id==id_maquina){
+            if (tamanho==1)
+            {
+                this->primeiro_elemento=NULL;
+                this->ultimo_elemento=NULL;
+                delete i;
+                tamanho=0;
+                break;
+            }
             if(contador==0){
                 i->prox_elemento->ant_elemento=NULL;
                 this->primeiro_elemento=i->prox_elemento;

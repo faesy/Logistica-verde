@@ -17,6 +17,7 @@ private:
     int tamanhoMaxPop;
 
 public:
+    float alfa=0.3;
     Solucao *primeira_Solucao;
     Solucao *ultima_Solucao;
     // Constructor

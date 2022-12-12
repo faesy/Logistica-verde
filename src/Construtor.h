@@ -24,7 +24,7 @@ class Construtor{
     float importanciaf1=2;
     float importanciaf2=1;
     float importanciaf3=1;
-    //float parametro_de_analise=0.79;
+    float parametro_de_analise=1;
 
     Construtor(CriadorInstancias* a);
     void embaralhar(int *vet, int vetSize);
