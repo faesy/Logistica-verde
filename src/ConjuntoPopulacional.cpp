@@ -179,7 +179,7 @@ void ConjuntoPopulacional::insereEmLista3(int id, int posicao)
 
 void ConjuntoPopulacional::selecionaPopulacao2()
 {
-    float alpha = 0.3;
+    float alpha = 0.6;
 
     bool *lista1bool = new bool[this->tamanhoLista];
     bool *lista2bool = new bool[this->tamanhoLista];
@@ -191,19 +191,21 @@ void ConjuntoPopulacional::selecionaPopulacao2()
         lista2bool[i] = false;
         lista3bool[i] = false;
     }
-    for (int i = 0; i < (alpha * tamanhoLista); i++)
+    for (int k = 0; k < (alpha * tamanhoLista); k++)
     {
 
-        lista1bool[this->lista1[i]] = true;
-        lista2bool[this->lista2[i]] = true;
-        lista3bool[this->lista3[i]] = true;
+        lista1bool[this->lista1[k]] = true;
+        lista2bool[this->lista2[k]] = true;
+        lista3bool[this->lista3[k]] = true;
     }
     int j = 0;
-    for (int i = 0; i < this->tamanhoLista; i++)
+    for (int l = 0; l < this->tamanhoLista; l++)
     {
-        if (lista1bool[i] && lista2bool[i] && lista3bool[i])
+        if (lista1bool[l] && lista2bool[l] && lista3bool[l])
         {
-           j = insereSolNaPopDadoPosicaoJaConhecida(j, i);
+           
+           j = insereSolNaPopDadoPosicaoJaConhecida(j, l);
+           this->tamanhoPop = j;
         }
     }
 }
@@ -266,13 +268,16 @@ bool ConjuntoPopulacional::verificaSeJaTem(int id)
 
 int ConjuntoPopulacional::insereSolNaPopDadoPosicaoJaConhecida(int posicaoOndeSeraAdicionado, int idASerAdicionado)
 {
+    
     if (!verificaSeJaTem(idASerAdicionado))
     {
+       
         this->populacao[posicaoOndeSeraAdicionado] = idASerAdicionado;
         return posicaoOndeSeraAdicionado + 1;
     }
     else
     {
+       
         return posicaoOndeSeraAdicionado;
     }
 }

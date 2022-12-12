@@ -211,7 +211,7 @@ int main(int argc, char const *argv[])
         b->solucao->id = i;
         populacao->preencheListasPorRequisito(b->solucao);
     }
-    populacao->selecionaPopulacao();
+    populacao->selecionaPopulacao2();
     cout << "tamanho da pop: " << populacao->getTamanhoPop() << endl << endl;
     populacao->printPopListaIndexSol();
     cout<<endl;
