@@ -5,7 +5,6 @@ using namespace std;
 
 ConjuntoPopulacional::ConjuntoPopulacional(int tamanhoLista)
 {
-    cout << "a1" << endl;
     this->lista1 = new int[tamanhoLista];
     this->lista2 = new int[tamanhoLista];
     this->lista3 = new int[tamanhoLista];

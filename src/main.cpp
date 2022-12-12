@@ -17,6 +17,7 @@ Matheus Cardoso Faesy 202065065A
 #include <chrono>
 #include <thread>
 #include <time.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -187,15 +188,22 @@ int mainMenu(ofstream &output_file, Graph *graph)
 */
 int main(int argc, char const *argv[])
 {
-    srand((unsigned)time(NULL));  
 
-    int numeroDeSolucoesTotais = 5000; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
+     int instancia=0;
+     cout<<"Digite o codigo da Instancia: ";
+     cin>>instancia;
+     srand(instancia);  
 
-    cout << "foi" << endl;
+    
+
+
+     
+
+    int numeroDeSolucoesTotais = 500; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
+
     CriadorInstancias *a = new CriadorInstancias();
-      cout << "foi" << endl;
+    srand(time(NULL));
     ConjuntoPopulacional *populacao = new ConjuntoPopulacional(numeroDeSolucoesTotais);
-      cout << "foi" << endl;
     for (int i = 0; i < numeroDeSolucoesTotais; i++)
     {
         
@@ -203,12 +211,11 @@ int main(int argc, char const *argv[])
         b->solucao->id = i;
         populacao->preencheListasPorRequisito(b->solucao);
     }
-    cout << "foi" << endl;
-    populacao->printListas123();
     populacao->selecionaPopulacao();
     cout << "tamanho da pop: " << populacao->getTamanhoPop() << endl << endl;
     populacao->printPopListaIndexSol();
     cout<<endl;
+
     
 
     // for(ElementoDaLista* b=a->primeiro_elemento;b!=NULL;b=b->prox_elemento){

@@ -31,7 +31,7 @@ Construtor::Construtor(CriadorInstancias *a)
     for (int i = 0; i < this->instancia->get_n(); i++)
     {
         AdicionaPontos(sequenciaProcessos[i]);
-        RemovePontos(sequenciaProcessos[i]);
+        //RemovePontos(sequenciaProcessos[i]);
 
         int sorteado = this->lista->Sorteia_na_Lista();
         // cout<<"adicionando processo "<<sequenciaProcessos[i]<<" Na Maquina: "<<sorteado<<endl;
@@ -81,8 +81,8 @@ void Construtor::RemovePontos(int id_Processo)
             break;
         }
     }
-
-    int tamanhoVetor = instancia->get_m() * parametro_de_analise;
+    cout<<"rem instancia->get_m() "<<instancia->get_m()<<endl;
+    int tamanhoVetor = instancia->get_m() /* parametro_de_analise*/;
     int maquinas_mais_devagar[tamanhoVetor];
     int maquinas_mais_devagar2[tamanhoVetor];
     bool maquinas_mais_devagar_bool[instancia->get_m()];
@@ -198,9 +198,9 @@ void Construtor::RemovePontos(int id_Processo)
         // cout<<endl;
         // this->lista->Imprime();
         // cout<<"Removendo "<<(this->instancia->get_m()-j)/2<<" copias da maquina "<<maquinas_mais_devagar2[j]<<" da lista"<<endl;
-        this->lista->Remove_na_Lista(maquinas_mais_devagar2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.25));
+        //this->lista->Remove_na_Lista(maquinas_mais_devagar2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.25));
         // this->lista->Imprime();
-        this->lista->Remove_na_Lista(maquinas_com_maior_makespam2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.75));
+        this->lista->Remove_na_Lista(maquinas_com_maior_makespam2[j], ((this->instancia->get_m()) - j) * (importanciaf1));
         this->lista->Remove_na_Lista(maquinas_com_maior_consumo2[j], ((this->instancia->get_m()) - j) * importanciaf2);
         this->lista->Remove_na_Lista(maquinas_com_maior_gasto2[j], ((this->instancia->get_m()) - j) * importanciaf3);
     }
@@ -221,9 +221,7 @@ void Construtor::AdicionaPontos(int id_Processo)
             break;
         }
     }
-
-    int tamanhoVetor = instancia->get_m() * parametro_de_analise;
-
+    int tamanhoVetor = instancia->get_m() /** parametro_de_analise*/;
     int maquinas_mais_rapidas[tamanhoVetor];
     int maquinas_mais_rapidas2[tamanhoVetor];
     bool maquinas_mais_rapidas_bool[instancia->get_m()];
@@ -340,8 +338,8 @@ void Construtor::AdicionaPontos(int id_Processo)
 
     for (int j = 0; j < tamanhoVetor; j++)
     {
-        this->lista->Adicionar_na_Lista(maquinas_mais_rapidas2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.25));
-        this->lista->Adicionar_na_Lista(maquinas_com_menos_makespam2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.75));
+        //this->lista->Adicionar_na_Lista(maquinas_mais_rapidas2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.25));
+        this->lista->Adicionar_na_Lista(maquinas_com_menos_makespam2[j], ((this->instancia->get_m()) - j) * (importanciaf1));
         this->lista->Adicionar_na_Lista(maquinas_com_menos_consumo2[j], ((this->instancia->get_m()) - j) * importanciaf2);
         this->lista->Adicionar_na_Lista(maquinas_com_menos_gasto2[j], ((this->instancia->get_m()) - j) * importanciaf3);
     }
