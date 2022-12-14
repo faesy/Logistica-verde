@@ -51,7 +51,7 @@ Construtor::Construtor(CriadorInstancias *a)
         }
     }
 
-    this->solucao->makespam = makespam;
+    this->solucao->makespam = makespam-this->instancia->calcInicioDia();
 
     // Imprime();
 }
@@ -198,8 +198,9 @@ void Construtor::RemovePontos(int id_Processo)
 
     for (int j = 0; j < tamanhoVetor; j++)
     {
-        this->lista->Remove_na_Lista(maquinas_mais_devagar2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.25));
-        this->lista->Remove_na_Lista(maquinas_com_maior_makespam2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.75));
+        //this->lista->Remove_na_Lista(maquinas_mais_devagar2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.25));
+        this->lista->Remove_na_Lista(maquinas_com_maior_makespam2[j], ((this->instancia->get_m()) - j) * (importanciaf1));
+
         this->lista->Remove_na_Lista(maquinas_com_maior_consumo2[j], ((this->instancia->get_m()) - j) * importanciaf2);
         this->lista->Remove_na_Lista(maquinas_com_maior_gasto2[j],((this->instancia->get_m()) - j) * importanciaf3);
     }
@@ -337,8 +338,9 @@ void Construtor::AdicionaPontos(int id_Processo)
 
     for (int j = 0; j < tamanhoVetor; j++)
     {
-        this->lista->Adicionar_na_Lista(maquinas_mais_rapidas2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.25));
-        this->lista->Adicionar_na_Lista(maquinas_com_menos_makespam2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.75));
+        //this->lista->Adicionar_na_Lista(maquinas_mais_rapidas2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.25));
+        this->lista->Adicionar_na_Lista(maquinas_com_menos_makespam2[j], ((this->instancia->get_m()) - j) * (importanciaf1));
+
         this->lista->Adicionar_na_Lista(maquinas_com_menos_consumo2[j], ((this->instancia->get_m()) - j) * importanciaf2);
         this->lista->Adicionar_na_Lista(maquinas_com_menos_gasto2[j], ((this->instancia->get_m()) - j) * importanciaf3);
     }

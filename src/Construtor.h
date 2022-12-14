@@ -21,9 +21,10 @@ class Construtor{
     float media_trabalho_por_tempo;
 
 
-    float importanciaf1=2;
+    float importanciaf1=2.5;
     float importanciaf2=1;
     float importanciaf3=1;
+
     float parametro_de_analise=1;
 
     Construtor(CriadorInstancias* a);

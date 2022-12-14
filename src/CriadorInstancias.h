@@ -34,6 +34,11 @@ class CriadorInstancias{
 
     public:
         // Constructor
+
+        int media_MS;
+        int media_CE;
+        int media_G;
+
         float intervalos[1440];
         CriadorInstancias();
         ~CriadorInstancias();

@@ -194,14 +194,14 @@ int main(int argc, char const *argv[])
      cin>>instancia;
      srand(instancia);  
 
-    
-
-
-     
-
-    int numeroDeSolucoesTotais = 10; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
+    int numeroDeSolucoesTotais = 1000; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
 
     CriadorInstancias *a = new CriadorInstancias();
+
+    cout<<"Media de Makespam da instancia: "<<a->media_MS<<endl;
+    cout<<"Media de Custo de Energia da instancia: "<<a->media_CE<<endl;
+    cout<<"Media de Gasto Monetario da instancia: "<<a->media_G<<endl;
+
     srand(time(NULL));
     ConjuntoPopulacional *populacao = new ConjuntoPopulacional(numeroDeSolucoesTotais);
     for (int i = 0; i < numeroDeSolucoesTotais; i++)
@@ -209,6 +209,7 @@ int main(int argc, char const *argv[])
         
         Construtor *b = new Construtor(a);
         b->solucao->id = i;
+        //cout<<b->solucao->makespam<<endl;
         populacao->preencheListasPorRequisito(b->solucao);
     }
     populacao->selecionaPopulacao2();

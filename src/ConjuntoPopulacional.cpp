@@ -295,6 +295,16 @@ void ConjuntoPopulacional::printPopListaIndexSol()
             cout << this->populacao[i] << ", ";
         }
     }
+
+
+    for (int i = 0; i < getTamanhoPop(); i++){
+
+        for(Solucao* a=this->primeira_Solucao;a!=NULL;a=a->get_prox_solucao()){
+            if(a->id==this->populacao[i]){
+        cout<<this->populacao[i]<<endl<<"Possui Makespam = "<<a->makespam<<endl<<"Custo de Energia= "<<a->custoEnergia<<endl<<"Custo Monetario= "<<a->custoMonetario<<endl<<endl;
+            }
+        }
+    }
 }
 
 void ConjuntoPopulacional::printListas123()

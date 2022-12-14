@@ -109,6 +109,8 @@ void CriadorInstancias::Calcula_b()
 {
 
     float soma = 0;
+    float soma2 =0;
+    float soma3=0;
 
     for (Processo *processo = this->primeiro_processo; processo != NULL; processo = processo->get_prox_Processo())
     { // para todos processos
@@ -116,10 +118,21 @@ void CriadorInstancias::Calcula_b()
         for (int i = 0; i < m; i++)
         { // em todas as maquinas
             soma = soma + processo->tempos_processamento[i];
+            soma2=soma2 + processo->custos_energia[i];
         }
     }
 
     this->b = alfa * (soma / (m * m));
+
+    this->media_MS= (soma / (m * m));
+
+    this->media_CE=(soma2 / m);
+
+    for(int i=0+this->calcInicioDia();i<this->media_MS+this->calcInicioDia();i++){
+        soma3=soma3+intervalos[i%1440];
+    }
+
+    this->media_G= this->media_CE*(soma3/this->media_MS);
 }
 
 void CriadorInstancias::GeraKpadrao()
