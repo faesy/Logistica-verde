@@ -6,10 +6,10 @@ using namespace std;
 
 void BL::BuscaLocal2(Solucao *solucao, int id_processo)
 {
-    cout<<"id_processo "<<id_processo<<endl;
+    //cout << "id_processo " << id_processo << endl;
     MaquinaSol *maquina1 = NULL;
     Processo *processoAux = NULL;
-    ProcessoSol* processo = NULL;
+    ProcessoSol *processo = NULL;
     int posProcesso = 0;
 
     for (MaquinaSol *i = solucao->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
@@ -21,7 +21,7 @@ void BL::BuscaLocal2(Solucao *solucao, int id_processo)
             {
                 maquina1 = i;
                 processoAux = this->instancia->buscaProcesso(j->id);
-                processo=j;
+                processo = j;
                 posProcesso = l;
             }
             l++;
@@ -36,126 +36,47 @@ void BL::BuscaLocal2(Solucao *solucao, int id_processo)
     ProcessoSol *k;
 
     bool flag = false;
-    bool flag2=false;
-    //cout<<"1"<<endl;
+    // cout<<"1"<<endl;
     for (MaquinaSol *i = solucao->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
     {
-        if(maquina1->id == i->id){
-            i=i->prox_maquinaSol;
+        if (maquina1->id == i->id)
+        {
+            i = i->prox_maquinaSol;
         }
-        if(i==NULL){
+        if (i == NULL)
+        {
             break;
         }
-        int contador = 0;
-        for (ProcessoSol *j = i->primeiro_processoSol; j != NULL; j = k)
-        {
-            cout<<"Analisando Processo "<<j->id<<" Da Maquina "<<i->id<<endl;
-            if (maquina1->id != i->id)
+            int contador = 0;
+            for (ProcessoSol *j = i->primeiro_processoSol; j != NULL; j = k)
             {
-                cout<<"Entrou ENCIMA"<<endl;
-                flag2=true;
-                RemoveProcesso2(i, this->instancia->buscaProcesso(j->id),solucao);
-                AdicionaProcesso(maquina1, this->instancia->buscaProcesso(j->id), posProcesso);
-
-                RemoveProcesso2(maquina1, processoAux,solucao);
-                AdicionaProcesso(i, processoAux, contador);
-                cout<<"Saiu ENCIMA"<<endl;
-
-            }
-            else if (maquina1->id == i->id)
-            {
-                // cout<<"4"<<endl;
-
-                // RemoveProcesso2(i, this->instancia->buscaProcesso(j->id));
-                // RemoveProcesso2(maquina1, processo);
-
-                // if (contador > posProcesso)
-                // {
-                //     //cout<<"5"<<endl;
-                //     AdicionaProcesso(i, processo, contador);
-                //     AdicionaProcesso(maquina1, this->instancia->buscaProcesso(j->id), posProcesso);
-
-                // }
-                // else if (contador < posProcesso)
-                // {
-                //     //cout<<"6"<<endl;
-                //     AdicionaProcesso(maquina1, this->instancia->buscaProcesso(j->id), posProcesso);
-                //     AdicionaProcesso(i, processo, contador);
-                //}else{
-                //}
-            }
-
-            AtualizaCustos(solucao);
-            float custoFinalF1 = solucao->makespam;
-            float custoFinalF2 = solucao->custoEnergia;
-            float custoFinalF3 = solucao->custoMonetario;
-            //cout<<"7"<<endl;
-
-            if(flag2){
-
-                flag2=false;
-
-            if(custoInicialF1 > custoFinalF1 && custoInicialF2 > custoFinalF2 && custoInicialF3 > custoFinalF3)
-            {
-                cout<<"Trocou o Processo "<<processo->id<<" da maquina "<<maquina1->id<<" com o processo "<<j->id<<" da maquina "<<i->id<<endl;
-                flag = true;
-                AtualizaCustos(solucao);
-                break;
-            }
-            else
-            {
-                if (maquina1->id != i->id)
+                if(VerificaTrocaEmF1eF2_2(maquina1,i,processo,j,solucao->makespam)){
+                if (VerificaTrocaEmF3_2(maquina1,i,processoAux,this->instancia->buscaProcesso(j->id),posProcesso,contador))
                 {
-                    cout<<"Entrou ENbaixo"<<endl;
-                    //cout<<"9"<<endl;
+                    cout << "Analisando Processo " << j->id << " Da Maquina " << i->id << endl;
+                    if (maquina1->id != i->id)
+                    {
+                        flag = true;
+                        RemoveProcesso2(i, this->instancia->buscaProcesso(j->id), solucao);
+                        AdicionaProcesso(maquina1, this->instancia->buscaProcesso(j->id), posProcesso);
 
-                    RemoveProcesso2(maquina1, this->instancia->buscaProcesso(j->id),solucao);
-                    AdicionaProcesso(i, this->instancia->buscaProcesso(j->id), contador);
-
-                    RemoveProcesso2(i, processoAux,solucao);
-                    AdicionaProcesso(maquina1, processoAux, posProcesso);
-
-
-                    AtualizaCustos(solucao);
-                    cout<<"saiu ENbaixo"<<endl;
+                        RemoveProcesso2(maquina1, processoAux, solucao);
+                        AdicionaProcesso(i, processoAux, contador);
+                        break;
+                    }
                 }
-                else if (maquina1->id == i->id)
-                {
-                    // //cout<<"10"<<endl;
-                    // RemoveProcesso2(maquina1, this->instancia->buscaProcesso(j->id));
-                    // RemoveProcesso2(i, processo);
-
-                    // if (contador > posProcesso)
-                    // {
-                    //     //cout<<"11"<<endl;
-                    //     AdicionaProcesso(maquina1, processo, posProcesso);
-                    //     AdicionaProcesso(i, this->instancia->buscaProcesso(j->id), contador);
-
-                    // }
-                    // else if (contador < posProcesso)
-                    // {
-                    //     //cout<<"12"<<endl;
-                    //     AdicionaProcesso(maquina1, this->instancia->buscaProcesso(j->id), posProcesso);
-                    //     AdicionaProcesso(i, processo, contador);
-                    // }
-                    // //cout<<"13"<<endl;
-                    // AtualizaCustos(solucao);
                 }
+                contador++;
             }
-
-            }
-            contador++;
-        }
         if (flag)
         {
-            //cout<<"14"<<endl;
             break;
         }
     }
-    //cout<<"fim"<<endl;
 }
 
-void BL::ChamadaDaBL2(Solucao* solucao,int  repeticoes){
+void BL::ChamadaDaBL2(Solucao *solucao, int repeticoes)
+{
     for (int i = 0; i < repeticoes; i++)
     {
         int id_processo = rand() % this->instancia->get_n();
@@ -228,6 +149,100 @@ void BL::BuscaLocal1(Solucao *solucao, int id_processo)
             i = i->prox_maquinaSol;
         }
     }
+}
+
+bool BL::VerificaTrocaEmF3_2(MaquinaSol *maquina1, MaquinaSol *maquina2, Processo *processo1, Processo *processo2, int pos1, int pos2)
+{
+
+    float CMinicial = maquina1->CM + maquina2->CM;
+    // cout<<"Custo Monetario Maq "<<maquinaRemovida->id<<" Rem: "<<maquinaRemovida->CM<<endl;
+    // cout<<"Custo Monetario Maq "<<maquinaAdicionada->id<<" Adc: "<<maquinaAdicionada->CM<<endl;
+
+    float CMfinal_maqRem = 0;
+    float CMfinal_maqAdc = 0;
+
+    int tempoAtual = 0;
+    int contador = 0;
+    for (ProcessoSol *i = maquina1->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
+    {
+
+        if (processo1->get_id() == i->id)
+        {
+
+            float customedioEnergia = 0;
+            for (int f = 0; f < processo2->tempos_processamento[maquina1->id]; f++)
+            {
+                customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
+            }
+            customedioEnergia = customedioEnergia / (float)processo2->tempos_processamento[maquina1->id];
+            CMfinal_maqRem = CMfinal_maqRem + processo2->custos_energia[maquina1->id] * customedioEnergia;
+
+            tempoAtual = (tempoAtual + processo2->tempos_processamento[maquina1->id]);
+            contador++;
+        }
+        else
+        {
+
+            float customedioEnergia = 0;
+            for (int f = 0; f < this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina1->id]; f++)
+            {
+                customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
+            }
+            customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina1->id];
+            CMfinal_maqRem = CMfinal_maqRem + this->instancia->buscaProcesso(i->id)->custos_energia[maquina1->id] * customedioEnergia;
+
+            tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina1->id]);
+            contador++;
+        }
+    }
+
+    tempoAtual = 0;
+    contador = 0;
+    for (ProcessoSol *i = maquina2->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
+    {
+
+        if (processo2->get_id() == i->id /*&& contador == pos2*/)
+        {
+
+            float customedioEnergia = 0;
+            for (int f = 0; f < processo1->tempos_processamento[maquina2->id]; f++)
+            {
+                customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
+            }
+            customedioEnergia = customedioEnergia / (float)processo1->tempos_processamento[maquina2->id];
+            CMfinal_maqRem = CMfinal_maqRem + processo1->custos_energia[maquina2->id] * customedioEnergia;
+
+            tempoAtual = (tempoAtual + processo1->tempos_processamento[maquina2->id]);
+            contador++;
+        }
+        else
+        {
+
+            float customedioEnergia = 0;
+            for (int f = 0; f < this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina2->id]; f++)
+            {
+                customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
+            }
+            customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina2->id];
+            CMfinal_maqRem = CMfinal_maqRem + this->instancia->buscaProcesso(i->id)->custos_energia[maquina2->id] * customedioEnergia;
+
+            tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina2->id]);
+            contador++;
+        }
+    }
+    contador++;
+
+    float CMfinal = CMfinal_maqAdc + CMfinal_maqRem;
+
+    // cout<<endl<<"Custo monetario Inicial: "<<CMinicial<<endl;
+    // cout<<"Custo monetario final: "<<CMfinal<<endl;
+
+    if (CMfinal >= CMinicial)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 bool BL::VerificaTrocaEmF3(MaquinaSol *maquinaRemovida, MaquinaSol *maquinaAdicionada, Processo *processo, int posAdc, int posRem)
@@ -313,6 +328,30 @@ bool BL::VerificaTrocaEmF3(MaquinaSol *maquinaRemovida, MaquinaSol *maquinaAdici
     return true;
 }
 
+bool BL::VerificaTrocaEmF1eF2_2(MaquinaSol *maquina1, MaquinaSol *maquina2, ProcessoSol *processo1, ProcessoSol *processo2, int makespam)
+{
+
+    Processo *processo1Aux = this->instancia->buscaProcesso(processo1->id);
+    Processo *processo2Aux = this->instancia->buscaProcesso(processo2->id);
+
+    int CEinicial = maquina1->CE + maquina2->CE;
+    int CEfinal = maquina1->CE - processo1Aux->custos_energia[maquina1->id] + processo2Aux->custos_energia[maquina1->id] + maquina2->CE - processo2Aux->custos_energia[maquina2->id] + processo1Aux->custos_energia[maquina2->id];
+    if (CEfinal >= CEinicial)
+    {
+        return false;
+    }
+
+    int novomakespam1 = maquina1->min_Atual + processo2Aux->tempos_processamento[maquina1->id] - processo1Aux->tempos_processamento[maquina1->id] - this->instancia->calcInicioDia();
+    int novomakespam2 = maquina2->min_Atual + processo1Aux->tempos_processamento[maquina2->id] - processo2Aux->tempos_processamento[maquina2->id] - this->instancia->calcInicioDia();
+    // cout<<"novomakespam: "<<novomakespam<<endl;
+    // cout<<"makespam: "<<makespam<<endl;
+    if (novomakespam1 >= makespam || novomakespam2 >= makespam)
+    {
+        return false;
+    }
+    return true;
+}
+
 bool BL::VerificaTrocaEmF1eF2(MaquinaSol *maquinaRemovida, MaquinaSol *maquinaAdicionada, Processo *processo, int makespam)
 {
 
@@ -333,9 +372,8 @@ bool BL::VerificaTrocaEmF1eF2(MaquinaSol *maquinaRemovida, MaquinaSol *maquinaAd
     return true;
 }
 
-void BL::RemoveProcesso2(MaquinaSol *maquina, Processo *processo,Solucao* solucao)
+void BL::RemoveProcesso2(MaquinaSol *maquina, Processo *processo, Solucao *solucao)
 {
-    cout<<"Removendo o processo "<<processo->get_id()<<" da maquina "<<maquina->id<<endl;
 
     maquina->CE = maquina->CE - processo->custos_energia[maquina->id];                     // Atualizo custo de energia
     maquina->min_Atual = maquina->min_Atual - processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina
@@ -343,14 +381,14 @@ void BL::RemoveProcesso2(MaquinaSol *maquina, Processo *processo,Solucao* soluca
 
     int tempoAtual = this->instancia->calcInicioDia();
     int contador = 0;
-    bool flag=true;
+    bool flag = true;
     for (ProcessoSol *i = maquina->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
     {
 
         if (processo->get_id() == i->id)
         {
 
-            flag=false;
+            flag = false;
             if (i->id == maquina->primeiro_processoSol->id)
             { // caso proc esteja sendo removido na pos 0
                 if (i->prox_processoSol == NULL)
@@ -405,9 +443,9 @@ void BL::RemoveProcesso2(MaquinaSol *maquina, Processo *processo,Solucao* soluca
         contador++;
     }
 
-    if(flag){
-        cout<<"============================================================================ ERRO em Remover ================================================================================="<<endl;
-        
+    if (flag)
+    {
+        cout << "============================================================================ ERRO em Remover =================================================================================" << endl;
     }
 }
 
@@ -482,7 +520,6 @@ void BL::RemoveProcesso(MaquinaSol *maquina, Processo *processo, int pos)
         tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id]);
         contador++;
     }
-
 }
 
 void BL::AtualizaCustos(Solucao *sol)
@@ -505,21 +542,19 @@ void BL::AtualizaCustos(Solucao *sol)
 void BL::AdicionaProcesso(MaquinaSol *maquina, Processo *processo, int pos)
 {
 
-    cout<<"Adicionando o processo "<<processo->get_id()<<" na maquina "<<maquina->id<<" na pos "<<pos<<endl;
-
     maquina->CE = maquina->CE + processo->custos_energia[maquina->id];                     // Atualizo custo de energia
     maquina->min_Atual = maquina->min_Atual + processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina
     maquina->CM = 0;                                                                       // zero o custo Monetario
 
     int contador = 0;
     int tempoAtual = this->instancia->calcInicioDia();
-    bool flag=true;
+    bool flag = true;
     for (ProcessoSol *i = maquina->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
     {
 
         if (contador == pos)
         {
-            flag=false;
+            flag = false;
             ProcessoSol *novoProc = new ProcessoSol();
             novoProc->id = processo->get_id();
 
@@ -564,7 +599,7 @@ void BL::AdicionaProcesso(MaquinaSol *maquina, Processo *processo, int pos)
 
         if (contador + 1 == pos && i->prox_processoSol == NULL)
         {
-            flag=false;
+            flag = false;
             ProcessoSol *novoProc = new ProcessoSol();
             novoProc->id = processo->get_id();
 
@@ -590,7 +625,8 @@ void BL::AdicionaProcesso(MaquinaSol *maquina, Processo *processo, int pos)
 
         contador++;
     }
-    if(flag){
-        cout<<"====================================== ERRO ADICIONANDO ==================================================="<<endl;
+    if (flag)
+    {
+        cout << "====================================== ERRO ADICIONANDO ===================================================" << endl;
     }
 }

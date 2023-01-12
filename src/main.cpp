@@ -190,12 +190,12 @@ int mainMenu(ofstream &output_file, Graph *graph)
 int main(int argc, char const *argv[])
 {
 
-    string nomeArquivo;
-    cout<<"Digite o nome do arquivo"<<endl;
-    cin>>nomeArquivo;
-    ofstream output_file;
+    // string nomeArquivo;
+    // cout<<"Digite o nome do arquivo"<<endl;
+    // cin>>nomeArquivo;
+    // ofstream output_file;
     
-    output_file.open(nomeArquivo, ios::out | ios::trunc);
+    //output_file.open(nomeArquivo, ios::out | ios::trunc);
 
      int instancia=0;
      //cout<<"Digite o codigo da Instancia: ";
@@ -203,7 +203,7 @@ int main(int argc, char const *argv[])
      instancia=1670879918;
      srand(instancia);  
 
-    int numeroDeSolucoesTotais = 100; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
+    int numeroDeSolucoesTotais = 1; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
 
     CriadorInstancias *a = new CriadorInstancias();
 
@@ -226,50 +226,50 @@ int main(int argc, char const *argv[])
 
         bl->AtualizaCustos(b->solucao);
         b->Imprime();
-        bl->ChamadaDaBL2(b->solucao,1);
+        bl->ChamadaDaBL2(b->solucao,100000);
         b->Imprime();
 
         //cout<<b->solucao->makespam<<endl;
-        populacao->preencheListasPorRequisito(b->solucao);
+        //populacao->preencheListasPorRequisito(b->solucao);
     }
-    output_file<<"Conjunto de Solucoes logo apos sair da busca local:"<<endl;
-    output_file<<"MakeSpan: ";
-    for(Solucao *p = populacao->primeira_Solucao; p!=NULL; p=p->get_prox_solucao()){
-       if (p->get_prox_solucao() == NULL){
-        output_file<<p->makespam<<endl;
-       }else{
-        output_file<<p->makespam<<", ";
-       }
+    // output_file<<"Conjunto de Solucoes logo apos sair da busca local:"<<endl;
+    // output_file<<"MakeSpan: ";
+    // for(Solucao *p = populacao->primeira_Solucao; p!=NULL; p=p->get_prox_solucao()){
+    //    if (p->get_prox_solucao() == NULL){
+    //     output_file<<p->makespam<<endl;
+    //    }else{
+    //     output_file<<p->makespam<<", ";
+    //    }
         
-    }
-     output_file<<"Custo Energia: ";
-    for(Solucao *p = populacao->primeira_Solucao; p!=NULL; p=p->get_prox_solucao()){
-       if (p->get_prox_solucao() == NULL){
-        output_file<<p->custoEnergia<<endl;
-       }else{
-        output_file<<p->custoEnergia<<", ";
-       }
+    // }
+    //  output_file<<"Custo Energia: ";
+    // for(Solucao *p = populacao->primeira_Solucao; p!=NULL; p=p->get_prox_solucao()){
+    //    if (p->get_prox_solucao() == NULL){
+    //     output_file<<p->custoEnergia<<endl;
+    //    }else{
+    //     output_file<<p->custoEnergia<<", ";
+    //    }
         
-    }
-     output_file<<"Custo Monetario: ";
-    for(Solucao *p = populacao->primeira_Solucao; p!=NULL; p=p->get_prox_solucao()){
-       if (p->get_prox_solucao() == NULL){
-        output_file<<p->custoMonetario<<endl;
-       }else{
-        output_file<<p->custoMonetario<<", ";
-       }
+    // }
+    //  output_file<<"Custo Monetario: ";
+    // for(Solucao *p = populacao->primeira_Solucao; p!=NULL; p=p->get_prox_solucao()){
+    //    if (p->get_prox_solucao() == NULL){
+    //     output_file<<p->custoMonetario<<endl;
+    //    }else{
+    //     output_file<<p->custoMonetario<<", ";
+    //    }
         
-    }
+    // }
 
-    populacao->selecionaPopulacao2();
-    //cout << "tamanho da pop: " << populacao->getTamanhoPop() << endl << endl;
-    populacao->printPopListaIndexSol(output_file);
+    // populacao->selecionaPopulacao2();
+    // //cout << "tamanho da pop: " << populacao->getTamanhoPop() << endl << endl;
+    // populacao->printPopListaIndexSol(output_file);
 
-    populacao->dizSelecaoLista1(output_file);
-    populacao->dizSelecaoLista2(output_file);
-    populacao->dizSelecaoLista3(output_file);
+    // populacao->dizSelecaoLista1(output_file);
+    // populacao->dizSelecaoLista2(output_file);
+    // populacao->dizSelecaoLista3(output_file);
 
-    cout<<endl;
+    // cout<<endl;
     
 
     
@@ -320,7 +320,7 @@ int main(int argc, char const *argv[])
     input_file.close();
 
     // Fechando arquivo de saída*/
-    output_file.close();
+    //output_file.close();
   
     return 0;
 }
