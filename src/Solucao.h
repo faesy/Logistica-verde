@@ -14,9 +14,9 @@ private:
 
 public:
     int id;
-    int custoEnergia;
-    int makespam;
-    int custoMonetario;
+    float custoEnergia;
+    float makespam;
+    float custoMonetario;
     Solucao()
     {
         custoEnergia = 0;
@@ -41,6 +41,7 @@ public:
     void set_ant_solucao(Solucao *a);
     Solucao *get_prox_solucao();
     Solucao *get_ant_solucao();
+
 };
 
 #endif

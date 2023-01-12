@@ -20,12 +20,12 @@ class Construtor{
     float media_Consumo_por_tempo;
     float media_trabalho_por_tempo;
 
-
-    float importanciaf1=2.5;
+    float importanciaf0=0;
+    float importanciaf1=2;
     float importanciaf2=1;
     float importanciaf3=1;
 
-    float parametro_de_analise=1;
+    float parametro_de_analise=0.5;
 
     Construtor(CriadorInstancias* a);
     void embaralhar(int *vet, int vetSize);

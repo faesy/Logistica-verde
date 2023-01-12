@@ -296,15 +296,25 @@ void ConjuntoPopulacional::printPopListaIndexSol()
         }
     }
 
+    int media_ms=0;
+    int media_ce=0;
+    int media_g=0;
+
 
     for (int i = 0; i < getTamanhoPop(); i++){
 
         for(Solucao* a=this->primeira_Solucao;a!=NULL;a=a->get_prox_solucao()){
             if(a->id==this->populacao[i]){
-        cout<<this->populacao[i]<<endl<<"Possui Makespam = "<<a->makespam<<endl<<"Custo de Energia= "<<a->custoEnergia<<endl<<"Custo Monetario= "<<a->custoMonetario<<endl<<endl;
+                media_ms=media_ms+a->makespam;
+                media_ce=media_ce+a->custoEnergia;
+                media_g=media_g+a->custoMonetario;
             }
         }
     }
+
+    cout<<"Media de makespam da populacao: "<<media_ms/getTamanhoPop()<<endl;
+    cout<<"Media de custo de energia da populacao: "<<media_ce/getTamanhoPop()<<endl;
+    cout<<"Media de custo monetario da populacao: "<<media_g/getTamanhoPop()<<endl;
 }
 
 void ConjuntoPopulacional::printListas123()

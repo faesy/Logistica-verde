@@ -61,13 +61,13 @@ void Construtor::Imprime()
     int custo = 0;
     for (MaquinaSol *a = this->solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol)
     {
-        cout << "Maquina " << a->id << " :";
+        cout << "Maquina " << a->id << " : ";
         for (ProcessoSol *b = a->primeiro_processoSol; b != NULL; b = b->prox_processoSol)
         {
             cout << b->id << " -> ";
             custo = custo + this->instancia->buscaProcesso(b->id)->custos_energia[a->id];
         }
-        cout << "Tempo final: " << a->min_Atual << endl;
+        cout << "Tempo final: " << a->min_Atual << " || Custo Energetico: "<<a->CE<<endl;
     }
     cout << "Makespam: " << solucao->makespam << endl;
     cout << "Custo Energetico: " << solucao->custoEnergia << endl;
@@ -144,9 +144,9 @@ void Construtor::RemovePontos(int id_Processo)
         {
             if (maquinas_com_maior_gasto_bool[contador] == false)
             {
-                if (maquinas_com_maior_gasto[r] < processo->custos_energia[i->get_id()] * this->instancia->intervalos[(this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440])
+                if (maquinas_com_maior_gasto[r] < processo->custos_energia[i->get_id()] * this->instancia->intervalos[(int) (this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440])
                 {
-                    maquinas_com_maior_gasto[r] = processo->custos_energia[i->get_id()] * this->instancia->intervalos[(this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440];
+                    maquinas_com_maior_gasto[r] = processo->custos_energia[i->get_id()] * this->instancia->intervalos[(int) (this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440];
                     maquinas_com_maior_gasto2[r] = i->get_id();
                     index_melhor_resultado = contador;
                 }
@@ -198,11 +198,11 @@ void Construtor::RemovePontos(int id_Processo)
 
     for (int j = 0; j < tamanhoVetor; j++)
     {
-        //this->lista->Remove_na_Lista(maquinas_mais_devagar2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.25));
-        this->lista->Remove_na_Lista(maquinas_com_maior_makespam2[j], ((this->instancia->get_m()) - j) * (importanciaf1));
+        this->lista->Remove_na_Lista(maquinas_mais_devagar2[j], (((this->instancia->get_m()) - j)* parametro_de_analise) * (importanciaf0));
+        this->lista->Remove_na_Lista(maquinas_com_maior_makespam2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf1) );
 
-        this->lista->Remove_na_Lista(maquinas_com_maior_consumo2[j], ((this->instancia->get_m()) - j) * importanciaf2);
-        this->lista->Remove_na_Lista(maquinas_com_maior_gasto2[j],((this->instancia->get_m()) - j) * importanciaf3);
+        this->lista->Remove_na_Lista(maquinas_com_maior_consumo2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf2) );
+        this->lista->Remove_na_Lista(maquinas_com_maior_gasto2[j],(((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf3) );
     }
 
     if(this->lista->primeiro_elemento==NULL){
@@ -281,10 +281,10 @@ void Construtor::AdicionaPontos(int id_Processo)
             if (maquinas_com_menos_gasto_bool[contador] == false)
             {
 
-                if (maquinas_com_menos_gasto[r] > processo->custos_energia[i->get_id()] * this->instancia->intervalos[(this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440])
+                if (maquinas_com_menos_gasto[r] > processo->custos_energia[i->get_id()] * this->instancia->intervalos[(int) (this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440])
                 {
 
-                    maquinas_com_menos_gasto[r] = processo->custos_energia[i->get_id()] * this->instancia->intervalos[(this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440];
+                    maquinas_com_menos_gasto[r] = processo->custos_energia[i->get_id()] * this->instancia->intervalos[(int) (this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440];
                     maquinas_com_menos_gasto2[r] = i->get_id();
 
                     index_melhor_resultado = contador;
@@ -338,11 +338,11 @@ void Construtor::AdicionaPontos(int id_Processo)
 
     for (int j = 0; j < tamanhoVetor; j++)
     {
-        //this->lista->Adicionar_na_Lista(maquinas_mais_rapidas2[j], ((this->instancia->get_m()) - j) * (importanciaf1*0.25));
-        this->lista->Adicionar_na_Lista(maquinas_com_menos_makespam2[j], ((this->instancia->get_m()) - j) * (importanciaf1));
+        this->lista->Adicionar_na_Lista(maquinas_mais_rapidas2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf0));
+        this->lista->Adicionar_na_Lista(maquinas_com_menos_makespam2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf1) );
 
-        this->lista->Adicionar_na_Lista(maquinas_com_menos_consumo2[j], ((this->instancia->get_m()) - j) * importanciaf2);
-        this->lista->Adicionar_na_Lista(maquinas_com_menos_gasto2[j], ((this->instancia->get_m()) - j) * importanciaf3);
+        this->lista->Adicionar_na_Lista(maquinas_com_menos_consumo2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf2) );
+        this->lista->Adicionar_na_Lista(maquinas_com_menos_gasto2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf3) );
     }
 }
 
@@ -369,6 +369,8 @@ void Construtor::Adiciona_Basico()
         {
             MaquinaSol *maquinaSol = new MaquinaSol();
             maquinaSol->min_Atual = this->instancia->calcInicioDia();
+            maquinaSol->CE=0;
+            maquinaSol->CM=0;
             maquinaSol->id = i->get_id();
             maquinaSol->primeiro_processoSol = NULL;
             maquinaSol->ultimo_processoSol = NULL;
@@ -381,6 +383,8 @@ void Construtor::Adiciona_Basico()
         {
             MaquinaSol *maquinaSol = new MaquinaSol();
             maquinaSol->min_Atual = this->instancia->calcInicioDia();
+            maquinaSol->CE=0;
+            maquinaSol->CM=0;
             maquinaSol->id = j;
             maquinaSol->primeiro_processoSol = NULL;
             maquinaSol->ultimo_processoSol = NULL;
@@ -419,13 +423,15 @@ void Construtor::Adiciona_Processo_Na_Maquina(int id_processo, int id_maquina)
                         processo->ant_processoSol = NULL;
 
                         solucao->custoEnergia = solucao->custoEnergia + k->custos_energia[i->id];
+                        i->CE=i->CE + k->custos_energia[i->id];
                         float customedioEnergia = 0;
                         for (int f = 0; f < k->tempos_processamento[i->id]; f++)
                         {
-                            customedioEnergia = customedioEnergia + instancia->intervalos[(i->min_Atual + f) % 1440];
+                            customedioEnergia = customedioEnergia + instancia->intervalos[(int) (i->min_Atual + f) % 1440];
                         }
                         customedioEnergia = customedioEnergia / (float)k->tempos_processamento[i->id];
                         solucao->custoMonetario = solucao->custoMonetario + k->custos_energia[i->id] * customedioEnergia;
+                        i->CM=i->CM +  k->custos_energia[i->id] * customedioEnergia;
 
                         i->min_Atual = (i->min_Atual + k->tempos_processamento[i->id]);
                     }
@@ -438,19 +444,20 @@ void Construtor::Adiciona_Processo_Na_Maquina(int id_processo, int id_maquina)
                         i->ultimo_processoSol = processo;
 
                         solucao->custoEnergia = solucao->custoEnergia + k->custos_energia[i->id];
+                        i->CE=i->CE + k->custos_energia[i->id];
                         float customedioEnergia = 0;
                         for (int f = 0; f < k->tempos_processamento[i->id]; f++)
                         {
-                            customedioEnergia = customedioEnergia + instancia->intervalos[(i->min_Atual + f) % 1440];
+                            customedioEnergia = customedioEnergia + instancia->intervalos[(int) (i->min_Atual + f) % 1440];
                         }
                         customedioEnergia = customedioEnergia / (float)k->tempos_processamento[i->id];
                         solucao->custoMonetario = solucao->custoMonetario + k->custos_energia[i->id] * customedioEnergia;
+                        i->CM=i->CM +  k->custos_energia[i->id] * customedioEnergia;
 
                         i->min_Atual = (i->min_Atual + k->tempos_processamento[i->id]);
                     }
                 }
             }
-
             break;
         }
     }

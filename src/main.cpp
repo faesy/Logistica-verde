@@ -18,6 +18,7 @@ Matheus Cardoso Faesy 202065065A
 #include <thread>
 #include <time.h>
 #include <stdlib.h>
+#include "BL.h"
 
 using namespace std;
 
@@ -190,11 +191,12 @@ int main(int argc, char const *argv[])
 {
 
      int instancia=0;
-     cout<<"Digite o codigo da Instancia: ";
-     cin>>instancia;
+     //cout<<"Digite o codigo da Instancia: ";
+     //cin>>instancia;
+     instancia=1670879957;
      srand(instancia);  
 
-    int numeroDeSolucoesTotais = 1000; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
+    int numeroDeSolucoesTotais = 1; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
 
     CriadorInstancias *a = new CriadorInstancias();
 
@@ -203,18 +205,31 @@ int main(int argc, char const *argv[])
     cout<<"Media de Gasto Monetario da instancia: "<<a->media_G<<endl;
 
     srand(time(NULL));
+    BL* bl=new BL(a);
     ConjuntoPopulacional *populacao = new ConjuntoPopulacional(numeroDeSolucoesTotais);
     for (int i = 0; i < numeroDeSolucoesTotais; i++)
     {
         
         Construtor *b = new Construtor(a);
         b->solucao->id = i;
+
+        //b->Imprime();
+        //bl->AdicionaProcesso(b->solucao->primeira_maquina,a->buscaProcesso(b->solucao->primeira_maquina->primeiro_processoSol->id),1);
+        //b->Imprime();
+
+        bl->AtualizaCustos(b->solucao);
+        b->Imprime();
+        bl->ChamadaDaBL1(b->solucao,5000);
+        b->Imprime();
+
         //cout<<b->solucao->makespam<<endl;
         populacao->preencheListasPorRequisito(b->solucao);
     }
+    
+
     populacao->selecionaPopulacao2();
-    cout << "tamanho da pop: " << populacao->getTamanhoPop() << endl << endl;
-    populacao->printPopListaIndexSol();
+    //cout << "tamanho da pop: " << populacao->getTamanhoPop() << endl << endl;
+    //populacao->printPopListaIndexSol();
     cout<<endl;
 
     

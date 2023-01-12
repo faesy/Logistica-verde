@@ -69,7 +69,7 @@ class CriadorInstancias{
         Processo* buscaProcesso(int id){
 
             for(Processo* a=this->primeiro_processo;a!=NULL;a=a->get_prox_Processo()){
-                if (id=a->get_id())
+                if (id==a->get_id())
                 {
                     return a;
                 }

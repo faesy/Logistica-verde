@@ -14,7 +14,9 @@ class MaquinaSol{
 
     int id;
 
-    int min_Atual;
+    float min_Atual;
+    float CE;
+    float CM;
 
     MaquinaSol* prox_maquinaSol;
     MaquinaSol* ant_maquinaSol;
