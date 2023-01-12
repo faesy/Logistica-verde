@@ -1,6 +1,7 @@
 #include <iostream>
 #include "ConjuntoPopulacional.h"
-
+#include <iostream>
+#include <fstream>
 using namespace std;
 
 ConjuntoPopulacional::ConjuntoPopulacional(int tamanhoLista)
@@ -209,6 +210,150 @@ void ConjuntoPopulacional::selecionaPopulacao2()
     }
 }
 
+void ConjuntoPopulacional::dizSelecaoLista1(ofstream &output_file){
+    output_file << endl
+                << endl;
+    output_file << "Conjunto de Solucoes da lista 1:" << endl;
+    output_file << "MakeSpan: ";
+     for (int h = 0; h < (alfa * tamanhoLista); h++)
+    {
+        
+         Solucao *a = getSolucaoPorIndex(this->lista1[h]);
+        if (h + 1 == (alfa * tamanhoLista))
+        {
+            output_file << a->makespam << endl;
+        }
+        else
+        {
+            output_file << a->makespam << ", ";
+        }
+    }
+    output_file << "Custo Energia: ";
+      for (int h = 0; h < (alfa * tamanhoLista); h++)
+    {
+        
+         Solucao *a = getSolucaoPorIndex(this->lista1[h]);
+        if (h + 1 == (alfa * tamanhoLista))
+        {
+            output_file << a->custoEnergia << endl;
+        }
+        else
+        {
+            output_file << a->custoEnergia << ", ";
+        }
+    }
+     output_file << "Custo Monetario: ";
+      for (int h = 0; h < (alfa * tamanhoLista); h++)
+    {
+        
+         Solucao *a = getSolucaoPorIndex(this->lista1[h]);
+        if (h + 1 == (alfa * tamanhoLista))
+        {
+            output_file << a->custoMonetario << endl;
+        }
+        else
+        {
+            output_file << a->custoMonetario << ", ";
+        }
+    }
+}
+
+void ConjuntoPopulacional::dizSelecaoLista2(ofstream &output_file){
+    output_file << endl
+                << endl;
+    output_file << "Conjunto de Solucoes da lista 2:" << endl;
+    output_file << "MakeSpan: ";
+     for (int h = 0; h < (alfa * tamanhoLista); h++)
+    {
+        
+         Solucao *a = getSolucaoPorIndex(this->lista2[h]);
+        if (h + 1 == (alfa * tamanhoLista))
+        {
+            output_file << a->makespam << endl;
+        }
+        else
+        {
+            output_file << a->makespam << ", ";
+        }
+    }
+    output_file << "Custo Energia: ";
+      for (int h = 0; h < (alfa * tamanhoLista); h++)
+    {
+        
+         Solucao *a = getSolucaoPorIndex(this->lista2[h]);
+        if (h + 1 == (alfa * tamanhoLista))
+        {
+            output_file << a->custoEnergia << endl;
+        }
+        else
+        {
+            output_file << a->custoEnergia << ", ";
+        }
+    }
+     output_file << "Custo Monetario: ";
+      for (int h = 0; h < (alfa * tamanhoLista); h++)
+    {
+        
+         Solucao *a = getSolucaoPorIndex(this->lista2[h]);
+        if (h + 1 == (alfa * tamanhoLista))
+        {
+            output_file << a->custoMonetario << endl;
+        }
+        else
+        {
+            output_file << a->custoMonetario << ", ";
+        }
+    }
+}
+
+void ConjuntoPopulacional::dizSelecaoLista3(ofstream &output_file){
+    output_file << endl
+                << endl;
+    output_file << "Conjunto de Solucoes da lista 3:" << endl;
+    output_file << "MakeSpan: ";
+     for (int h = 0; h < (alfa * tamanhoLista); h++)
+    {
+        
+         Solucao *a = getSolucaoPorIndex(this->lista3[h]);
+        if (h + 1 == (alfa * tamanhoLista))
+        {
+            output_file << a->makespam << endl;
+        }
+        else
+        {
+            output_file << a->makespam << ", ";
+        }
+    }
+    output_file << "Custo Energia: ";
+      for (int h = 0; h < (alfa * tamanhoLista); h++)
+    {
+        
+         Solucao *a = getSolucaoPorIndex(this->lista3[h]);
+        if (h + 1 == (alfa * tamanhoLista))
+        {
+            output_file << a->custoEnergia << endl;
+        }
+        else
+        {
+            output_file << a->custoEnergia << ", ";
+        }
+    }
+     output_file << "Custo Monetario: ";
+      for (int h = 0; h < (alfa * tamanhoLista); h++)
+    {
+        
+         Solucao *a = getSolucaoPorIndex(this->lista3[h]);
+        if (h + 1 == (alfa * tamanhoLista))
+        {
+            output_file << a->custoMonetario << endl;
+        }
+        else
+        {
+            output_file << a->custoMonetario << ", ";
+        }
+    }
+}
+
 void ConjuntoPopulacional::selecionaPopulacao()
 {
     float alpha = 0.3;
@@ -267,21 +412,21 @@ bool ConjuntoPopulacional::verificaSeJaTem(int id)
 
 int ConjuntoPopulacional::insereSolNaPopDadoPosicaoJaConhecida(int posicaoOndeSeraAdicionado, int idASerAdicionado)
 {
-    
+
     if (!verificaSeJaTem(idASerAdicionado))
     {
-       
+
         this->populacao[posicaoOndeSeraAdicionado] = idASerAdicionado;
         return posicaoOndeSeraAdicionado + 1;
     }
     else
     {
-       
+
         return posicaoOndeSeraAdicionado;
     }
 }
 
-void ConjuntoPopulacional::printPopListaIndexSol()
+void ConjuntoPopulacional::printPopListaIndexSol(ofstream &output_file)
 {
     cout << "Populacao composta pelas solucoes: ";
     for (int i = 0; i < getTamanhoPop(); i++)
@@ -296,25 +441,70 @@ void ConjuntoPopulacional::printPopListaIndexSol()
         }
     }
 
-    int media_ms=0;
-    int media_ce=0;
-    int media_g=0;
+    int media_ms = 0;
+    int media_ce = 0;
+    int media_g = 0;
 
+    // for (int i = 0; i < getTamanhoPop(); i++){
 
-    for (int i = 0; i < getTamanhoPop(); i++){
-
-        for(Solucao* a=this->primeira_Solucao;a!=NULL;a=a->get_prox_solucao()){
-            if(a->id==this->populacao[i]){
-                media_ms=media_ms+a->makespam;
-                media_ce=media_ce+a->custoEnergia;
-                media_g=media_g+a->custoMonetario;
-            }
+    //     for(Solucao* a=this->primeira_Solucao;a!=NULL;a=a->get_prox_solucao()){
+    //         if(a->id==this->populacao[i]){
+    //             media_ms=media_ms+a->makespam;
+    //             media_ce=media_ce+a->custoEnergia;
+    //             media_g=media_g+a->custoMonetario;
+    //         }
+    //     }
+    // }
+    output_file << endl
+                << endl;
+    output_file << "Conjunto de Solucoes logo apos sair da seleção para os 3 graus de importancia:" << endl;
+    output_file << "MakeSpan: ";
+    for (int i = 0; i < getTamanhoPop(); i++)
+    {
+        Solucao *a = getSolucaoPorIndex(i);
+        if (i + 1 == getTamanhoPop())
+        {
+            output_file << a->makespam << endl;
         }
-    }
+        else
+        {
+            output_file << a->makespam << ", ";
+        }
 
-    cout<<"Media de makespam da populacao: "<<media_ms/getTamanhoPop()<<endl;
-    cout<<"Media de custo de energia da populacao: "<<media_ce/getTamanhoPop()<<endl;
-    cout<<"Media de custo monetario da populacao: "<<media_g/getTamanhoPop()<<endl;
+        media_ms = media_ms + a->makespam;
+    }
+    output_file << "Custo Energia: ";
+    for (int i = 0; i < getTamanhoPop(); i++)
+    {
+        Solucao *a = getSolucaoPorIndex(i);
+        if (i + 1 == getTamanhoPop())
+        {
+            output_file << a->custoEnergia << endl;
+        }
+        else
+        {
+            output_file << a->custoEnergia << ", ";
+        }
+        media_ce=media_ce+a->custoEnergia;
+     
+    }
+    output_file << "Custo Monetario: ";
+    for (int i = 0; i < getTamanhoPop(); i++)
+    {
+        Solucao *a = getSolucaoPorIndex(i);
+        if (i + 1 == getTamanhoPop())
+        {
+            output_file << a->custoMonetario << endl;
+        }
+        else
+        {
+            output_file << a->custoMonetario << ", ";
+        }
+         media_g=media_g+a->custoMonetario;
+    }
+    cout << "Media de makespam da populacao: " << media_ms / getTamanhoPop() << endl;
+    cout << "Media de custo de energia da populacao: " << media_ce / getTamanhoPop() << endl;
+    cout << "Media de custo monetario da populacao: " << media_g / getTamanhoPop() << endl;
 }
 
 void ConjuntoPopulacional::printListas123()

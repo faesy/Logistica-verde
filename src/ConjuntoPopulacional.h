@@ -1,6 +1,8 @@
 #ifndef ConjuntoPopulacional_H_INCLUDED
 #define ConjuntoPopulacional_H_INCLUDED
 #include "Solucao.h"
+#include <iostream>
+#include <fstream>
 using namespace std;
 
 class ConjuntoPopulacional
@@ -32,8 +34,11 @@ public:
     void insereEmLista1(int id, int posicao);
     void insereEmLista2(int id, int posicao);
     void insereEmLista3(int id, int posicao);
+    void dizSelecaoLista1(ofstream &output_file);
+    void dizSelecaoLista2(ofstream &output_file);
+    void dizSelecaoLista3(ofstream &output_file);
     Solucao *getSolucaoPorIndex(int id);
-    void printPopListaIndexSol();
+    void printPopListaIndexSol(ofstream &output_file);
     int *getPopulacao();
     int getTamanhoPop();
     void printListas123();
