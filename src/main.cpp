@@ -191,88 +191,155 @@ int main(int argc, char const *argv[])
 {
 
     // string nomeArquivo;
-    // cout<<"Digite o nome do arquivo"<<endl;
-    // cin>>nomeArquivo;
-    // ofstream output_file;
-    
-    //output_file.open(nomeArquivo, ios::out | ios::trunc);
+    // cout << "Digite o nome do arquivo" << endl;
+    // cin >> nomeArquivo;
+    ofstream output_file;
 
-     int instancia=0;
-     //cout<<"Digite o codigo da Instancia: ";
-     //cin>>instancia;
-     instancia=1670879918;
-     srand(instancia);  
+    output_file.open("teste1.txt", ios::out | ios::trunc);
 
-    int numeroDeSolucoesTotais = 1; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
+    int instancia = 0;
+    // cout << "Digite o codigo da Instancia: ";
+    // cin >> instancia;
+    // 1670879965
+    // 1670879893
+    // 1670879957
+    instancia = 1670879893;
+    srand(instancia);
+
+    int numeroDeSolucoesTotais = 200; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
 
     CriadorInstancias *a = new CriadorInstancias();
 
-    cout<<"Media de Makespam da instancia: "<<a->media_MS<<endl;
-    cout<<"Media de Custo de Energia da instancia: "<<a->media_CE<<endl;
-    cout<<"Media de Gasto Monetario da instancia: "<<a->media_G<<endl;
-
+    output_file << "Media de Makespam da instancia: " << a->media_MS << endl;
+    output_file << "Media de Custo de Energia da instancia: " << a->media_CE << endl;
+    output_file << "Media de Gasto Monetario da instancia: " << a->media_G << endl;
+    output_file << endl
+                << endl;
     srand(time(NULL));
-    BL* bl=new BL(a);
+    BL *bl = new BL(a);
     ConjuntoPopulacional *populacao = new ConjuntoPopulacional(numeroDeSolucoesTotais);
     for (int i = 0; i < numeroDeSolucoesTotais; i++)
     {
-        
+
         Construtor *b = new Construtor(a);
         b->solucao->id = i;
 
-        //b->Imprime();
-        //bl->AdicionaProcesso(b->solucao->primeira_maquina,a->buscaProcesso(b->solucao->primeira_maquina->primeiro_processoSol->id),1);
-        //b->Imprime();
+        // b->Imprime();
+        // bl->AdicionaProcesso(b->solucao->primeira_maquina,a->buscaProcesso(b->solucao->primeira_maquina->primeiro_processoSol->id),1);
+        // b->Imprime();
 
         bl->AtualizaCustos(b->solucao);
-        b->Imprime();
-        bl->ChamadaDaBL2(b->solucao,100000);
-        b->Imprime();
+        // b->Imprime();
 
-        //cout<<b->solucao->makespam<<endl;
-        //populacao->preencheListasPorRequisito(b->solucao);
+        // b->Imprime();
+        // bl->AtualizaCustos(b->solucao);
+        // cout<<b->solucao->makespam<<endl;
+        populacao->preencheListasPorRequisito(b->solucao);
     }
-    // output_file<<"Conjunto de Solucoes logo apos sair da busca local:"<<endl;
-    // output_file<<"MakeSpan: ";
-    // for(Solucao *p = populacao->primeira_Solucao; p!=NULL; p=p->get_prox_solucao()){
-    //    if (p->get_prox_solucao() == NULL){
-    //     output_file<<p->makespam<<endl;
-    //    }else{
-    //     output_file<<p->makespam<<", ";
-    //    }
-        
-    // }
-    //  output_file<<"Custo Energia: ";
-    // for(Solucao *p = populacao->primeira_Solucao; p!=NULL; p=p->get_prox_solucao()){
-    //    if (p->get_prox_solucao() == NULL){
-    //     output_file<<p->custoEnergia<<endl;
-    //    }else{
-    //     output_file<<p->custoEnergia<<", ";
-    //    }
-        
-    // }
-    //  output_file<<"Custo Monetario: ";
-    // for(Solucao *p = populacao->primeira_Solucao; p!=NULL; p=p->get_prox_solucao()){
-    //    if (p->get_prox_solucao() == NULL){
-    //     output_file<<p->custoMonetario<<endl;
-    //    }else{
-    //     output_file<<p->custoMonetario<<", ";
-    //    }
-        
-    // }
 
-    // populacao->selecionaPopulacao2();
-    // //cout << "tamanho da pop: " << populacao->getTamanhoPop() << endl << endl;
-    // populacao->printPopListaIndexSol(output_file);
+    output_file << "Conjunto de Solucoes antes da busca local:" << endl;
+    output_file << "MakeSpan: ";
+    for (Solucao *p = populacao->primeira_Solucao; p != NULL; p = p->get_prox_solucao())
+    {
 
-    // populacao->dizSelecaoLista1(output_file);
-    // populacao->dizSelecaoLista2(output_file);
-    // populacao->dizSelecaoLista3(output_file);
+        if (p->get_prox_solucao() == NULL)
+        {
+            output_file << p->makespam << endl;
+        }
+        else
+        {
+            output_file << p->makespam << ", ";
+        }
+    }
+    output_file << "Custo Energia: ";
+    for (Solucao *p = populacao->primeira_Solucao; p != NULL; p = p->get_prox_solucao())
+    {
+        if (p->get_prox_solucao() == NULL)
+        {
+            output_file << p->custoEnergia << endl;
+        }
+        else
+        {
+            output_file << p->custoEnergia << ", ";
+        }
+    }
+    output_file << "Custo Monetario: ";
+    for (Solucao *p = populacao->primeira_Solucao; p != NULL; p = p->get_prox_solucao())
+    {
+        if (p->get_prox_solucao() == NULL)
+        {
+            output_file << p->custoMonetario << endl;
+        }
+        else
+        {
+            output_file << p->custoMonetario << ", ";
+        }
+    }
+    cout<<"a"<<endl;
+    populacao->mediaSol(output_file);
+    cout<<"b"<<endl;
+    int coontadore = 0;
+    for (Solucao *p = populacao->primeira_Solucao; p != NULL; p = p->get_prox_solucao())
+    {
+        cout << "conta " << coontadore << endl;
+        bl->ChamadaDaBL2(p, 500);
+     
+        bl->AtualizaCustos(p);
+       
+        bl->ChamadaDaBL1(p, 500);
+        bl->AtualizaCustos(p);
+       
+        // populacao->preencheListasPorRequisito(p);
+        coontadore++;
+    }
+
+    output_file << "Conjunto de Solucoes logo apos sair da busca local:" << endl;
+    output_file << "MakeSpan: ";
+    for (Solucao *p = populacao->primeira_Solucao; p != NULL; p = p->get_prox_solucao())
+    {
+        cout << p->id << endl;
+        if (p->get_prox_solucao() == NULL)
+        {
+            output_file << p->makespam << endl;
+        }
+        else
+        {
+            output_file << p->makespam << ", ";
+        }
+    }
+    output_file << "Custo Energia: ";
+    for (Solucao *p = populacao->primeira_Solucao; p != NULL; p = p->get_prox_solucao())
+    {
+        if (p->get_prox_solucao() == NULL)
+        {
+            output_file << p->custoEnergia << endl;
+        }
+        else
+        {
+            output_file << p->custoEnergia << ", ";
+        }
+    }
+    output_file << "Custo Monetario: ";
+    for (Solucao *p = populacao->primeira_Solucao; p != NULL; p = p->get_prox_solucao())
+    {
+        if (p->get_prox_solucao() == NULL)
+        {
+            output_file << p->custoMonetario << endl;
+        }
+        else
+        {
+            output_file << p->custoMonetario << ", ";
+        }
+    }
+
+    populacao->selecionaPopulacao2();
+    populacao->printPopListaIndexSol(output_file);
+
+    populacao->dizSelecaoLista1(output_file);
+    populacao->dizSelecaoLista2(output_file);
+    populacao->dizSelecaoLista3(output_file);
 
     // cout<<endl;
-    
-
-    
 
     // for(ElementoDaLista* b=a->primeiro_elemento;b!=NULL;b=b->prox_elemento){
     //     cout<<b->id<<endl;
@@ -320,7 +387,7 @@ int main(int argc, char const *argv[])
     input_file.close();
 
     // Fechando arquivo de saída*/
-    //output_file.close();
-  
+    // output_file.close();
+
     return 0;
 }

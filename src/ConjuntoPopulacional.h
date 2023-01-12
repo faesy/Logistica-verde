@@ -19,7 +19,7 @@ private:
     int tamanhoMaxPop;
 
 public:
-    float alfa=0.3;
+    float alfa=0.4;
     Solucao *primeira_Solucao;
     Solucao *ultima_Solucao;
     // Constructor
@@ -39,6 +39,7 @@ public:
     void dizSelecaoLista3(ofstream &output_file);
     Solucao *getSolucaoPorIndex(int id);
     void printPopListaIndexSol(ofstream &output_file);
+    void mediaSol(ofstream &output_file);
     int *getPopulacao();
     int getTamanhoPop();
     void printListas123();

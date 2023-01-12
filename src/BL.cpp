@@ -6,7 +6,7 @@ using namespace std;
 
 void BL::BuscaLocal2(Solucao *solucao, int id_processo)
 {
-    //cout << "id_processo " << id_processo << endl;
+    // cout << "id_processo " << id_processo << endl;
     MaquinaSol *maquina1 = NULL;
     Processo *processoAux = NULL;
     ProcessoSol *processo = NULL;
@@ -14,6 +14,7 @@ void BL::BuscaLocal2(Solucao *solucao, int id_processo)
 
     for (MaquinaSol *i = solucao->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
     {
+
         int l = 0;
         for (ProcessoSol *j = i->primeiro_processoSol; j != NULL; j = j->prox_processoSol)
         {
@@ -27,7 +28,7 @@ void BL::BuscaLocal2(Solucao *solucao, int id_processo)
             l++;
         }
     }
-
+    
     AtualizaCustos(solucao);
     float custoInicialF1 = solucao->makespam;
     float custoInicialF2 = solucao->custoEnergia;
@@ -39,19 +40,24 @@ void BL::BuscaLocal2(Solucao *solucao, int id_processo)
     // cout<<"1"<<endl;
     for (MaquinaSol *i = solucao->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
     {
+       
         if (maquina1->id == i->id)
         {
             i = i->prox_maquinaSol;
         }
+        
         if (i == NULL)
         {
             break;
         }
-            int contador = 0;
-            for (ProcessoSol *j = i->primeiro_processoSol; j != NULL; j = k)
+        int contador = 0;
+        for (ProcessoSol *j = i->primeiro_processoSol; j != NULL; j = j->prox_processoSol)
+        {
+          
+            if (VerificaTrocaEmF1eF2_2(maquina1, i, processo, j, solucao->makespam))
             {
-                if(VerificaTrocaEmF1eF2_2(maquina1,i,processo,j,solucao->makespam)){
-                if (VerificaTrocaEmF3_2(maquina1,i,processoAux,this->instancia->buscaProcesso(j->id),posProcesso,contador))
+               
+                if (VerificaTrocaEmF3_2(maquina1, i, processoAux, this->instancia->buscaProcesso(j->id), posProcesso, contador))
                 {
                     cout << "Analisando Processo " << j->id << " Da Maquina " << i->id << endl;
                     if (maquina1->id != i->id)
@@ -65,9 +71,9 @@ void BL::BuscaLocal2(Solucao *solucao, int id_processo)
                         break;
                     }
                 }
-                }
-                contador++;
             }
+            contador++;
+        }
         if (flag)
         {
             break;
@@ -79,8 +85,11 @@ void BL::ChamadaDaBL2(Solucao *solucao, int repeticoes)
 {
     for (int i = 0; i < repeticoes; i++)
     {
+        //cout << i << endl;
         int id_processo = rand() % this->instancia->get_n();
+        
         BuscaLocal2(solucao, id_processo);
+        
     }
 }
 
@@ -330,17 +339,17 @@ bool BL::VerificaTrocaEmF3(MaquinaSol *maquinaRemovida, MaquinaSol *maquinaAdici
 
 bool BL::VerificaTrocaEmF1eF2_2(MaquinaSol *maquina1, MaquinaSol *maquina2, ProcessoSol *processo1, ProcessoSol *processo2, int makespam)
 {
-
+    
     Processo *processo1Aux = this->instancia->buscaProcesso(processo1->id);
     Processo *processo2Aux = this->instancia->buscaProcesso(processo2->id);
-
+     
     int CEinicial = maquina1->CE + maquina2->CE;
     int CEfinal = maquina1->CE - processo1Aux->custos_energia[maquina1->id] + processo2Aux->custos_energia[maquina1->id] + maquina2->CE - processo2Aux->custos_energia[maquina2->id] + processo1Aux->custos_energia[maquina2->id];
     if (CEfinal >= CEinicial)
     {
         return false;
     }
-
+     
     int novomakespam1 = maquina1->min_Atual + processo2Aux->tempos_processamento[maquina1->id] - processo1Aux->tempos_processamento[maquina1->id] - this->instancia->calcInicioDia();
     int novomakespam2 = maquina2->min_Atual + processo1Aux->tempos_processamento[maquina2->id] - processo2Aux->tempos_processamento[maquina2->id] - this->instancia->calcInicioDia();
     // cout<<"novomakespam: "<<novomakespam<<endl;
