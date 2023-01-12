@@ -193,7 +193,7 @@ int main(int argc, char const *argv[])
      int instancia=0;
      //cout<<"Digite o codigo da Instancia: ";
      //cin>>instancia;
-     instancia=1670879957;
+     instancia=1670879918;
      srand(instancia);  
 
     int numeroDeSolucoesTotais = 1; // pra ja deixar algo pratico pra caso de testes futuros só mudar o numero aqui
@@ -219,7 +219,7 @@ int main(int argc, char const *argv[])
 
         bl->AtualizaCustos(b->solucao);
         b->Imprime();
-        bl->ChamadaDaBL1(b->solucao,5000);
+        bl->ChamadaDaBL2(b->solucao,1);
         b->Imprime();
 
         //cout<<b->solucao->makespam<<endl;
