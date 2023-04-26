@@ -13,15 +13,17 @@ private:
     Solucao *ant_Solucao;
 
 public:
+    CriadorInstancias* instancia;
+    int *jobs;
+    int frente;
     int id;
+    int pos;
     float custoEnergia;
     float makespam;
-    float custoMonetario;
     Solucao()
     {
         custoEnergia = 0;
         makespam = 0;
-        custoMonetario = 0;
     }
     MaquinaSol *primeira_maquina;
     MaquinaSol *ultima_maquina;

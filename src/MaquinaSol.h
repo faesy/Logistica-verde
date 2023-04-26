@@ -16,7 +16,6 @@ class MaquinaSol{
 
     float min_Atual;
     float CE;
-    float CM;
 
     MaquinaSol* prox_maquinaSol;
     MaquinaSol* ant_maquinaSol;

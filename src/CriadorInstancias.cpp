@@ -19,9 +19,6 @@ CriadorInstancias::CriadorInstancias()
     primeiro_processo = NULL;
     ultimo_processo = NULL;
 
-    primeiro_intervalo = NULL;
-    ultimo_intervalo = NULL;
-
     SorteiaNumProcessos();
     // cout<<"Num de Processos Sorteados: "<<n<<endl;
     SorteiaNumMaquinas();
@@ -42,7 +39,7 @@ CriadorInstancias::CriadorInstancias()
     // }
     // i++;
     //}
-    GeraKpadrao();
+    //GeraKpadrao();
     Calcula_b();
     // cout<<"Tempo limite da instancia: "<<b<<endl;
     int instanteDeInicio = calcInicioDia();
@@ -128,91 +125,6 @@ void CriadorInstancias::Calcula_b()
 
     this->media_CE=(soma2 / m);
 
-    for(int i=0+this->calcInicioDia();i<this->media_MS+this->calcInicioDia();i++){
-        soma3=soma3+intervalos[i%1440];
-    }
-
-    this->media_G= this->media_CE*(soma3/this->media_MS);
-}
-
-void CriadorInstancias::GeraKpadrao()
-{
-
-    this->k = 6;
-
-    for (int i = 0; i < 1440; i++)
-    {
-        if (i >= 0 && i < 200)
-        {
-            this->intervalos[i] = 0.140;
-        }
-
-        if (i >= 200 && i < 500)
-        {
-            this->intervalos[i] = 0.220;
-        }
-
-        if (i >= 500 && i < 650)
-        {
-            this->intervalos[i] = 0.140;
-        }
-
-        if (i >= 650 && i < 800)
-        {
-            this->intervalos[i] = 0.220;
-        }
-
-        if (i >= 800 && i < 900)
-        {
-            this->intervalos[i] = 0.140;
-        }
-
-        if (i >= 900 && i < 1440)
-        {
-            this->intervalos[i] = 0.140;
-        }
-    }
-
-    Intervalo *intervalo1 = new Intervalo();
-    intervalo1->set_tk(200);
-    intervalo1->set_prk(0.140);
-
-    Intervalo *intervalo2 = new Intervalo();
-    intervalo2->set_tk(300);
-    intervalo2->set_prk(0.220);
-
-    Intervalo *intervalo3 = new Intervalo();
-    intervalo3->set_tk(150);
-    intervalo3->set_prk(0.140);
-
-    Intervalo *intervalo4 = new Intervalo();
-    intervalo4->set_tk(150);
-    intervalo4->set_prk(0.220);
-
-    Intervalo *intervalo5 = new Intervalo();
-    intervalo5->set_tk(100);
-    intervalo5->set_prk(0.140);
-
-    Intervalo *intervalo6 = new Intervalo();
-    intervalo6->set_tk(540);
-    intervalo6->set_prk(0.060);
-
-    intervalo1->set_prox_Intervalo(intervalo2);
-    intervalo2->set_prox_Intervalo(intervalo3);
-    intervalo3->set_prox_Intervalo(intervalo4);
-    intervalo4->set_prox_Intervalo(intervalo5);
-    intervalo5->set_prox_Intervalo(intervalo6);
-    intervalo6->set_prox_Intervalo(NULL);
-
-    intervalo6->set_ant_Intervalo(intervalo5);
-    intervalo5->set_ant_Intervalo(intervalo4);
-    intervalo4->set_ant_Intervalo(intervalo3);
-    intervalo3->set_ant_Intervalo(intervalo2);
-    intervalo2->set_ant_Intervalo(intervalo1);
-    intervalo1->set_ant_Intervalo(NULL);
-
-    intervalo1 = this->primeiro_intervalo;
-    intervalo6 = this->ultimo_intervalo;
 }
 
 // sortear numero de processos

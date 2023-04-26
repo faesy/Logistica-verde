@@ -1,22 +1,24 @@
 
+using namespace std;
+
 #include <iostream>
 #include "Construtor.h"
 #include "Maquina.h"
 #include "Processo.h"
-
-using namespace std;
 
 Construtor::Construtor(CriadorInstancias *a)
 {
     this->instancia = a;
     Solucao *b = new Solucao();
     this->solucao = b;
+    this->solucao->instancia=this->instancia;
+    this->solucao->frente=-1;
+    this->solucao->pos=0;
     Lista *c = new Lista();
     this->lista = c;
     Adiciona_Basico();
     Calcular_media_Consumo_por_tempo();
     Calcular_media_trabalho_por_tempo();
-    Calcular_Custo_Minuto();
 
     int sequenciaProcessos[this->instancia->get_n()];
     for (int i = 0; i < this->instancia->get_n(); i++)
@@ -51,7 +53,14 @@ Construtor::Construtor(CriadorInstancias *a)
         }
     }
 
-    this->solucao->makespam = makespam-this->instancia->calcInicioDia();
+    this->solucao->makespam = makespam;
+    
+    for(int i=0;i<this->instancia->get_n();i++){
+        for(MaquinaSol *a = this->solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol){
+        this->solucao->jobs[i]=a->id;
+        }
+
+    }
 
     // Imprime();
 }
@@ -71,7 +80,6 @@ void Construtor::Imprime()
     }
     cout << "Makespam: " << solucao->makespam << endl;
     cout << "Custo Energetico: " << solucao->custoEnergia << endl;
-    cout << "Custo Monetario: " << solucao->custoMonetario << endl;
 }
 
 void Construtor::RemovePontos(int id_Processo)
@@ -95,16 +103,12 @@ void Construtor::RemovePontos(int id_Processo)
     int maquinas_com_maior_consumo[tamanhoVetor];
     int maquinas_com_maior_consumo2[tamanhoVetor];
     bool maquinas_com_maior_consumo_bool[instancia->get_m()];
-    int maquinas_com_maior_gasto[tamanhoVetor];
-    int maquinas_com_maior_gasto2[tamanhoVetor];
-    bool maquinas_com_maior_gasto_bool[instancia->get_m()];
 
     for (int j = 0; j < tamanhoVetor; j++)
     {
         maquinas_mais_devagar[j] = 99999999;
         maquinas_com_maior_makespam[j] = 0;
         maquinas_com_maior_consumo[j] = 0;
-        maquinas_com_maior_gasto[j] = 0;
     }
 
     for (int j = 0; j < instancia->get_m(); j++)
@@ -112,7 +116,6 @@ void Construtor::RemovePontos(int id_Processo)
         maquinas_mais_devagar_bool[j] = false;
         maquinas_com_maior_makespam_bool[j] = false;
         maquinas_com_maior_consumo_bool[j] = false;
-        maquinas_com_maior_gasto_bool[j] = false;
     }
 
     for (int r = 0; r < tamanhoVetor; r++)
@@ -134,26 +137,6 @@ void Construtor::RemovePontos(int id_Processo)
             contador++;
         }
         maquinas_mais_devagar_bool[index_melhor_resultado] = true;
-    }
-
-    for (int r = 0; r < tamanhoVetor; r++)
-    {
-        int contador = 0;
-        int index_melhor_resultado = -1;
-        for (Maquina *i = this->instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
-        {
-            if (maquinas_com_maior_gasto_bool[contador] == false)
-            {
-                if (maquinas_com_maior_gasto[r] < processo->custos_energia[i->get_id()] * this->instancia->intervalos[(int) (this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440])
-                {
-                    maquinas_com_maior_gasto[r] = processo->custos_energia[i->get_id()] * this->instancia->intervalos[(int) (this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440];
-                    maquinas_com_maior_gasto2[r] = i->get_id();
-                    index_melhor_resultado = contador;
-                }
-            }
-            contador++;
-        }
-        maquinas_com_maior_gasto_bool[index_melhor_resultado] = true;
     }
 
     for (int r = 0; r < tamanhoVetor; r++)
@@ -202,7 +185,6 @@ void Construtor::RemovePontos(int id_Processo)
         this->lista->Remove_na_Lista(maquinas_com_maior_makespam2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf1) );
 
         this->lista->Remove_na_Lista(maquinas_com_maior_consumo2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf2) );
-        this->lista->Remove_na_Lista(maquinas_com_maior_gasto2[j],(((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf3) );
     }
 
     if(this->lista->primeiro_elemento==NULL){
@@ -231,16 +213,12 @@ void Construtor::AdicionaPontos(int id_Processo)
     int maquinas_com_menos_consumo[tamanhoVetor];
     int maquinas_com_menos_consumo2[tamanhoVetor];
     bool maquinas_com_menos_consumo_bool[instancia->get_m()];
-    int maquinas_com_menos_gasto[tamanhoVetor];
-    int maquinas_com_menos_gasto2[tamanhoVetor];
-    bool maquinas_com_menos_gasto_bool[instancia->get_m()];
 
     for (int j = 0; j < tamanhoVetor; j++)
     {
         maquinas_mais_rapidas[j] = 0;
         maquinas_com_menos_makespam[j] = 99999999;
         maquinas_com_menos_consumo[j] = 99999999;
-        maquinas_com_menos_gasto[j] = 99999999;
     }
 
     for (int j = 0; j < instancia->get_m(); j++)
@@ -248,7 +226,6 @@ void Construtor::AdicionaPontos(int id_Processo)
         maquinas_mais_rapidas_bool[j] = false;
         maquinas_com_menos_makespam_bool[j] = false;
         maquinas_com_menos_consumo_bool[j] = false;
-        maquinas_com_menos_gasto_bool[j] = false;
     }
 
     for (int r = 0; r < tamanhoVetor; r++)
@@ -271,30 +248,6 @@ void Construtor::AdicionaPontos(int id_Processo)
         maquinas_mais_rapidas_bool[index_melhor_resultado] = true;
     }
 
-    for (int r = 0; r < tamanhoVetor; r++)
-    {
-        int contador = 0;
-        int index_melhor_resultado = -1;
-        for (Maquina *i = this->instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
-        {
-
-            if (maquinas_com_menos_gasto_bool[contador] == false)
-            {
-
-                if (maquinas_com_menos_gasto[r] > processo->custos_energia[i->get_id()] * this->instancia->intervalos[(int) (this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440])
-                {
-
-                    maquinas_com_menos_gasto[r] = processo->custos_energia[i->get_id()] * this->instancia->intervalos[(int) (this->solucao->procura_maquina(i->get_id())->min_Atual) % 1440];
-                    maquinas_com_menos_gasto2[r] = i->get_id();
-
-                    index_melhor_resultado = contador;
-                }
-            }
-            contador++;
-        }
-
-        maquinas_com_menos_gasto_bool[index_melhor_resultado] = true;
-    }
 
     for (int r = 0; r < tamanhoVetor; r++)
     {
@@ -342,7 +295,6 @@ void Construtor::AdicionaPontos(int id_Processo)
         this->lista->Adicionar_na_Lista(maquinas_com_menos_makespam2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf1) );
 
         this->lista->Adicionar_na_Lista(maquinas_com_menos_consumo2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf2) );
-        this->lista->Adicionar_na_Lista(maquinas_com_menos_gasto2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf3) );
     }
 }
 
@@ -368,9 +320,8 @@ void Construtor::Adiciona_Basico()
         if (j == 0)
         {
             MaquinaSol *maquinaSol = new MaquinaSol();
-            maquinaSol->min_Atual = this->instancia->calcInicioDia();
+            maquinaSol->min_Atual = 0;
             maquinaSol->CE=0;
-            maquinaSol->CM=0;
             maquinaSol->id = i->get_id();
             maquinaSol->primeiro_processoSol = NULL;
             maquinaSol->ultimo_processoSol = NULL;
@@ -382,9 +333,8 @@ void Construtor::Adiciona_Basico()
         else
         {
             MaquinaSol *maquinaSol = new MaquinaSol();
-            maquinaSol->min_Atual = this->instancia->calcInicioDia();
+            maquinaSol->min_Atual =0;
             maquinaSol->CE=0;
-            maquinaSol->CM=0;
             maquinaSol->id = j;
             maquinaSol->primeiro_processoSol = NULL;
             maquinaSol->ultimo_processoSol = NULL;
@@ -424,15 +374,6 @@ void Construtor::Adiciona_Processo_Na_Maquina(int id_processo, int id_maquina)
 
                         solucao->custoEnergia = solucao->custoEnergia + k->custos_energia[i->id];
                         i->CE=i->CE + k->custos_energia[i->id];
-                        float customedioEnergia = 0;
-                        for (int f = 0; f < k->tempos_processamento[i->id]; f++)
-                        {
-                            customedioEnergia = customedioEnergia + instancia->intervalos[(int) (i->min_Atual + f) % 1440];
-                        }
-                        customedioEnergia = customedioEnergia / (float)k->tempos_processamento[i->id];
-                        solucao->custoMonetario = solucao->custoMonetario + k->custos_energia[i->id] * customedioEnergia;
-                        i->CM=i->CM +  k->custos_energia[i->id] * customedioEnergia;
-
                         i->min_Atual = (i->min_Atual + k->tempos_processamento[i->id]);
                     }
                     else
@@ -445,15 +386,6 @@ void Construtor::Adiciona_Processo_Na_Maquina(int id_processo, int id_maquina)
 
                         solucao->custoEnergia = solucao->custoEnergia + k->custos_energia[i->id];
                         i->CE=i->CE + k->custos_energia[i->id];
-                        float customedioEnergia = 0;
-                        for (int f = 0; f < k->tempos_processamento[i->id]; f++)
-                        {
-                            customedioEnergia = customedioEnergia + instancia->intervalos[(int) (i->min_Atual + f) % 1440];
-                        }
-                        customedioEnergia = customedioEnergia / (float)k->tempos_processamento[i->id];
-                        solucao->custoMonetario = solucao->custoMonetario + k->custos_energia[i->id] * customedioEnergia;
-                        i->CM=i->CM +  k->custos_energia[i->id] * customedioEnergia;
-
                         i->min_Atual = (i->min_Atual + k->tempos_processamento[i->id]);
                     }
                 }
@@ -496,19 +428,3 @@ void Construtor::Calcular_media_trabalho_por_tempo()
     }
 }
 
-void Construtor::Calcular_Custo_Minuto()
-{
-    float soma1 = 0;
-    int k;
-
-    this->instancia->calcInicioDia();
-
-    for (int i = this->instancia->calcInicioDia(); i < (this->instancia->get_b() + this->instancia->calcInicioDia()); i++)
-    { // para todos processos
-
-        k = i % 1440;
-        soma1 = soma1 + this->instancia->intervalos[k];
-    }
-
-    this->media_Custo_Minuto = soma1 / this->instancia->get_b();
-}

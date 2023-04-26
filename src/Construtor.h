@@ -16,14 +16,12 @@ class Construtor{
     CriadorInstancias* instancia;
     Lista* lista;
     Solucao* solucao;
-    float media_Custo_Minuto;
     float media_Consumo_por_tempo;
     float media_trabalho_por_tempo;
 
     float importanciaf0=0;
-    float importanciaf1=2;
+    float importanciaf1=1;
     float importanciaf2=1;
-    float importanciaf3=1;
 
     float parametro_de_analise=0.5;
 
@@ -40,7 +38,6 @@ class Construtor{
     //Funções de sortear na lista
     void Calcular_media_Consumo_por_tempo();
     void Calcular_media_trabalho_por_tempo();
-    void Calcular_Custo_Minuto();
 
     
 };

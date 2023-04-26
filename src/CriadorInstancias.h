@@ -14,7 +14,6 @@ class CriadorInstancias{
     private:
         int m; //num de maquinas
         int n; //num de processos
-        int k; //num de intervalos de preço
         int b; //Tempo limite
 
         float e1=0.3;
@@ -25,11 +24,7 @@ class CriadorInstancias{
         Maquina* ultima_maquina;
 
         Processo* primeiro_processo;
-        Processo* ultimo_processo;
-
-        Intervalo* primeiro_intervalo;
-        Intervalo* ultimo_intervalo;
-        
+        Processo* ultimo_processo;  
 
 
     public:
@@ -37,9 +32,7 @@ class CriadorInstancias{
 
         int media_MS;
         int media_CE;
-        int media_G;
 
-        float intervalos[1440];
         CriadorInstancias();
         ~CriadorInstancias();
     
@@ -61,10 +54,9 @@ class CriadorInstancias{
 
         int get_m(){return this->m;}
         int get_n(){return this->n;}
-        int get_k(){return this->k;}
         int get_b(){return this->b;}
 
-        int calcInicioDia();
+        //int calcInicioDia();
 
         Processo* buscaProcesso(int id){
 

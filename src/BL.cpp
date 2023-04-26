@@ -32,7 +32,6 @@ void BL::BuscaLocal2(Solucao *solucao, int id_processo)
     AtualizaCustos(solucao);
     float custoInicialF1 = solucao->makespam;
     float custoInicialF2 = solucao->custoEnergia;
-    float custoInicialF3 = solucao->custoMonetario;
 
     ProcessoSol *k;
 
@@ -56,10 +55,6 @@ void BL::BuscaLocal2(Solucao *solucao, int id_processo)
           
             if (VerificaTrocaEmF1eF2_2(maquina1, i, processo, j, solucao->makespam))
             {
-               
-                if (VerificaTrocaEmF3_2(maquina1, i, processoAux, this->instancia->buscaProcesso(j->id), posProcesso, contador))
-                {
-                    cout << "Analisando Processo " << j->id << " Da Maquina " << i->id << endl;
                     if (maquina1->id != i->id)
                     {
                         flag = true;
@@ -70,7 +65,7 @@ void BL::BuscaLocal2(Solucao *solucao, int id_processo)
                         AdicionaProcesso(i, processoAux, contador);
                         break;
                     }
-                }
+                
             }
             contador++;
         }
@@ -91,6 +86,13 @@ void BL::ChamadaDaBL2(Solucao *solucao, int repeticoes)
         BuscaLocal2(solucao, id_processo);
         
     }
+
+    for(int i=0;i<this->instancia->get_n();i++){
+        for(MaquinaSol *a = solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol){
+        solucao->jobs[i]=a->id;
+        }
+
+    }
 }
 
 void BL::ChamadaDaBL1(Solucao *solucao, int repeticoes)
@@ -100,6 +102,13 @@ void BL::ChamadaDaBL1(Solucao *solucao, int repeticoes)
     {
         int id_processo = rand() % this->instancia->get_n();
         BuscaLocal1(solucao, id_processo);
+    }
+
+    for(int i=0;i<this->instancia->get_n();i++){
+        for(MaquinaSol *a = solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol){
+        solucao->jobs[i]=a->id;
+        }
+
     }
 }
 
@@ -133,9 +142,7 @@ void BL::BuscaLocal1(Solucao *solucao, int id_processo)
         { // se vale a pena (por F1 e F2) eu olho processo a processo
             for (ProcessoSol *j = i->primeiro_processoSol; j != NULL; j = j->prox_processoSol)
             {
-                if (VerificaTrocaEmF3(maquinaremovida, i, processo, contador, posAnterior))
-                { // se vale a pena por F3
-                    // cout<<"Removendo o Processo "<<processo->get_id()<<" Da Maquina "<<maquinaremovida->id<<" Da pos "<<posAnterior<<endl;
+                
                     RemoveProcesso(maquinaremovida, processo, posAnterior);
                     cout << "Adicionando o Processo " << processo->get_id() << " Na Maquina " << i->id << " Na pos " << contador << endl;
                     AdicionaProcesso(i, processo, contador);
@@ -144,7 +151,7 @@ void BL::BuscaLocal1(Solucao *solucao, int id_processo)
                     flag = true;
                     maquinaremovida = i;
                     break;
-                }
+                
                 contador++;
             }
         }
@@ -160,182 +167,6 @@ void BL::BuscaLocal1(Solucao *solucao, int id_processo)
     }
 }
 
-bool BL::VerificaTrocaEmF3_2(MaquinaSol *maquina1, MaquinaSol *maquina2, Processo *processo1, Processo *processo2, int pos1, int pos2)
-{
-
-    float CMinicial = maquina1->CM + maquina2->CM;
-    // cout<<"Custo Monetario Maq "<<maquinaRemovida->id<<" Rem: "<<maquinaRemovida->CM<<endl;
-    // cout<<"Custo Monetario Maq "<<maquinaAdicionada->id<<" Adc: "<<maquinaAdicionada->CM<<endl;
-
-    float CMfinal_maqRem = 0;
-    float CMfinal_maqAdc = 0;
-
-    int tempoAtual = 0;
-    int contador = 0;
-    for (ProcessoSol *i = maquina1->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
-    {
-
-        if (processo1->get_id() == i->id)
-        {
-
-            float customedioEnergia = 0;
-            for (int f = 0; f < processo2->tempos_processamento[maquina1->id]; f++)
-            {
-                customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-            }
-            customedioEnergia = customedioEnergia / (float)processo2->tempos_processamento[maquina1->id];
-            CMfinal_maqRem = CMfinal_maqRem + processo2->custos_energia[maquina1->id] * customedioEnergia;
-
-            tempoAtual = (tempoAtual + processo2->tempos_processamento[maquina1->id]);
-            contador++;
-        }
-        else
-        {
-
-            float customedioEnergia = 0;
-            for (int f = 0; f < this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina1->id]; f++)
-            {
-                customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-            }
-            customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina1->id];
-            CMfinal_maqRem = CMfinal_maqRem + this->instancia->buscaProcesso(i->id)->custos_energia[maquina1->id] * customedioEnergia;
-
-            tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina1->id]);
-            contador++;
-        }
-    }
-
-    tempoAtual = 0;
-    contador = 0;
-    for (ProcessoSol *i = maquina2->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
-    {
-
-        if (processo2->get_id() == i->id /*&& contador == pos2*/)
-        {
-
-            float customedioEnergia = 0;
-            for (int f = 0; f < processo1->tempos_processamento[maquina2->id]; f++)
-            {
-                customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-            }
-            customedioEnergia = customedioEnergia / (float)processo1->tempos_processamento[maquina2->id];
-            CMfinal_maqRem = CMfinal_maqRem + processo1->custos_energia[maquina2->id] * customedioEnergia;
-
-            tempoAtual = (tempoAtual + processo1->tempos_processamento[maquina2->id]);
-            contador++;
-        }
-        else
-        {
-
-            float customedioEnergia = 0;
-            for (int f = 0; f < this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina2->id]; f++)
-            {
-                customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-            }
-            customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina2->id];
-            CMfinal_maqRem = CMfinal_maqRem + this->instancia->buscaProcesso(i->id)->custos_energia[maquina2->id] * customedioEnergia;
-
-            tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina2->id]);
-            contador++;
-        }
-    }
-    contador++;
-
-    float CMfinal = CMfinal_maqAdc + CMfinal_maqRem;
-
-    // cout<<endl<<"Custo monetario Inicial: "<<CMinicial<<endl;
-    // cout<<"Custo monetario final: "<<CMfinal<<endl;
-
-    if (CMfinal >= CMinicial)
-    {
-        return false;
-    }
-
-    return true;
-}
-
-bool BL::VerificaTrocaEmF3(MaquinaSol *maquinaRemovida, MaquinaSol *maquinaAdicionada, Processo *processo, int posAdc, int posRem)
-{
-
-    float CMinicial = maquinaRemovida->CM + maquinaAdicionada->CM;
-    // cout<<"Custo Monetario Maq "<<maquinaRemovida->id<<" Rem: "<<maquinaRemovida->CM<<endl;
-    // cout<<"Custo Monetario Maq "<<maquinaAdicionada->id<<" Adc: "<<maquinaAdicionada->CM<<endl;
-
-    float CMfinal_maqRem = 0;
-    float CMfinal_maqAdc = 0;
-
-    int tempoAtual = 0;
-    int contador = 0;
-    for (ProcessoSol *i = maquinaRemovida->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
-    {
-
-        if (processo->get_id() == i->id && contador == posRem)
-        {
-            if (i->prox_processoSol == NULL)
-            { // caso proc esteja sendo removido na pos final
-                break;
-            }
-            else
-            {
-                i = i->prox_processoSol;
-            }
-        }
-
-        float customedioEnergia = 0;
-        for (int f = 0; f < this->instancia->buscaProcesso(i->id)->tempos_processamento[maquinaRemovida->id]; f++)
-        {
-            customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-        }
-        customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(i->id)->tempos_processamento[maquinaRemovida->id];
-        CMfinal_maqRem = CMfinal_maqRem + this->instancia->buscaProcesso(i->id)->custos_energia[maquinaRemovida->id] * customedioEnergia;
-
-        tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquinaRemovida->id]);
-        contador++;
-    }
-
-    tempoAtual = 0;
-    contador = 0;
-    for (ProcessoSol *i = maquinaAdicionada->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
-    {
-
-        if (contador == posAdc)
-        {
-
-            float customedioEnergia = 0;
-            for (int f = 0; f < this->instancia->buscaProcesso(processo->get_id())->tempos_processamento[maquinaAdicionada->id]; f++)
-            {
-                customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-            }
-            customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(processo->get_id())->tempos_processamento[maquinaAdicionada->id];
-            CMfinal_maqAdc = CMfinal_maqAdc + this->instancia->buscaProcesso(processo->get_id())->custos_energia[maquinaAdicionada->id] * customedioEnergia;
-
-            tempoAtual = (tempoAtual + this->instancia->buscaProcesso(processo->get_id())->tempos_processamento[maquinaAdicionada->id]);
-        }
-
-        float customedioEnergia = 0;
-        for (int f = 0; f < this->instancia->buscaProcesso(i->id)->tempos_processamento[maquinaAdicionada->id]; f++)
-        {
-            customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-        }
-        customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(i->id)->tempos_processamento[maquinaAdicionada->id];
-        CMfinal_maqAdc = CMfinal_maqAdc + this->instancia->buscaProcesso(i->id)->custos_energia[maquinaAdicionada->id] * customedioEnergia;
-
-        tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquinaAdicionada->id]);
-    }
-    contador++;
-
-    float CMfinal = CMfinal_maqAdc + CMfinal_maqRem;
-
-    // cout<<endl<<"Custo monetario Inicial: "<<CMinicial<<endl;
-    // cout<<"Custo monetario final: "<<CMfinal<<endl;
-
-    if (CMfinal >= CMinicial)
-    {
-        return false;
-    }
-
-    return true;
-}
 
 bool BL::VerificaTrocaEmF1eF2_2(MaquinaSol *maquina1, MaquinaSol *maquina2, ProcessoSol *processo1, ProcessoSol *processo2, int makespam)
 {
@@ -385,8 +216,7 @@ void BL::RemoveProcesso2(MaquinaSol *maquina, Processo *processo, Solucao *soluc
 {
 
     maquina->CE = maquina->CE - processo->custos_energia[maquina->id];                     // Atualizo custo de energia
-    maquina->min_Atual = maquina->min_Atual - processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina
-    maquina->CM = 0;                                                                       // zero o custo Monetario
+    maquina->min_Atual = maquina->min_Atual - processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina                                                                     // zero o custo Monetario
 
     int tempoAtual = this->instancia->calcInicioDia();
     int contador = 0;
@@ -407,7 +237,6 @@ void BL::RemoveProcesso2(MaquinaSol *maquina, Processo *processo, Solucao *soluc
                     delete i;
 
                     maquina->CE = 0;
-                    maquina->CM = 0;
                     maquina->min_Atual = 0;
                     break;
                 }
@@ -440,14 +269,6 @@ void BL::RemoveProcesso2(MaquinaSol *maquina, Processo *processo, Solucao *soluc
             }
         }
 
-        float customedioEnergia = 0;
-        for (int f = 0; f < this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id]; f++)
-        {
-            customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-        }
-        customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id];
-        maquina->CM = maquina->CM + this->instancia->buscaProcesso(i->id)->custos_energia[maquina->id] * customedioEnergia;
-
         tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id]);
         contador++;
     }
@@ -461,8 +282,7 @@ void BL::RemoveProcesso2(MaquinaSol *maquina, Processo *processo, Solucao *soluc
 void BL::RemoveProcesso(MaquinaSol *maquina, Processo *processo, int pos)
 {
     maquina->CE = maquina->CE - processo->custos_energia[maquina->id];                     // Atualizo custo de energia
-    maquina->min_Atual = maquina->min_Atual - processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina
-    maquina->CM = 0;                                                                       // zero o custo Monetario
+    maquina->min_Atual = maquina->min_Atual - processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina                                                                     // zero o custo Monetario
 
     int tempoAtual = this->instancia->calcInicioDia();
     int contador = 0;
@@ -484,7 +304,6 @@ void BL::RemoveProcesso(MaquinaSol *maquina, Processo *processo, int pos)
                         delete i;
 
                         maquina->CE = 0;
-                        maquina->CM = 0;
                         maquina->min_Atual = 0;
                         break;
                     }
@@ -519,13 +338,6 @@ void BL::RemoveProcesso(MaquinaSol *maquina, Processo *processo, int pos)
         }
 
         float customedioEnergia = 0;
-        for (int f = 0; f < this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id]; f++)
-        {
-            customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-        }
-        customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id];
-        maquina->CM = maquina->CM + this->instancia->buscaProcesso(i->id)->custos_energia[maquina->id] * customedioEnergia;
-
         tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id]);
         contador++;
     }
@@ -535,12 +347,10 @@ void BL::AtualizaCustos(Solucao *sol)
 {
     sol->custoEnergia = 0;
     sol->makespam = 0;
-    sol->custoMonetario = 0;
 
     for (MaquinaSol *i = sol->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
     {
         sol->custoEnergia = sol->custoEnergia + i->CE;
-        sol->custoMonetario = sol->custoMonetario + i->CM;
         if (i->min_Atual - this->instancia->calcInicioDia() > sol->makespam)
         {
             sol->makespam = i->min_Atual - this->instancia->calcInicioDia();
@@ -552,8 +362,7 @@ void BL::AdicionaProcesso(MaquinaSol *maquina, Processo *processo, int pos)
 {
 
     maquina->CE = maquina->CE + processo->custos_energia[maquina->id];                     // Atualizo custo de energia
-    maquina->min_Atual = maquina->min_Atual + processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina
-    maquina->CM = 0;                                                                       // zero o custo Monetario
+    maquina->min_Atual = maquina->min_Atual + processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina                                                                     // zero o custo Monetario
 
     int contador = 0;
     int tempoAtual = this->instancia->calcInicioDia();
@@ -596,14 +405,6 @@ void BL::AdicionaProcesso(MaquinaSol *maquina, Processo *processo, int pos)
             }
         }
 
-        float customedioEnergia = 0;
-        for (int f = 0; f < this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id]; f++)
-        {
-            customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-        }
-        customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id];
-        maquina->CM = maquina->CM + this->instancia->buscaProcesso(i->id)->custos_energia[maquina->id] * customedioEnergia;
-
         tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id]);
 
         if (contador + 1 == pos && i->prox_processoSol == NULL)
@@ -618,15 +419,6 @@ void BL::AdicionaProcesso(MaquinaSol *maquina, Processo *processo, int pos)
             i->prox_processoSol = novoProc;
 
             i = novoProc;
-
-            float customedioEnergia = 0;
-            for (int f = 0; f < this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id]; f++)
-            {
-                customedioEnergia = customedioEnergia + instancia->intervalos[(tempoAtual + f) % 1440];
-            }
-            customedioEnergia = customedioEnergia / (float)this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id];
-            maquina->CM = maquina->CM + this->instancia->buscaProcesso(i->id)->custos_energia[maquina->id] * customedioEnergia;
-
             tempoAtual = (tempoAtual + this->instancia->buscaProcesso(i->id)->tempos_processamento[maquina->id]);
 
             break;

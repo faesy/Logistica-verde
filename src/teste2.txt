@@ -1,0 +1,14 @@
+Media de Makespam da instancia: 385
+Media de Custo de Energia da instancia: 3146
+Media de Gasto Monetario da instancia: 440
+
+
+Conjunto de Solucoes antes da busca local:
+MakeSpan: 441.686, 477.804, 466.565, 490.769, 497.87, 479.349, 509.436, 488.933, 458.706, 476.961, 503.185, 502.423, 489.353, 489.548, 496.312, 501.962, 479.534, 483.759, 474.206, 490.61
+Custo Energia: 2165.94, 2180.13, 2075.61, 2225.29, 2082.94, 2144, 2102.12, 1985.41, 2195.35, 2154.89, 1963.09, 2073.54, 2024.18, 2057.17, 2154.76, 1958.53, 2160.4, 2070.46, 2073.3, 2034.47
+Custo Monetario: 312.422, 313.012, 299.444, 321.69, 301.427, 309.121, 304.155, 285.177, 315.829, 309.732, 280.884, 297.918, 291.296, 296.446, 309.118, 281.223, 311.58, 297.484, 297.075, 293.169
+
+Media de makespam da populacao: 484
+Media de custo de energia da populacao: 2093
+Media de custo monetario da populacao: 301
+

@@ -37,10 +37,6 @@ class BL{
 
     bool VerificaTrocaEmF1eF2_2(MaquinaSol *maquina1, MaquinaSol *maquina2, ProcessoSol *processo1,ProcessoSol *processo2, int makespam);
 
-    bool VerificaTrocaEmF3(MaquinaSol* maquinaRemovida,MaquinaSol* maquinaAdicionada,Processo* processo,int pos, int posRem);
-
-    bool VerificaTrocaEmF3_2(MaquinaSol *maquina1, MaquinaSol *maquina2, Processo *processo1,Processo *processo2, int pos1, int pos2);
-
     void BuscaLocal1(Solucao* solucao,int id_processo);
 
     void AtualizaCustos(Solucao* sol);
