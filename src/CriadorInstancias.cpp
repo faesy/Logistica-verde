@@ -2,7 +2,6 @@
 
 #include "CriadorInstancias.h"
 #include <iostream>
-#include "Maquina.h"
 
 using namespace std;
 
@@ -42,7 +41,7 @@ CriadorInstancias::CriadorInstancias()
     //GeraKpadrao();
     Calcula_b();
     // cout<<"Tempo limite da instancia: "<<b<<endl;
-    int instanteDeInicio = calcInicioDia();
+    int instanteDeInicio = 0;
     cout<<"M: "<<this->get_m()<<" || N: "<<this->get_n()<<endl;
 }
 
@@ -217,10 +216,4 @@ void CriadorInstancias::GeraMaquinas()
             this->ultima_maquina = maquina;                  // essa maquina se torna a ultima maquina
         }
     }
-}
-
-int CriadorInstancias::calcInicioDia()
-{
-    // calcular o melhor instante do dia dos 1440 mins para começar o trabalho dado todas as maquinas.
-    return 900;
 }

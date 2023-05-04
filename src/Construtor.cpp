@@ -3,8 +3,7 @@ using namespace std;
 
 #include <iostream>
 #include "Construtor.h"
-#include "Maquina.h"
-#include "Processo.h"
+
 
 Construtor::Construtor(CriadorInstancias *a)
 {

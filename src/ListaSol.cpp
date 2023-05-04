@@ -1,17 +1,17 @@
 #include <iostream>
-#include "Construtor.h"
 #include "ListaSol.h"
-#include "Construtor.h"
 
 
 using namespace std;
 
 void ListaSol::ConstruirSolucoes(int qtd_sol)
 {
+    cout<<"1"<<endl;
     for(int i=0;i<qtd_sol;i++){
         Construtor *construtor= new Construtor(this->instancia);
         construtor->solucao->id=i;
         this->AdicionaSolucao(construtor->solucao);
+        cout<<"Sol "<<i<<" Construida"<<endl; 
     }
 
     //zera frente 

@@ -2,6 +2,7 @@
 #define ListaSol_H_INCLUDED
 #include "Solucao.h"
 #include "CriadorInstancias.h"
+#include "Construtor.h"
 
 using namespace std;
 

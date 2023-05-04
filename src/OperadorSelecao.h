@@ -13,7 +13,8 @@ class OperadorSelecao{
     public:
     ListaSol* RealizaSelecao(ListaSol *listaInicial);
     Solucao* Vaga(ListaSol *listaInicial, int numContestantes);
-    Solucao* crossover1(Solucao* parente1,Solucao* parente2);
+    Solucao* crossover1(Solucao* parente1,Solucao* parente2);//unitario
+    Solucao* crossover2(Solucao* parente1,Solucao* parente2);//2 pontos de corte
 
 };
 

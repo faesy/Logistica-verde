@@ -181,8 +181,8 @@ bool BL::VerificaTrocaEmF1eF2_2(MaquinaSol *maquina1, MaquinaSol *maquina2, Proc
         return false;
     }
      
-    int novomakespam1 = maquina1->min_Atual + processo2Aux->tempos_processamento[maquina1->id] - processo1Aux->tempos_processamento[maquina1->id] - this->instancia->calcInicioDia();
-    int novomakespam2 = maquina2->min_Atual + processo1Aux->tempos_processamento[maquina2->id] - processo2Aux->tempos_processamento[maquina2->id] - this->instancia->calcInicioDia();
+    int novomakespam1 = maquina1->min_Atual + processo2Aux->tempos_processamento[maquina1->id] - processo1Aux->tempos_processamento[maquina1->id];
+    int novomakespam2 = maquina2->min_Atual + processo1Aux->tempos_processamento[maquina2->id] - processo2Aux->tempos_processamento[maquina2->id];
     // cout<<"novomakespam: "<<novomakespam<<endl;
     // cout<<"makespam: "<<makespam<<endl;
     if (novomakespam1 >= makespam || novomakespam2 >= makespam)
@@ -202,7 +202,7 @@ bool BL::VerificaTrocaEmF1eF2(MaquinaSol *maquinaRemovida, MaquinaSol *maquinaAd
         return false;
     }
 
-    int novomakespam = maquinaAdicionada->min_Atual + processo->tempos_processamento[maquinaAdicionada->id] - this->instancia->calcInicioDia();
+    int novomakespam = maquinaAdicionada->min_Atual + processo->tempos_processamento[maquinaAdicionada->id];
     // cout<<"novomakespam: "<<novomakespam<<endl;
     // cout<<"makespam: "<<makespam<<endl;
     if (novomakespam >= makespam)
@@ -218,7 +218,7 @@ void BL::RemoveProcesso2(MaquinaSol *maquina, Processo *processo, Solucao *soluc
     maquina->CE = maquina->CE - processo->custos_energia[maquina->id];                     // Atualizo custo de energia
     maquina->min_Atual = maquina->min_Atual - processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina                                                                     // zero o custo Monetario
 
-    int tempoAtual = this->instancia->calcInicioDia();
+    int tempoAtual = 0;
     int contador = 0;
     bool flag = true;
     for (ProcessoSol *i = maquina->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
@@ -284,7 +284,7 @@ void BL::RemoveProcesso(MaquinaSol *maquina, Processo *processo, int pos)
     maquina->CE = maquina->CE - processo->custos_energia[maquina->id];                     // Atualizo custo de energia
     maquina->min_Atual = maquina->min_Atual - processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina                                                                     // zero o custo Monetario
 
-    int tempoAtual = this->instancia->calcInicioDia();
+    int tempoAtual = 0;
     int contador = 0;
     for (ProcessoSol *i = maquina->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
     {
@@ -351,9 +351,9 @@ void BL::AtualizaCustos(Solucao *sol)
     for (MaquinaSol *i = sol->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
     {
         sol->custoEnergia = sol->custoEnergia + i->CE;
-        if (i->min_Atual - this->instancia->calcInicioDia() > sol->makespam)
+        if (i->min_Atual > sol->makespam)
         {
-            sol->makespam = i->min_Atual - this->instancia->calcInicioDia();
+            sol->makespam = i->min_Atual;
         }
     }
 }
@@ -365,7 +365,7 @@ void BL::AdicionaProcesso(MaquinaSol *maquina, Processo *processo, int pos)
     maquina->min_Atual = maquina->min_Atual + processo->tempos_processamento[maquina->id]; // Atualizo custo de tempo da maquina                                                                     // zero o custo Monetario
 
     int contador = 0;
-    int tempoAtual = this->instancia->calcInicioDia();
+    int tempoAtual = 0;
     bool flag = true;
     for (ProcessoSol *i = maquina->primeiro_processoSol; i != NULL; i = i->prox_processoSol)
     {

@@ -3,6 +3,8 @@
 #include "CriadorInstancias.h"
 #include "Solucao.h"
 #include "Lista.h"
+#include "Maquina.h"
+#include "Processo.h"
 
 using namespace std;
 

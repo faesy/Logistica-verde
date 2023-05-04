@@ -1,6 +1,7 @@
 #ifndef Solucao_H_INCLUDED
 #define Solucao_H_INCLUDED
 #include "MaquinaSol.h"
+#include "CriadorInstancias.h"
 
 using namespace std;
 
