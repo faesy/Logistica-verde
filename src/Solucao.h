@@ -15,8 +15,7 @@ private:
 
 public:
     CriadorInstancias* instancia;
-    int *jobs;
-    int frente;
+    int jobs[200];
     int id;
     int pos;
     float custoEnergia;

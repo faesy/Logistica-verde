@@ -11,16 +11,25 @@ ListaSol *novaLista = new ListaSol(listaInicial->instancia);
         for(Solucao *a=listaInicial->primeira_sol;a!=NULL;a=a->get_prox_solucao()){//olho sol a sol
         bool flag=true;
                 for(Solucao *b=listaInicial->primeira_sol;b!=NULL;b=b->get_prox_solucao()){ //começo a comparar com outras soluções
-                        if ((a->makespam < b->makespam && a->custoEnergia <= b->custoEnergia) || (a->makespam <= b->makespam && a->custoEnergia < b->custoEnergia)) //se a sol for melhor
+                        if ((a->makespam < b->makespam /*&& a->custoEnergia <= b->custoEnergia*/) || (/*a->makespam <= b->makespam &&*/ a->custoEnergia < b->custoEnergia) || (a->custoEnergia==b->custoEnergia && a->makespam==b->makespam))
                         {
-
                         }else{
                             flag=false;
                             break;
                         }
                 }
                 if(flag==true){
-                novaLista->AdicionaSolucao(a);
+                    Solucao *filho = new Solucao();
+                    filho->instancia=a->instancia;
+
+                    for(int i=0;i<a->instancia->get_n();i++){
+                        filho->jobs[i]=a->jobs[i];
+                    }
+
+                    filho->custoEnergia=a->custoEnergia;
+                    filho->makespam=a->makespam;
+                    //cout<<"Adicionou na lista"<<endl;
+                novaLista->AdicionaSolucao(filho);
                 }
         }
 
@@ -58,7 +67,7 @@ return listaInicial->BuscaSol(melhorContestante);
 }
 
 
-Solucao* OperadorSelecao::crossover1(Solucao* parente1,Solucao* parente2){
+void OperadorSelecao::crossover1(Solucao* parente1,Solucao* parente2,ListaSol *listaNova){
 
     Solucao *filho = new Solucao();
     filho->instancia=parente1->instancia;
@@ -72,6 +81,10 @@ Solucao* OperadorSelecao::crossover1(Solucao* parente1,Solucao* parente2){
             filho->jobs[i]=parente2->jobs[i];
         }
     }
+
+    
+    this->mutacao(filho,0);
+    
 
     int makespams[20];
     int custos[20];
@@ -89,11 +102,21 @@ Solucao* OperadorSelecao::crossover1(Solucao* parente1,Solucao* parente2){
 
     }
 
-    return filho;
+
+    int maiorMakespam=0;
+    for(int i=0;i<20;i++){
+        filho->custoEnergia=filho->custoEnergia+ custos[i];
+        if( makespams[i]>maiorMakespam){
+            maiorMakespam=makespams[i];
+        }
+    }
+    filho->makespam=maiorMakespam;
+
+    listaNova->AdicionaSolucao(filho);
 
 }
 
-Solucao* OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2){
+void OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2,ListaSol *listaNova){
 
     Solucao *filho = new Solucao();
     filho->instancia=parente1->instancia;
@@ -129,6 +152,8 @@ Solucao* OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2){
 
     }
 
+    this->mutacao(filho,5);
+
     int makespams[20];
     int custos[20];
 
@@ -145,5 +170,27 @@ Solucao* OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2){
 
     }
 
-    return filho;
+    int maiorMakespam=0;
+    for(int i=0;i<20;i++){
+        filho->custoEnergia=filho->custoEnergia+ custos[i];
+        if( makespams[i]>maiorMakespam){
+            maiorMakespam=makespams[i];
+        }
+    }
+    filho->makespam=maiorMakespam;
+
+    listaNova->AdicionaSolucao(filho);
+}
+
+void OperadorSelecao::mutacao(Solucao* alvo,int chancePorJob){ //chance de acontecer em 1000 possibilidades
+
+    for(int i=0;i<alvo->instancia->get_n();i++){
+        int sorteado = (rand() % 1000) + 1;
+        if(sorteado<=chancePorJob){
+            cout<<"Houve mutacao"<<endl;
+            int novaMaq= rand() % alvo->instancia->get_m();
+            alvo->jobs[i]=novaMaq;
+        }
+    }
+
 }

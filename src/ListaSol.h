@@ -3,6 +3,7 @@
 #include "Solucao.h"
 #include "CriadorInstancias.h"
 #include "Construtor.h"
+#include <stdlib.h>
 
 using namespace std;
 
@@ -19,7 +20,8 @@ class ListaSol{
     Solucao *primeira_sol;
     Solucao *ultima_sol;
     ListaSol(CriadorInstancias *instancia);
-    void ConstruirSolucoes(int qtd_sol);
+    void ConstruirSolucoes(int qtd_sol,ofstream &output_file);
+    void Imprimir(Solucao *solucao,ofstream &output_file);
     void AdicionaSolucao(Solucao *sol);
     void RemoveSolucao(int id);
     Solucao* BuscaSol(int id);

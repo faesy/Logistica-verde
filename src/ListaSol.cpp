@@ -1,26 +1,54 @@
 #include <iostream>
 #include "ListaSol.h"
-
+#include <fstream>
 
 using namespace std;
 
-void ListaSol::ConstruirSolucoes(int qtd_sol)
+void ListaSol::ConstruirSolucoes(int qtd_sol,ofstream &output_file)
 {
-    cout<<"1"<<endl;
     for(int i=0;i<qtd_sol;i++){
         Construtor *construtor= new Construtor(this->instancia);
         construtor->solucao->id=i;
         this->AdicionaSolucao(construtor->solucao);
-        cout<<"Sol "<<i<<" Construida"<<endl; 
-    }
+        //output_file<<"Sol "<<i<<" Construida"<<endl;
+        //this->Imprimir(construtor->solucao,output_file);
+       // output_file<< construtor->solucao->makespam <<"   "<<construtor->solucao->custoEnergia<< endl;
+    //output_file << "Custo Energetico: " << construtor->solucao->custoEnergia << endl;
 
-    //zera frente 
-    //Analise de frentes de pareto
-    //remove as X piores
-
-    //Reproduz as restantes
-    //repete
 }
+}
+
+void ListaSol::Imprimir(Solucao *solucao,ofstream &output_file){
+
+    for (int i = 0; i < solucao->instancia->get_m(); i++)
+    {
+        output_file << "Maquina " << i << " : ";
+        for (int j = 0; j < solucao->instancia->get_n(); j++)
+        {
+            if(solucao->jobs[j]==i){
+            output_file << j << " -> ";
+            }
+        }
+        output_file <<endl;
+    }
+    output_file << "Makespam: " << solucao->makespam << endl;
+    output_file << "Custo Energetico: " << solucao->custoEnergia << endl;
+}
+
+// void ListaSol::Imprimir(Solucao *solucao,ofstream &output_file){
+
+//     for (MaquinaSol *a = solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol)
+//     {
+//         output_file << "Maquina " << a->id << " : ";
+//         for (ProcessoSol *b = a->primeiro_processoSol; b != NULL; b = b->prox_processoSol)
+//         {
+//             output_file << b->id << " -> ";
+//         }
+//         output_file << "Tempo final: " << a->min_Atual << " || Custo Energetico: "<<a->CE<<endl;
+//     }
+//     output_file << "Makespam: " << solucao->makespam << endl;
+//     output_file << "Custo Energetico: " << solucao->custoEnergia << endl;
+// }
 
 
 ListaSol::ListaSol(CriadorInstancias *instancia)

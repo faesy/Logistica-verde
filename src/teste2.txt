@@ -1,0 +1,40 @@
+
+
+ Iteração 0
+Tamanho da Fronteira de pareto = 9
+
+
+ Iteração 1
+Tamanho da Fronteira de pareto = 11
+
+
+ Iteração 2
+Tamanho da Fronteira de pareto = 10
+
+
+ Iteração 3
+Tamanho da Fronteira de pareto = 11
+
+
+ Iteração 4
+Tamanho da Fronteira de pareto = 13
+
+
+ Iteração 5
+Tamanho da Fronteira de pareto = 15
+
+
+ Iteração 6
+Tamanho da Fronteira de pareto = 26
+
+
+ Iteração 7
+Tamanho da Fronteira de pareto = 45
+
+
+ Iteração 8
+Tamanho da Fronteira de pareto = 63
+
+
+ Iteração 9
+Tamanho da Fronteira de pareto = 82

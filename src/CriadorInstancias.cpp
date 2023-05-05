@@ -42,7 +42,7 @@ CriadorInstancias::CriadorInstancias()
     Calcula_b();
     // cout<<"Tempo limite da instancia: "<<b<<endl;
     int instanteDeInicio = 0;
-    cout<<"M: "<<this->get_m()<<" || N: "<<this->get_n()<<endl;
+    //cout<<"M: "<<this->get_m()<<" || N: "<<this->get_n()<<endl;
 }
 
 void CriadorInstancias::GeraProcesos()

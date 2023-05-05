@@ -11,7 +11,6 @@ Construtor::Construtor(CriadorInstancias *a)
     Solucao *b = new Solucao();
     this->solucao = b;
     this->solucao->instancia=this->instancia;
-    this->solucao->frente=-1;
     this->solucao->pos=0;
     Lista *c = new Lista();
     this->lista = c;
@@ -26,8 +25,10 @@ Construtor::Construtor(CriadorInstancias *a)
     }
     for (int i = 0; i < this->instancia->get_n() * 5; i++)
     {
+     
         embaralhar(sequenciaProcessos, this->instancia->get_n());
     }
+
 
     for (int i = 0; i < this->instancia->get_n(); i++)
     {
@@ -43,6 +44,7 @@ Construtor::Construtor(CriadorInstancias *a)
         this->lista->Zera_Lista();
 
     }
+
     int makespam = 0;
     for (MaquinaSol *a = this->solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol)
     {
@@ -53,13 +55,14 @@ Construtor::Construtor(CriadorInstancias *a)
     }
 
     this->solucao->makespam = makespam;
-    
-    for(int i=0;i<this->instancia->get_n();i++){
-        for(MaquinaSol *a = this->solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol){
-        this->solucao->jobs[i]=a->id;
-        }
 
+    for(MaquinaSol *a = this->solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol){
+        for(ProcessoSol *b = a->primeiro_processoSol; b != NULL; b=b->prox_processoSol){
+            this->solucao->jobs[b->id]=a->id;
+        }
     }
+
+
 
     // Imprime();
 }
