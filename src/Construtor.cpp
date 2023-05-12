@@ -13,10 +13,10 @@ Construtor::Construtor(CriadorInstancias *a)
     this->solucao->instancia=this->instancia;
     this->solucao->pos=0;
     Lista *c = new Lista();
-    this->lista = c;
+    this->lista = c;//lista de candidatos para o sorteio
     Adiciona_Basico();
-    Calcular_media_Consumo_por_tempo();
-    Calcular_media_trabalho_por_tempo();
+    //Calcular_media_Consumo_por_tempo();
+    //Calcular_media_trabalho_por_tempo();
 
     int sequenciaProcessos[this->instancia->get_n()];
     for (int i = 0; i < this->instancia->get_n(); i++)
@@ -25,7 +25,6 @@ Construtor::Construtor(CriadorInstancias *a)
     }
     for (int i = 0; i < this->instancia->get_n() * 5; i++)
     {
-     
         embaralhar(sequenciaProcessos, this->instancia->get_n());
     }
 
@@ -34,7 +33,6 @@ Construtor::Construtor(CriadorInstancias *a)
     {
 
         AdicionaPontos(sequenciaProcessos[i]);
-
         RemovePontos(sequenciaProcessos[i]);
 
         int sorteado = this->lista->Sorteia_na_Lista();
@@ -55,6 +53,8 @@ Construtor::Construtor(CriadorInstancias *a)
     }
 
     this->solucao->makespam = makespam;
+
+    
 
     for(MaquinaSol *a = this->solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol){
         for(ProcessoSol *b = a->primeiro_processoSol; b != NULL; b=b->prox_processoSol){

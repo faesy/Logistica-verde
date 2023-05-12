@@ -67,7 +67,7 @@ return listaInicial->BuscaSol(melhorContestante);
 }
 
 
-void OperadorSelecao::crossover1(Solucao* parente1,Solucao* parente2,ListaSol *listaNova){
+void OperadorSelecao::crossover1(Solucao* parente1,Solucao* parente2,ListaSol *listaNova,int chanceDeMut){
 
     Solucao *filho = new Solucao();
     filho->instancia=parente1->instancia;
@@ -83,7 +83,7 @@ void OperadorSelecao::crossover1(Solucao* parente1,Solucao* parente2,ListaSol *l
     }
 
     
-    this->mutacao(filho,0);
+    this->mutacao(filho,chanceDeMut);
     
 
     int makespams[20];
@@ -116,7 +116,7 @@ void OperadorSelecao::crossover1(Solucao* parente1,Solucao* parente2,ListaSol *l
 
 }
 
-void OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2,ListaSol *listaNova){
+void OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2,ListaSol *listaNova, int chanceDeMut){
 
     Solucao *filho = new Solucao();
     filho->instancia=parente1->instancia;
@@ -152,7 +152,7 @@ void OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2,ListaSol *l
 
     }
 
-    this->mutacao(filho,5);
+    this->mutacao(filho,chanceDeMut);
 
     int makespams[20];
     int custos[20];
@@ -187,7 +187,7 @@ void OperadorSelecao::mutacao(Solucao* alvo,int chancePorJob){ //chance de acont
     for(int i=0;i<alvo->instancia->get_n();i++){
         int sorteado = (rand() % 1000) + 1;
         if(sorteado<=chancePorJob){
-            cout<<"Houve mutacao"<<endl;
+            //cout<<"Houve mutacao"<<endl;
             int novaMaq= rand() % alvo->instancia->get_m();
             alvo->jobs[i]=novaMaq;
         }

@@ -1,40 +1,400 @@
-
-
- Iteração 0
-Tamanho da Fronteira de pareto = 9
-
-
- Iteração 1
-Tamanho da Fronteira de pareto = 11
-
-
- Iteração 2
-Tamanho da Fronteira de pareto = 10
-
-
- Iteração 3
-Tamanho da Fronteira de pareto = 11
-
-
- Iteração 4
-Tamanho da Fronteira de pareto = 13
-
-
- Iteração 5
-Tamanho da Fronteira de pareto = 15
-
-
- Iteração 6
-Tamanho da Fronteira de pareto = 26
-
-
- Iteração 7
-Tamanho da Fronteira de pareto = 45
-
-
- Iteração 8
-Tamanho da Fronteira de pareto = 63
-
-
- Iteração 9
-Tamanho da Fronteira de pareto = 82
+Iteracao 0
+Tamanho da Fronteira de pareto = 5
+makespam0 = [24,21,266,313,45]
+custo_energetico0 = [362,370,350.874,343.561,357]
+Iteracao 1
+Tamanho da Fronteira de pareto = 2
+makespam1 = [21,24]
+custo_energetico1 = [370,302]
+Iteracao 2
+Tamanho da Fronteira de pareto = 2
+makespam2 = [21,24]
+custo_energetico2 = [370,302]
+Iteracao 3
+Tamanho da Fronteira de pareto = 2
+makespam3 = [24,20]
+custo_energetico3 = [302,303]
+Iteracao 4
+Tamanho da Fronteira de pareto = 2
+makespam4 = [24,20]
+custo_energetico4 = [302,303]
+Iteracao 5
+Tamanho da Fronteira de pareto = 3
+makespam5 = [24,20,422]
+custo_energetico5 = [302,303,290]
+Iteracao 6
+Tamanho da Fronteira de pareto = 5
+makespam6 = [24,20,422,361,402]
+custo_energetico6 = [302,303,290,300,298]
+Iteracao 7
+Tamanho da Fronteira de pareto = 5
+makespam7 = [24,20,422,415,341]
+custo_energetico7 = [302,303,290,293,296]
+Iteracao 8
+Tamanho da Fronteira de pareto = 4
+makespam8 = [24,20,17,28]
+custo_energetico8 = [302,303,373,275]
+Iteracao 9
+Tamanho da Fronteira de pareto = 4
+makespam9 = [20,17,28,24]
+custo_energetico9 = [303,373,275,296]
+Iteracao 10
+Tamanho da Fronteira de pareto = 3
+makespam10 = [20,17,22]
+custo_energetico10 = [303,373,274]
+Iteracao 11
+Tamanho da Fronteira de pareto = 3
+makespam11 = [20,17,22]
+custo_energetico11 = [303,373,274]
+Iteracao 12
+Tamanho da Fronteira de pareto = 3
+makespam12 = [20,17,22]
+custo_energetico12 = [303,373,274]
+Iteracao 13
+Tamanho da Fronteira de pareto = 3
+makespam13 = [20,17,22]
+custo_energetico13 = [303,373,274]
+Iteracao 14
+Tamanho da Fronteira de pareto = 3
+makespam14 = [17,22,20]
+custo_energetico14 = [373,274,302]
+Iteracao 15
+Tamanho da Fronteira de pareto = 5
+makespam15 = [17,22,20,403,16]
+custo_energetico15 = [373,274,302,273,394]
+Iteracao 16
+Tamanho da Fronteira de pareto = 5
+makespam16 = [17,22,20,403,16]
+custo_energetico16 = [373,274,302,273,394]
+Iteracao 17
+Tamanho da Fronteira de pareto = 6
+makespam17 = [17,22,403,16,19,518]
+custo_energetico17 = [373,274,273,394,294,272]
+Iteracao 18
+Tamanho da Fronteira de pareto = 6
+makespam18 = [17,22,403,16,19,518]
+custo_energetico18 = [373,274,273,394,294,272]
+Iteracao 19
+Tamanho da Fronteira de pareto = 4
+makespam19 = [22,19,98,16]
+custo_energetico19 = [274,294,270,357]
+Iteracao 20
+Tamanho da Fronteira de pareto = 5
+makespam20 = [22,19,98,16,26]
+custo_energetico20 = [274,294,270,357,273]
+Iteracao 21
+Tamanho da Fronteira de pareto = 5
+makespam21 = [22,19,98,16,26]
+custo_energetico21 = [274,294,270,357,273]
+Iteracao 22
+Tamanho da Fronteira de pareto = 5
+makespam22 = [22,19,98,26,16]
+custo_energetico22 = [274,294,270,273,349]
+Iteracao 23
+Tamanho da Fronteira de pareto = 6
+makespam23 = [22,19,98,26,16,36]
+custo_energetico23 = [274,294,270,273,349,271]
+Iteracao 24
+Tamanho da Fronteira de pareto = 6
+makespam24 = [22,19,98,26,16,36]
+custo_energetico24 = [274,294,270,273,349,271]
+Iteracao 25
+Tamanho da Fronteira de pareto = 6
+makespam25 = [22,19,26,16,30,27]
+custo_energetico25 = [274,294,273,349,269,270]
+Iteracao 26
+Tamanho da Fronteira de pareto = 6
+makespam26 = [22,19,26,16,30,27]
+custo_energetico26 = [274,294,273,349,269,270]
+Iteracao 27
+Tamanho da Fronteira de pareto = 7
+makespam27 = [22,19,26,16,30,27,34]
+custo_energetico27 = [274,294,273,349,269,270,268]
+Iteracao 28
+Tamanho da Fronteira de pareto = 7
+makespam28 = [22,19,26,16,30,27,34]
+custo_energetico28 = [274,294,273,349,269,270,268]
+Iteracao 29
+Tamanho da Fronteira de pareto = 5
+makespam29 = [19,16,22,21,23]
+custo_energetico29 = [294,349,263,283,250]
+Iteracao 30
+Tamanho da Fronteira de pareto = 4
+makespam30 = [16,22,23,18]
+custo_energetico30 = [349,263,250,279]
+Iteracao 31
+Tamanho da Fronteira de pareto = 4
+makespam31 = [16,22,23,18]
+custo_energetico31 = [349,263,250,279]
+Iteracao 32
+Tamanho da Fronteira de pareto = 5
+makespam32 = [16,22,23,18,21]
+custo_energetico32 = [349,263,250,279,271]
+Iteracao 33
+Tamanho da Fronteira de pareto = 5
+makespam33 = [16,22,23,18,21]
+custo_energetico33 = [349,263,250,279,271]
+Iteracao 34
+Tamanho da Fronteira de pareto = 6
+makespam34 = [16,22,23,18,21,53]
+custo_energetico34 = [349,263,250,279,271,245]
+Iteracao 35
+Tamanho da Fronteira de pareto = 7
+makespam35 = [16,22,23,18,21,53,20]
+custo_energetico35 = [349,263,250,279,271,245,275]
+Iteracao 36
+Tamanho da Fronteira de pareto = 7
+makespam36 = [16,22,23,18,21,53,20]
+custo_energetico36 = [349,263,250,279,271,245,275]
+Iteracao 37
+Tamanho da Fronteira de pareto = 7
+makespam37 = [16,22,23,18,21,53,20]
+custo_energetico37 = [349,263,250,279,271,245,275]
+Iteracao 38
+Tamanho da Fronteira de pareto = 7
+makespam38 = [16,22,23,18,21,53,20]
+custo_energetico38 = [349,263,250,279,271,245,275]
+Iteracao 39
+Tamanho da Fronteira de pareto = 7
+makespam39 = [16,22,23,18,21,53,20]
+custo_energetico39 = [349,263,250,279,271,245,275]
+Iteracao 40
+Tamanho da Fronteira de pareto = 7
+makespam40 = [16,22,23,18,21,53,20]
+custo_energetico40 = [349,263,250,279,271,245,275]
+Iteracao 41
+Tamanho da Fronteira de pareto = 7
+makespam41 = [16,22,23,18,21,53,20]
+custo_energetico41 = [349,263,250,279,271,245,275]
+Iteracao 42
+Tamanho da Fronteira de pareto = 7
+makespam42 = [16,22,23,18,21,53,20]
+custo_energetico42 = [349,263,250,279,271,245,275]
+Iteracao 43
+Tamanho da Fronteira de pareto = 7
+makespam43 = [16,22,23,18,21,53,20]
+custo_energetico43 = [349,263,250,279,271,245,275]
+Iteracao 44
+Tamanho da Fronteira de pareto = 7
+makespam44 = [16,22,23,18,21,53,20]
+custo_energetico44 = [349,263,250,279,271,245,275]
+Iteracao 45
+Tamanho da Fronteira de pareto = 7
+makespam45 = [16,22,23,18,21,53,20]
+custo_energetico45 = [349,263,250,279,271,245,275]
+Iteracao 46
+Tamanho da Fronteira de pareto = 7
+makespam46 = [16,22,23,18,21,53,20]
+custo_energetico46 = [349,263,250,279,271,245,275]
+Iteracao 47
+Tamanho da Fronteira de pareto = 7
+makespam47 = [16,22,23,18,21,53,20]
+custo_energetico47 = [349,263,250,279,271,245,275]
+Iteracao 48
+Tamanho da Fronteira de pareto = 7
+makespam48 = [16,22,23,18,21,53,20]
+custo_energetico48 = [349,263,250,279,271,245,275]
+Iteracao 49
+Tamanho da Fronteira de pareto = 7
+makespam49 = [16,22,23,18,21,53,20]
+custo_energetico49 = [349,263,250,279,271,245,275]
+Iteracao 50
+Tamanho da Fronteira de pareto = 7
+makespam50 = [16,22,23,18,21,53,20]
+custo_energetico50 = [349,263,250,279,271,245,275]
+Iteracao 51
+Tamanho da Fronteira de pareto = 7
+makespam51 = [16,22,23,18,21,53,20]
+custo_energetico51 = [349,263,250,279,271,245,275]
+Iteracao 52
+Tamanho da Fronteira de pareto = 7
+makespam52 = [16,22,23,18,21,53,20]
+custo_energetico52 = [349,263,250,279,271,245,275]
+Iteracao 53
+Tamanho da Fronteira de pareto = 7
+makespam53 = [16,22,23,18,21,53,20]
+custo_energetico53 = [349,263,250,279,271,245,275]
+Iteracao 54
+Tamanho da Fronteira de pareto = 7
+makespam54 = [16,22,23,18,21,53,20]
+custo_energetico54 = [349,263,250,279,271,245,275]
+Iteracao 55
+Tamanho da Fronteira de pareto = 7
+makespam55 = [16,22,23,18,21,53,20]
+custo_energetico55 = [349,263,250,279,271,245,275]
+Iteracao 56
+Tamanho da Fronteira de pareto = 7
+makespam56 = [16,22,23,18,21,53,20]
+custo_energetico56 = [349,263,250,279,271,245,275]
+Iteracao 57
+Tamanho da Fronteira de pareto = 7
+makespam57 = [22,23,18,21,53,20,16]
+custo_energetico57 = [263,250,279,271,245,275,315]
+Iteracao 58
+Tamanho da Fronteira de pareto = 5
+makespam58 = [23,18,53,16,20]
+custo_energetico58 = [250,279,245,315,261]
+Iteracao 59
+Tamanho da Fronteira de pareto = 5
+makespam59 = [23,18,53,16,20]
+custo_energetico59 = [250,279,245,315,261]
+Iteracao 60
+Tamanho da Fronteira de pareto = 4
+makespam60 = [23,53,16,18]
+custo_energetico60 = [250,245,315,255]
+Iteracao 61
+Tamanho da Fronteira de pareto = 4
+makespam61 = [23,53,16,18]
+custo_energetico61 = [250,245,315,255]
+Iteracao 62
+Tamanho da Fronteira de pareto = 4
+makespam62 = [23,53,16,18]
+custo_energetico62 = [250,245,315,255]
+Iteracao 63
+Tamanho da Fronteira de pareto = 4
+makespam63 = [23,53,16,18]
+custo_energetico63 = [250,245,315,255]
+Iteracao 64
+Tamanho da Fronteira de pareto = 4
+makespam64 = [23,53,16,18]
+custo_energetico64 = [250,245,315,255]
+Iteracao 65
+Tamanho da Fronteira de pareto = 4
+makespam65 = [23,53,16,18]
+custo_energetico65 = [250,245,315,255]
+Iteracao 66
+Tamanho da Fronteira de pareto = 4
+makespam66 = [23,53,16,18]
+custo_energetico66 = [250,245,315,255]
+Iteracao 67
+Tamanho da Fronteira de pareto = 4
+makespam67 = [23,53,16,18]
+custo_energetico67 = [250,245,315,255]
+Iteracao 68
+Tamanho da Fronteira de pareto = 4
+makespam68 = [23,53,16,18]
+custo_energetico68 = [250,245,315,255]
+Iteracao 69
+Tamanho da Fronteira de pareto = 4
+makespam69 = [23,53,16,18]
+custo_energetico69 = [250,245,315,255]
+Iteracao 70
+Tamanho da Fronteira de pareto = 4
+makespam70 = [23,53,16,18]
+custo_energetico70 = [250,245,315,255]
+Iteracao 71
+Tamanho da Fronteira de pareto = 4
+makespam71 = [23,53,16,18]
+custo_energetico71 = [250,245,315,255]
+Iteracao 72
+Tamanho da Fronteira de pareto = 4
+makespam72 = [23,53,16,18]
+custo_energetico72 = [250,245,315,255]
+Iteracao 73
+Tamanho da Fronteira de pareto = 4
+makespam73 = [23,53,16,18]
+custo_energetico73 = [250,245,315,255]
+Iteracao 74
+Tamanho da Fronteira de pareto = 4
+makespam74 = [23,53,16,18]
+custo_energetico74 = [250,245,315,255]
+Iteracao 75
+Tamanho da Fronteira de pareto = 4
+makespam75 = [23,53,16,18]
+custo_energetico75 = [250,245,315,255]
+Iteracao 76
+Tamanho da Fronteira de pareto = 4
+makespam76 = [23,53,16,18]
+custo_energetico76 = [250,245,315,255]
+Iteracao 77
+Tamanho da Fronteira de pareto = 4
+makespam77 = [23,53,16,18]
+custo_energetico77 = [250,245,315,255]
+Iteracao 78
+Tamanho da Fronteira de pareto = 4
+makespam78 = [23,53,16,18]
+custo_energetico78 = [250,245,315,255]
+Iteracao 79
+Tamanho da Fronteira de pareto = 4
+makespam79 = [23,53,16,18]
+custo_energetico79 = [250,245,315,255]
+Iteracao 80
+Tamanho da Fronteira de pareto = 4
+makespam80 = [23,53,16,18]
+custo_energetico80 = [250,245,315,255]
+Iteracao 81
+Tamanho da Fronteira de pareto = 4
+makespam81 = [23,53,16,18]
+custo_energetico81 = [250,245,315,255]
+Iteracao 82
+Tamanho da Fronteira de pareto = 4
+makespam82 = [23,53,16,18]
+custo_energetico82 = [250,245,315,255]
+Iteracao 83
+Tamanho da Fronteira de pareto = 4
+makespam83 = [23,53,16,18]
+custo_energetico83 = [250,245,315,255]
+Iteracao 84
+Tamanho da Fronteira de pareto = 4
+makespam84 = [23,53,16,18]
+custo_energetico84 = [250,245,315,255]
+Iteracao 85
+Tamanho da Fronteira de pareto = 4
+makespam85 = [23,53,16,18]
+custo_energetico85 = [250,245,315,255]
+Iteracao 86
+Tamanho da Fronteira de pareto = 4
+makespam86 = [23,53,16,18]
+custo_energetico86 = [250,245,315,255]
+Iteracao 87
+Tamanho da Fronteira de pareto = 4
+makespam87 = [23,53,16,18]
+custo_energetico87 = [250,245,315,255]
+Iteracao 88
+Tamanho da Fronteira de pareto = 4
+makespam88 = [23,53,16,18]
+custo_energetico88 = [250,245,315,255]
+Iteracao 89
+Tamanho da Fronteira de pareto = 4
+makespam89 = [23,53,16,18]
+custo_energetico89 = [250,245,315,255]
+Iteracao 90
+Tamanho da Fronteira de pareto = 4
+makespam90 = [23,53,16,18]
+custo_energetico90 = [250,245,315,255]
+Iteracao 91
+Tamanho da Fronteira de pareto = 4
+makespam91 = [23,53,16,18]
+custo_energetico91 = [250,245,315,255]
+Iteracao 92
+Tamanho da Fronteira de pareto = 4
+makespam92 = [23,53,16,18]
+custo_energetico92 = [250,245,315,255]
+Iteracao 93
+Tamanho da Fronteira de pareto = 4
+makespam93 = [23,53,16,18]
+custo_energetico93 = [250,245,315,255]
+Iteracao 94
+Tamanho da Fronteira de pareto = 4
+makespam94 = [23,53,16,18]
+custo_energetico94 = [250,245,315,255]
+Iteracao 95
+Tamanho da Fronteira de pareto = 4
+makespam95 = [23,53,16,18]
+custo_energetico95 = [250,245,315,255]
+Iteracao 96
+Tamanho da Fronteira de pareto = 4
+makespam96 = [23,53,16,18]
+custo_energetico96 = [250,245,315,255]
+Iteracao 97
+Tamanho da Fronteira de pareto = 4
+makespam97 = [23,53,16,18]
+custo_energetico97 = [250,245,315,255]
+Iteracao 98
+Tamanho da Fronteira de pareto = 4
+makespam98 = [23,53,16,18]
+custo_energetico98 = [250,245,315,255]
+Iteracao 99
+Tamanho da Fronteira de pareto = 4
+makespam99 = [23,53,16,18]
+custo_energetico99 = [250,245,315,255]

@@ -39,7 +39,7 @@ CriadorInstancias::CriadorInstancias()
     // i++;
     //}
     //GeraKpadrao();
-    Calcula_b();
+    //Calcula_b();
     // cout<<"Tempo limite da instancia: "<<b<<endl;
     int instanteDeInicio = 0;
     //cout<<"M: "<<this->get_m()<<" || N: "<<this->get_n()<<endl;

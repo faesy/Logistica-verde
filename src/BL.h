@@ -25,21 +25,12 @@ class BL{
 
     void ChamadaDaBL2(Solucao* solucao,int  repeticoes);
 
-    void BuscaLocal2(Solucao* solucao, int id_processo);
-
-    void AdicionaProcesso(MaquinaSol* maquina,Processo* processo,int pos);
-
-    void RemoveProcesso(MaquinaSol* maquina,Processo* processo,int pos);
-
-    void RemoveProcesso2(MaquinaSol* maquina,Processo* processo,Solucao* solucao);
-
-    bool VerificaTrocaEmF1eF2(MaquinaSol* maquinaRemovida,MaquinaSol* maquinaAdicionada,Processo* processo,int makespam);
+    void BuscaLocal2(Solucao* solucao, int id_processo);//falta atualizar
 
     bool VerificaTrocaEmF1eF2_2(MaquinaSol *maquina1, MaquinaSol *maquina2, ProcessoSol *processo1,ProcessoSol *processo2, int makespam);
 
     void BuscaLocal1(Solucao* solucao,int id_processo);
 
-    void AtualizaCustos(Solucao* sol);
 
     
 };

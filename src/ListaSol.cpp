@@ -35,6 +35,32 @@ void ListaSol::Imprimir(Solucao *solucao,ofstream &output_file){
     output_file << "Custo Energetico: " << solucao->custoEnergia << endl;
 }
 
+void ListaSol::ImprimirPython(ofstream &output_file,int num){
+
+    output_file << "makespam"<<num<<" = [";
+    for (Solucao* i = this->primeira_sol;i!=NULL;i=i->get_prox_solucao())
+    {
+        if(i->get_prox_solucao()==NULL){
+            output_file <<i->makespam;
+        }else{
+            output_file <<i->makespam<<",";
+        }
+    }
+    output_file <<"]"<<endl;
+
+    output_file << "custo_energetico"<<num<<" = [";
+    for (Solucao* i = this->primeira_sol;i!=NULL;i=i->get_prox_solucao())
+    {
+        if(i->get_prox_solucao()==NULL){
+            output_file <<i->custoEnergia;
+        }else{
+            output_file <<i->custoEnergia<<",";
+        }
+    }
+    output_file <<"]"<<endl;
+
+}
+
 // void ListaSol::Imprimir(Solucao *solucao,ofstream &output_file){
 
 //     for (MaquinaSol *a = solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol)

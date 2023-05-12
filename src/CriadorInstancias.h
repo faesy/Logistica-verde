@@ -13,7 +13,7 @@ class CriadorInstancias{
     // Attributes
     private:
         int m; //num de maquinas
-        int n; //num de processos
+        int n; //num de jobs
         int b; //Tempo limite
 
         float e1=0.3;

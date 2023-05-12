@@ -25,9 +25,11 @@ class ListaSol{
     void AdicionaSolucao(Solucao *sol);
     void RemoveSolucao(int id);
     Solucao* BuscaSol(int id);
+    void ImprimirPython(ofstream &output_file,int num);
     //void AnaliseDeFrentes();
     //void ZeraFrentes();
     //void RemoveXsol(int x);
+
     
 };
 
