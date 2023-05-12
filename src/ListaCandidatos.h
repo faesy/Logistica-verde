@@ -1,11 +1,11 @@
-#ifndef Lista_H_INCLUDED
-#define Lista_H_INCLUDED
-#include "ElementoDaLista.h"
+#ifndef ListaCandidatos_H_INCLUDED
+#define ListaCandidatos_H_INCLUDED
+#include "Candidato.h"
 
 using namespace std;
 
 
-class Lista{
+class ListaCandidatos{
 
     // Attributes
     private:
@@ -13,9 +13,9 @@ class Lista{
 
     public:
     int tamanho;
-    ElementoDaLista* primeiro_elemento;
-    ElementoDaLista* ultimo_elemento;
-    Lista();
+    Candidato* primeiro_elemento;
+    Candidato* ultimo_elemento;
+    ListaCandidatos();
     void Adicionar_na_Lista(int id_maquina,int qtd);
     void Remove_na_Lista(int id_maquina,int qtd);
     int Sorteia_na_Lista();

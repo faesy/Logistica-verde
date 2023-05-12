@@ -1,5 +1,5 @@
-#ifndef CRIADORINSTANCIAS_H_INCLUDED
-#define CRIADORINSTANCIAS_H_INCLUDED
+#ifndef Instancia_H_INCLUDED
+#define Instancia_H_INCLUDED
 #include "Maquina.h"
 #include "Processo.h"
 #include "Intervalo.h"
@@ -8,7 +8,7 @@
 using namespace std;
 
 
-class CriadorInstancias{
+class Instancia{
 
     // Attributes
     private:
@@ -33,8 +33,8 @@ class CriadorInstancias{
         int media_MS;
         int media_CE;
 
-        CriadorInstancias();
-        ~CriadorInstancias();
+        Instancia();
+        ~Instancia();
     
         void SorteiaNumProcessos();
         void SorteiaNumMaquinas();

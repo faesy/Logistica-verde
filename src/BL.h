@@ -3,7 +3,7 @@
 #include "Solucao.h"
 #include "ProcessoSol.h"
 #include "Processo.h"
-#include "CriadorInstancias.h"
+#include "Instancia.h"
 
 using namespace std;
 
@@ -15,21 +15,18 @@ class BL{
 
     public:
 
-    BL(CriadorInstancias* a){
-        this->instancia=a;
+    BL(){
     }
 
-    CriadorInstancias* instancia;
+    //Instancia* instancia;
 
-    void ChamadaDaBL1(Solucao* solucao,int  repeticoes);
+    void ChamadaDaBL1(Solucao* solucao,int  repeticoes,Instancia* instancia);
 
-    void ChamadaDaBL2(Solucao* solucao,int  repeticoes);
+    void ChamadaDaBL2(Solucao* solucao,int  repeticoes,Instancia* instancia);
 
-    void BuscaLocal2(Solucao* solucao, int id_processo);//falta atualizar
+    void BuscaLocal2(Solucao* solucao, int id_processo,Instancia* instancia);
 
-    bool VerificaTrocaEmF1eF2_2(MaquinaSol *maquina1, MaquinaSol *maquina2, ProcessoSol *processo1,ProcessoSol *processo2, int makespam);
-
-    void BuscaLocal1(Solucao* solucao,int id_processo);
+    void BuscaLocal1(Solucao* solucao,int id_processo,Instancia* instancia);
 
 
     

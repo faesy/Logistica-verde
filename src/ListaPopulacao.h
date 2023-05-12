@@ -1,29 +1,28 @@
-#ifndef ListaSol_H_INCLUDED
-#define ListaSol_H_INCLUDED
+#ifndef ListaPopulacao_H_INCLUDED
+#define ListaPopulacao_H_INCLUDED
 #include "Solucao.h"
-#include "CriadorInstancias.h"
-#include "Construtor.h"
+#include "Instancia.h"
+#include "Construtivo.h"
 #include <stdlib.h>
 
 using namespace std;
 
 
-class ListaSol{
+class ListaPopulacao{
 
     // Attributes
     private:
 
 
     public:
-    CriadorInstancias *instancia;
+    //Instancia *instancia;
     int tamanho;
     Solucao *primeira_sol;
     Solucao *ultima_sol;
-    ListaSol(CriadorInstancias *instancia);
-    void ConstruirSolucoes(int qtd_sol,ofstream &output_file);
-    void Imprimir(Solucao *solucao,ofstream &output_file);
+    ListaPopulacao(Instancia *instancia);
+    void ConstruirSolucoes(int qtd_sol,ofstream &output_file,Instancia* instancia);
+    void Imprimir(Solucao *solucao,ofstream &output_file,Instancia* instancia);
     void AdicionaSolucao(Solucao *sol);
-    void RemoveSolucao(int id);
     Solucao* BuscaSol(int id);
     void ImprimirPython(ofstream &output_file,int num);
     //void AnaliseDeFrentes();

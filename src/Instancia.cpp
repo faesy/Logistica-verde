@@ -1,16 +1,16 @@
 
 
-#include "CriadorInstancias.h"
+#include "Instancia.h"
 #include <iostream>
 
 using namespace std;
 
-CriadorInstancias::~CriadorInstancias()
+Instancia::~Instancia()
 {
 }
 
 // Constructor
-CriadorInstancias::CriadorInstancias()
+Instancia::Instancia()
 {
     primeira_maquina = NULL;
     ultima_maquina = NULL;
@@ -45,7 +45,7 @@ CriadorInstancias::CriadorInstancias()
     //cout<<"M: "<<this->get_m()<<" || N: "<<this->get_n()<<endl;
 }
 
-void CriadorInstancias::GeraProcesos()
+void Instancia::GeraProcesos()
 {
 
     int quantidadeTrabalho;
@@ -101,7 +101,7 @@ void CriadorInstancias::GeraProcesos()
     }
 }
 
-void CriadorInstancias::Calcula_b()
+void Instancia::Calcula_b()
 {
 
     float soma = 0;
@@ -127,7 +127,7 @@ void CriadorInstancias::Calcula_b()
 }
 
 // sortear numero de processos
-void CriadorInstancias::SorteiaNumProcessos()
+void Instancia::SorteiaNumProcessos()
 {
     int parametro;
 
@@ -156,7 +156,7 @@ void CriadorInstancias::SorteiaNumProcessos()
 }
 
 // sortear numero de maquinas
-void CriadorInstancias::SorteiaNumMaquinas()
+void Instancia::SorteiaNumMaquinas()
 {
 
     int parametro;
@@ -182,7 +182,7 @@ void CriadorInstancias::SorteiaNumMaquinas()
 }
 
 // Gera as maquinas
-void CriadorInstancias::GeraMaquinas()
+void Instancia::GeraMaquinas()
 {
 
     for (int i = 0; i < m; i++)

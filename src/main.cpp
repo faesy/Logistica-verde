@@ -11,12 +11,12 @@ Matheus Cardoso Faesy 202065065A
 #include <iomanip>
 #include <stdlib.h>
 #include <chrono>
-#include "Construtor.h"
-#include "CriadorInstancias.h"
+#include "Construtivo.h"
+#include "Instancia.h"
 #include <chrono>
 #include <thread>
 #include <time.h>
-#include "ListaSol.h"
+#include "ListaPopulacao.h"
 #include "BL.h"
 #include "OperadorSelecao.h"
 
@@ -42,28 +42,30 @@ int main(int argc, char const *argv[])
     srand(cod_instancia);
 
 
-    CriadorInstancias *instancia = new CriadorInstancias();
+    Instancia *instancia = new Instancia();
 
 
     srand(time(NULL));
 
 
-    int numDeIter=100;
+    int numDeIter=1000;
     int numDeSol=100;
     float numDeNovasSol=0.1; //porcentagem de novas soluções a cada iteração
     int chanceDeMut=30; //a cada 1000
     int chanceDeBl=100;//a cada 1000
 
-    
 
-    ListaSol *listaInicial = new ListaSol(instancia);
-
-
-    listaInicial->ConstruirSolucoes(numDeSol,output_file);
-    BL *buscaLocal = new BL(instancia);
+    ListaPopulacao *listaInicial = new ListaPopulacao(instancia);
 
 
-    OperadorSelecao *operador = new OperadorSelecao();
+    listaInicial->ConstruirSolucoes(numDeSol,output_file,instancia);
+
+
+    BL *buscaLocal = new BL();
+
+
+    OperadorSelecao *operador;
+
 
     for(int i=0;i<numDeIter;i++){
 
@@ -71,8 +73,8 @@ int main(int argc, char const *argv[])
 
                 int sorteado = (rand() % 1000) + 1;
                 if(sorteado<=chanceDeBl){
-                    buscaLocal->ChamadaDaBL1(itr,instancia->get_n()*2);
-                    buscaLocal->ChamadaDaBL2(itr,instancia->get_n()/2);
+                    buscaLocal->ChamadaDaBL1(itr,instancia->get_n()*2,instancia);
+                    buscaLocal->ChamadaDaBL2(itr,instancia->get_n()/2,instancia);
                 }
 
         }
@@ -84,10 +86,10 @@ int main(int argc, char const *argv[])
         //listaInicial->Imprimir(p,output_file);
         //}
 
-    ListaSol *novaLista = new ListaSol(instancia);
+    ListaPopulacao *novaLista = new ListaPopulacao(instancia);
 
 
-    novaLista=operador->RealizaSelecao(listaInicial);//adiciona a fronteira de pareto na nova lista
+    novaLista=operador->RealizaSelecao(listaInicial,instancia);//adiciona a fronteira de pareto na nova lista
     output_file<<"Iteracao "<<i<<endl;
     output_file<<"Tamanho da Fronteira de pareto = "<<novaLista->tamanho<<endl;
     novaLista->ImprimirPython(output_file,i);
@@ -98,15 +100,15 @@ int main(int argc, char const *argv[])
     
 
         for(int j=0;j<numDeFilhos;j++){
-        Solucao *sol1=operador->Vaga(listaInicial,2);
-        Solucao *sol2=operador->Vaga(listaInicial,4);
+        Solucao *sol1=operador->Vaga(listaInicial,2,instancia);
+        Solucao *sol2=operador->Vaga(listaInicial,4,instancia);
 
-        operador->crossover1(sol1,sol2,novaLista,chanceDeMut);
+        operador->crossover1(sol1,sol2,novaLista,chanceDeMut,instancia);
         }
 
         int novasSolucoes=numDeSol-novaLista->tamanho;
 
-        novaLista->ConstruirSolucoes(novasSolucoes,output_file);
+        novaLista->ConstruirSolucoes(novasSolucoes,output_file,instancia);
 
         listaInicial=novaLista;
     }

@@ -2,49 +2,42 @@
 using namespace std;
 
 #include <iostream>
-#include "Construtor.h"
+#include "Construtivo.h"
 
+float importanciaf0=0;
+float importanciaf1=1;
+float importanciaf2=1;
 
-Construtor::Construtor(CriadorInstancias *a)
+float parametro_de_analise=0.5;
+
+Solucao* Construtivo::criaSol(Instancia *instancia)
 {
-    this->instancia = a;
-    Solucao *b = new Solucao();
-    this->solucao = b;
-    this->solucao->instancia=this->instancia;
-    this->solucao->pos=0;
-    Lista *c = new Lista();
-    this->lista = c;//lista de candidatos para o sorteio
-    Adiciona_Basico();
-    //Calcular_media_Consumo_por_tempo();
-    //Calcular_media_trabalho_por_tempo();
+    Solucao *solucao = new Solucao();
+    solucao->pos=0;
+    ListaCandidatos *lista = new ListaCandidatos();
+    Adiciona_Basico(solucao,instancia);
 
-    int sequenciaProcessos[this->instancia->get_n()];
-    for (int i = 0; i < this->instancia->get_n(); i++)
+    int sequenciaProcessos[instancia->get_n()];
+    for (int i = 0; i < instancia->get_n(); i++)
     {
         sequenciaProcessos[i] = i;
     }
-    for (int i = 0; i < this->instancia->get_n() * 5; i++)
+    for (int i = 0; i < instancia->get_n() * 5; i++)
     {
-        embaralhar(sequenciaProcessos, this->instancia->get_n());
+        embaralhar(sequenciaProcessos, instancia->get_n());
     }
 
 
-    for (int i = 0; i < this->instancia->get_n(); i++)
+    for (int i = 0; i < instancia->get_n(); i++)
     {
-
-        AdicionaPontos(sequenciaProcessos[i]);
-        RemovePontos(sequenciaProcessos[i]);
-
-        int sorteado = this->lista->Sorteia_na_Lista();
-
-        this->Adiciona_Processo_Na_Maquina(sequenciaProcessos[i], sorteado);
-
-        this->lista->Zera_Lista();
-
+        AdicionaPontos(sequenciaProcessos[i],solucao,instancia,lista);
+        RemovePontos(sequenciaProcessos[i],solucao,instancia,lista);
+        int sorteado = lista->Sorteia_na_Lista();
+        Adiciona_Processo_Na_Maquina(sequenciaProcessos[i], sorteado,solucao,instancia);
+        lista->Zera_Lista();
     }
-
     int makespam = 0;
-    for (MaquinaSol *a = this->solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol)
+    for (MaquinaSol *a = solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol)
     {
         if (a->min_Atual > makespam)
         {
@@ -52,31 +45,30 @@ Construtor::Construtor(CriadorInstancias *a)
         }
     }
 
-    this->solucao->makespam = makespam;
+    solucao->makespam = makespam;
 
     
-
-    for(MaquinaSol *a = this->solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol){
+    for(MaquinaSol *a = solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol){
         for(ProcessoSol *b = a->primeiro_processoSol; b != NULL; b=b->prox_processoSol){
-            this->solucao->jobs[b->id]=a->id;
+            solucao->jobs[b->id]=a->id;
         }
     }
 
-
-
+    //cout<<"Makespam: "<<solucao->makespam<<endl;
+    return solucao;
     // Imprime();
 }
 
-void Construtor::Imprime()
+void Construtivo::Imprime(Solucao* solucao,Instancia* instancia)
 {
     int custo = 0;
-    for (MaquinaSol *a = this->solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol)
+    for (MaquinaSol *a = solucao->primeira_maquina; a != NULL; a = a->prox_maquinaSol)
     {
         cout << "Maquina " << a->id << " : ";
         for (ProcessoSol *b = a->primeiro_processoSol; b != NULL; b = b->prox_processoSol)
         {
             cout << b->id << " -> ";
-            custo = custo + this->instancia->buscaProcesso(b->id)->custos_energia[a->id];
+            custo = custo + instancia->buscaProcesso(b->id)->custos_energia[a->id];
         }
         cout << "Tempo final: " << a->min_Atual << " || Custo Energetico: "<<a->CE<<endl;
     }
@@ -84,10 +76,10 @@ void Construtor::Imprime()
     cout << "Custo Energetico: " << solucao->custoEnergia << endl;
 }
 
-void Construtor::RemovePontos(int id_Processo)
+void Construtivo::RemovePontos(int id_Processo,Solucao* solucao,Instancia* instancia,ListaCandidatos *lista)
 {
     Processo *processo;
-    for (Processo *it = this->instancia->get_primeiro_Processo(); it != NULL; it = it->get_prox_Processo())
+    for (Processo *it = instancia->get_primeiro_Processo(); it != NULL; it = it->get_prox_Processo())
     {
         if (it->get_id() == id_Processo)
         {
@@ -124,7 +116,7 @@ void Construtor::RemovePontos(int id_Processo)
     {
         int contador = 0;
         int index_melhor_resultado = -1;
-        for (Maquina *i = this->instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
+        for (Maquina *i = instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
         {
             if (maquinas_mais_devagar_bool[contador] == false)
             {
@@ -145,7 +137,7 @@ void Construtor::RemovePontos(int id_Processo)
     {
         int contador = 0;
         int index_melhor_resultado = -1;
-        for (Maquina *i = this->instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
+        for (Maquina *i = instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
         {
             if (maquinas_com_maior_consumo_bool[contador] == false)
             {
@@ -165,7 +157,7 @@ void Construtor::RemovePontos(int id_Processo)
     {
         int contador = 0;
         int index_melhor_resultado = -1;
-        for (MaquinaSol *i = this->solucao->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
+        for (MaquinaSol *i = solucao->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
         {
             if (maquinas_com_maior_makespam_bool[contador] == false)
             {
@@ -183,21 +175,21 @@ void Construtor::RemovePontos(int id_Processo)
 
     for (int j = 0; j < tamanhoVetor; j++)
     {
-        this->lista->Remove_na_Lista(maquinas_mais_devagar2[j], (((this->instancia->get_m()) - j)* parametro_de_analise) * (importanciaf0));
-        this->lista->Remove_na_Lista(maquinas_com_maior_makespam2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf1) );
+        lista->Remove_na_Lista(maquinas_mais_devagar2[j], (((instancia->get_m()) - j)* parametro_de_analise) * (importanciaf0));
+        lista->Remove_na_Lista(maquinas_com_maior_makespam2[j], (((instancia->get_m())* parametro_de_analise) - j) * (importanciaf1) );
 
-        this->lista->Remove_na_Lista(maquinas_com_maior_consumo2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf2) );
+        lista->Remove_na_Lista(maquinas_com_maior_consumo2[j], (((instancia->get_m())* parametro_de_analise) - j) * (importanciaf2) );
     }
 
-    if(this->lista->primeiro_elemento==NULL){
-        this->lista->Adicionar_na_Lista(rand()%this->instancia->get_m(),1);
+    if(lista->primeiro_elemento==NULL){
+        lista->Adicionar_na_Lista(rand()%instancia->get_m(),1);
     }
 }
 
-void Construtor::AdicionaPontos(int id_Processo)
+void Construtivo::AdicionaPontos(int id_Processo,Solucao* solucao,Instancia* instancia,ListaCandidatos* lista)
 {
     Processo *processo;
-    for (Processo *it = this->instancia->get_primeiro_Processo(); it != NULL; it = it->get_prox_Processo())
+    for (Processo *it = instancia->get_primeiro_Processo(); it != NULL; it = it->get_prox_Processo())
     {
         if (it->get_id() == id_Processo)
         {
@@ -215,26 +207,23 @@ void Construtor::AdicionaPontos(int id_Processo)
     int maquinas_com_menos_consumo[tamanhoVetor];
     int maquinas_com_menos_consumo2[tamanhoVetor];
     bool maquinas_com_menos_consumo_bool[instancia->get_m()];
-
     for (int j = 0; j < tamanhoVetor; j++)
     {
         maquinas_mais_rapidas[j] = 0;
         maquinas_com_menos_makespam[j] = 99999999;
         maquinas_com_menos_consumo[j] = 99999999;
     }
-
     for (int j = 0; j < instancia->get_m(); j++)
     {
         maquinas_mais_rapidas_bool[j] = false;
         maquinas_com_menos_makespam_bool[j] = false;
         maquinas_com_menos_consumo_bool[j] = false;
     }
-
     for (int r = 0; r < tamanhoVetor; r++)
     {
         int contador = 0;
         int index_melhor_resultado = -1;
-        for (Maquina *i = this->instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
+        for (Maquina *i = instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
         {
             if (maquinas_mais_rapidas_bool[contador] == false)
             {
@@ -250,12 +239,11 @@ void Construtor::AdicionaPontos(int id_Processo)
         maquinas_mais_rapidas_bool[index_melhor_resultado] = true;
     }
 
-
     for (int r = 0; r < tamanhoVetor; r++)
     {
         int contador = 0;
         int index_melhor_resultado = -1;
-        for (Maquina *i = this->instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
+        for (Maquina *i = instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
         {
             if (maquinas_com_menos_consumo_bool[contador] == false)
             {
@@ -270,12 +258,11 @@ void Construtor::AdicionaPontos(int id_Processo)
         }
         maquinas_com_menos_consumo_bool[index_melhor_resultado] = true;
     }
-
     for (int r = 0; r < tamanhoVetor; r++)
     {
         int contador = 0;
         int index_melhor_resultado = -1;
-        for (MaquinaSol *i = this->solucao->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
+        for (MaquinaSol *i = solucao->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
         {
             if (maquinas_com_menos_makespam_bool[contador] == false)
             {
@@ -290,17 +277,16 @@ void Construtor::AdicionaPontos(int id_Processo)
         }
         maquinas_com_menos_makespam_bool[index_melhor_resultado] = true;
     }
-
     for (int j = 0; j < tamanhoVetor; j++)
     {
-        this->lista->Adicionar_na_Lista(maquinas_mais_rapidas2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf0));
-        this->lista->Adicionar_na_Lista(maquinas_com_menos_makespam2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf1) );
+        lista->Adicionar_na_Lista(maquinas_mais_rapidas2[j], (((instancia->get_m())* parametro_de_analise) - j) * (importanciaf0));
+        lista->Adicionar_na_Lista(maquinas_com_menos_makespam2[j], (((instancia->get_m())* parametro_de_analise) - j) * (importanciaf1) );
 
-        this->lista->Adicionar_na_Lista(maquinas_com_menos_consumo2[j], (((this->instancia->get_m())* parametro_de_analise) - j) * (importanciaf2) );
+        lista->Adicionar_na_Lista(maquinas_com_menos_consumo2[j], (((instancia->get_m())* parametro_de_analise) - j) * (importanciaf2) );
     }
 }
 
-void Construtor::embaralhar(int *vet, int vetSize)
+void Construtivo::embaralhar(int *vet, int vetSize)
 {
     for (int i = 0; i < vetSize; i++)
     {
@@ -312,11 +298,11 @@ void Construtor::embaralhar(int *vet, int vetSize)
     }
 }
 
-void Construtor::Adiciona_Basico()
+void Construtivo::Adiciona_Basico(Solucao* solucao,Instancia* instancia)
 {
 
     int j = 0;
-    for (Maquina *i = this->instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
+    for (Maquina *i = instancia->get_primeira_maquina(); i != NULL; i = i->get_prox_Maquina())
     {
 
         if (j == 0)
@@ -329,8 +315,8 @@ void Construtor::Adiciona_Basico()
             maquinaSol->ultimo_processoSol = NULL;
             maquinaSol->ant_maquinaSol = NULL;
             maquinaSol->prox_maquinaSol = NULL;
-            this->solucao->primeira_maquina = maquinaSol;
-            this->solucao->ultima_maquina = maquinaSol;
+            solucao->primeira_maquina = maquinaSol;
+            solucao->ultima_maquina = maquinaSol;
         }
         else
         {
@@ -341,26 +327,26 @@ void Construtor::Adiciona_Basico()
             maquinaSol->primeiro_processoSol = NULL;
             maquinaSol->ultimo_processoSol = NULL;
 
-            this->solucao->ultima_maquina->prox_maquinaSol = maquinaSol; // proxima maquina da maquina anterior passa a ser essa maquina
-            maquinaSol->ant_maquinaSol = this->solucao->ultima_maquina;  // maquina anterior passa a ser a ultima maquina adicionada
+            solucao->ultima_maquina->prox_maquinaSol = maquinaSol; // proxima maquina da maquina anterior passa a ser essa maquina
+            maquinaSol->ant_maquinaSol = solucao->ultima_maquina;  // maquina anterior passa a ser a ultima maquina adicionada
             maquinaSol->prox_maquinaSol = NULL;
 
-            this->solucao->ultima_maquina = maquinaSol;
+            solucao->ultima_maquina = maquinaSol;
         }
 
         j++;
     }
 }
 
-void Construtor::Adiciona_Processo_Na_Maquina(int id_processo, int id_maquina)
+void Construtivo::Adiciona_Processo_Na_Maquina(int id_processo, int id_maquina,Solucao* solucao,Instancia* instancia)
 {
 
-    for (MaquinaSol *i = this->solucao->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
+    for (MaquinaSol *i = solucao->primeira_maquina; i != NULL; i = i->prox_maquinaSol)
     {
         if (i->id == id_maquina)
         {
 
-            for (Processo *k = this->instancia->get_primeiro_Processo(); k != NULL; k = k->get_prox_Processo())
+            for (Processo *k = instancia->get_primeiro_Processo(); k != NULL; k = k->get_prox_Processo())
             {
                 if (k->get_id() == id_processo)
                 {
@@ -397,36 +383,4 @@ void Construtor::Adiciona_Processo_Na_Maquina(int id_processo, int id_maquina)
     }
 }
 
-void Construtor::Calcular_media_Consumo_por_tempo()
-{
-
-    float soma1 = 0;
-
-    for (Processo *processo = this->instancia->get_primeiro_Processo(); processo != NULL; processo = processo->get_prox_Processo())
-    { // para todos processos
-
-        for (int i = 0; i < this->instancia->get_m(); i++)
-        { // em todas as maquinas
-            soma1 = soma1 + (processo->custos_energia[i] / processo->tempos_processamento[i]);
-        }
-
-        this->media_Consumo_por_tempo = soma1 / this->instancia->get_n();
-    }
-}
-
-void Construtor::Calcular_media_trabalho_por_tempo()
-{
-    float soma1 = 0;
-
-    for (Processo *processo = this->instancia->get_primeiro_Processo(); processo != NULL; processo = processo->get_prox_Processo())
-    { // para todos processos
-
-        for (int i = 0; i < this->instancia->get_m(); i++)
-        { // em todas as maquinas
-            soma1 = soma1 + (processo->get_qt() / processo->tempos_processamento[i]);
-        }
-
-        this->media_trabalho_por_tempo = soma1 / this->instancia->get_n();
-    }
-}
 

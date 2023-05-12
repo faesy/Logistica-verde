@@ -1,18 +1,18 @@
 #include <iostream>
-#include "Lista.h"
+#include "ListaCandidatos.h"
 
 using namespace std;
 
-Lista::Lista(){
+ListaCandidatos::ListaCandidatos(){
 
 tamanho=0;
 this->primeiro_elemento=NULL;
 this->ultimo_elemento=NULL;
 }
 
-void Lista::Zera_Lista(){
-ElementoDaLista* currNode=this->primeiro_elemento;
-ElementoDaLista* nextNode=NULL;
+void ListaCandidatos::Zera_Lista(){
+Candidato* currNode=this->primeiro_elemento;
+Candidato* nextNode=NULL;
 while(currNode!=NULL){
     nextNode=currNode->prox_elemento;
     delete currNode;
@@ -25,10 +25,10 @@ this->ultimo_elemento=NULL;
 
 }
 
-void Lista::Adicionar_na_Lista(int id_maquina,int qtd){
+void ListaCandidatos::Adicionar_na_Lista(int id_maquina,int qtd){
 
     for(int i=0;i<qtd;i++){
-ElementoDaLista* elemento= new ElementoDaLista();
+Candidato* elemento= new Candidato();
 elemento->id=id_maquina;
 if(this->primeiro_elemento==NULL){
     tamanho++;
@@ -48,7 +48,7 @@ if(this->primeiro_elemento==NULL){
 
 }
 
-void Lista::Remove_na_Lista(int id_maquina,int qtd){
+void ListaCandidatos::Remove_na_Lista(int id_maquina,int qtd){
 
     if (qtd==0)
     {
@@ -60,7 +60,7 @@ void Lista::Remove_na_Lista(int id_maquina,int qtd){
     }
     for(int i=0;i<qtd;i++){
         int contador=0;
-    for(ElementoDaLista* i=this->primeiro_elemento;i!=NULL;i=i->prox_elemento){
+    for(Candidato* i=this->primeiro_elemento;i!=NULL;i=i->prox_elemento){
         if(i->id==id_maquina){
             if (tamanho==1)
             {
@@ -96,12 +96,12 @@ void Lista::Remove_na_Lista(int id_maquina,int qtd){
 
 }
 
-int Lista::Sorteia_na_Lista(){
+int ListaCandidatos::Sorteia_na_Lista(){
 
     int numSort = rand() % tamanho;
 
     int contador=0;
-    for(ElementoDaLista* i=this->primeiro_elemento;i!=NULL;i=i->prox_elemento){
+    for(Candidato* i=this->primeiro_elemento;i!=NULL;i=i->prox_elemento){
         if(contador==numSort){
             return i->id;
         }
@@ -111,9 +111,9 @@ int Lista::Sorteia_na_Lista(){
     return -1;
 }
 
-void Lista::Imprime(){
+void ListaCandidatos::Imprime(){
     cout<<"LISTA : ";
-    for(ElementoDaLista* a=this->primeiro_elemento;a!=NULL;a=a->prox_elemento){
+    for(Candidato* a=this->primeiro_elemento;a!=NULL;a=a->prox_elemento){
         cout<< a->id <<" ";
     }
     cout<<endl;

@@ -1,7 +1,7 @@
 #ifndef Solucao_H_INCLUDED
 #define Solucao_H_INCLUDED
 #include "MaquinaSol.h"
-#include "CriadorInstancias.h"
+#include "Instancia.h"
 
 using namespace std;
 
@@ -14,9 +14,8 @@ private:
     Solucao *ant_Solucao;
 
 public:
-    CriadorInstancias* instancia;
+    //Instancia* instancia;
     int jobs[200];
-    int id;
     int pos;
     float custoEnergia;
     float makespam;
