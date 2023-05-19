@@ -48,24 +48,20 @@ int main(int argc, char const *argv[])
     srand(time(NULL));
 
 
-    int numDeIter=1000;
+    int numDeIter=200;
     int numDeSol=100;
-    float numDeNovasSol=0.1; //porcentagem de novas soluções a cada iteração
+    float numDeNovasSol=0.05; //porcentagem de novas soluções a cada iteração
     int chanceDeMut=30; //a cada 1000
     int chanceDeBl=100;//a cada 1000
 
 
     ListaPopulacao *listaInicial = new ListaPopulacao(instancia);
 
-
     listaInicial->ConstruirSolucoes(numDeSol,output_file,instancia);
-
 
     BL *buscaLocal = new BL();
 
-
     OperadorSelecao *operador;
-
 
     for(int i=0;i<numDeIter;i++){
 
@@ -73,8 +69,7 @@ int main(int argc, char const *argv[])
 
                 int sorteado = (rand() % 1000) + 1;
                 if(sorteado<=chanceDeBl){
-                    buscaLocal->ChamadaDaBL1(itr,instancia->get_n()*2,instancia);
-                    buscaLocal->ChamadaDaBL2(itr,instancia->get_n()/2,instancia);
+                    buscaLocal->ChamadaDaBL(itr,instancia);
                 }
 
         }
@@ -101,9 +96,14 @@ int main(int argc, char const *argv[])
 
         for(int j=0;j<numDeFilhos;j++){
         Solucao *sol1=operador->Vaga(listaInicial,2,instancia);
-        Solucao *sol2=operador->Vaga(listaInicial,4,instancia);
+        Solucao *sol2=operador->Vaga(listaInicial,2,instancia);
 
+        int crossover = (rand() % 2);
+        if(crossover==0){
         operador->crossover1(sol1,sol2,novaLista,chanceDeMut,instancia);
+        }else{
+        operador->crossover2(sol1,sol2,novaLista,chanceDeMut,instancia);
+        }
         }
 
         int novasSolucoes=numDeSol-novaLista->tamanho;

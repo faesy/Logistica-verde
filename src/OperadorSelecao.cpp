@@ -116,6 +116,7 @@ void OperadorSelecao::crossover1(Solucao* parente1,Solucao* parente2,ListaPopula
 
 void OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2,ListaPopulacao *listaNova, int chanceDeMut,Instancia *instancia){
 
+
     Solucao *filho = new Solucao();
 
     int n_jobs=instancia->get_n();
@@ -137,17 +138,18 @@ void OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2,ListaPopula
 
     for(int i=0;i<instancia->get_n();i++){
 
-        if(i<pontoDeCorte1){//se i for par
+        if(i<=pontoDeCorte1){
             filho->jobs[i]=parente1->jobs[i];
         }
-        if(i>pontoDeCorte1 && i<pontoDeCorte2){//se i for impar
+        if(i>pontoDeCorte1 && i<pontoDeCorte2){
             filho->jobs[i]=parente2->jobs[i];
         }
-        if(i>pontoDeCorte2){//se i for impar
+        if(i>=pontoDeCorte2){
             filho->jobs[i]=parente1->jobs[i];
         }
 
     }
+
 
     this->mutacao(filho,chanceDeMut,instancia);
 
@@ -162,10 +164,10 @@ void OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2,ListaPopula
     for(int i=0;i<instancia->get_n();i++){
 
         makespams[filho->jobs[i]]= makespams[filho->jobs[i]] + instancia->buscaProcesso(i)->tempos_processamento[filho->jobs[i]];
-
         custos[filho->jobs[i]] = custos[filho->jobs[i]] + instancia->buscaProcesso(i)->custos_energia[filho->jobs[i]];
 
     }
+
 
     int maiorMakespam=0;
     for(int i=0;i<20;i++){
@@ -177,6 +179,7 @@ void OperadorSelecao::crossover2(Solucao* parente1,Solucao* parente2,ListaPopula
     filho->makespam=maiorMakespam;
 
     listaNova->AdicionaSolucao(filho);
+
 }
 
 void OperadorSelecao::mutacao(Solucao* alvo,int chancePorJob,Instancia *instancia){ //chance de acontecer em 1000 possibilidades

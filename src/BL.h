@@ -24,9 +24,11 @@ class BL{
 
     void ChamadaDaBL2(Solucao* solucao,int  repeticoes,Instancia* instancia);
 
-    void BuscaLocal2(Solucao* solucao, int id_processo,Instancia* instancia);
+    bool BuscaLocal2(Solucao* solucao, int id_processo,Instancia* instancia);
 
-    void BuscaLocal1(Solucao* solucao,int id_processo,Instancia* instancia);
+    bool BuscaLocal1(Solucao* solucao,int id_processo,Instancia* instancia);
+
+    void ChamadaDaBL(Solucao *solucao,Instancia* instancia);
 
 
     

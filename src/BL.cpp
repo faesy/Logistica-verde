@@ -5,6 +5,41 @@
 using namespace std;
 
 
+void BL::ChamadaDaBL(Solucao *solucao,Instancia* instancia)
+{
+    for (int i = 0; i < instancia->get_n(); i++)
+    {
+
+        bool caso1=true;
+        bool caso2=true;
+
+        int aux = rand() % 2;
+
+        if(aux==0){
+        
+            if(BuscaLocal1(solucao, i,instancia)==true){
+               i=0;
+                caso1=false;
+            }else if(BuscaLocal2(solucao, i,instancia)==true && caso1==true){
+                i=-1;
+            }
+        }
+
+        if(aux==1){
+            if(BuscaLocal2(solucao, i,instancia)==true){
+                i=-1;
+                caso2=false;
+            }else if(BuscaLocal1(solucao, i,instancia)==true && caso2==true){
+                i=0;
+            }
+        }
+
+        
+    }
+
+}
+
+
 void BL::ChamadaDaBL2(Solucao *solucao, int repeticoes,Instancia* instancia)
 {
     for (int i = 0; i < repeticoes; i++)
@@ -28,19 +63,22 @@ void BL::ChamadaDaBL1(Solucao *solucao, int repeticoes,Instancia* instancia)
     }
 }
 
-void BL::BuscaLocal2(Solucao *solucao, int id_processo,Instancia* instancia)
+bool BL::BuscaLocal2(Solucao *solucao, int id_processo,Instancia* instancia)
 {
+    bool mudanca=false;
+
     int melhorMakespam=solucao->makespam;
-    int melhorCustoEnergetico=solucao->custoEnergia;
+    float melhorCustoEnergetico=solucao->custoEnergia;
     int maquinaAtual=solucao->jobs[id_processo];
 
     //cout<<"2.1"<<endl;
 
     //simular trocar o processo sorteado com todos os processos e verificar se em alguma o custo energetico total da solução diminuiu
     for(int i=0;i<instancia->get_n();i++){
+        if(i!=id_processo){
         //cout<<"2.2"<<endl;
         //cout<<i<<endl;
-        int novoCustoEnergetico = melhorCustoEnergetico -instancia->buscaProcesso(id_processo)->custos_energia[maquinaAtual] + instancia->buscaProcesso(i)->custos_energia[maquinaAtual] + instancia->buscaProcesso(id_processo)->custos_energia[solucao->jobs[i]] - instancia->buscaProcesso(i)->custos_energia[solucao->jobs[i]];
+        float novoCustoEnergetico = melhorCustoEnergetico - instancia->buscaProcesso(id_processo)->custos_energia[maquinaAtual] + instancia->buscaProcesso(i)->custos_energia[maquinaAtual] + instancia->buscaProcesso(id_processo)->custos_energia[solucao->jobs[i]] - instancia->buscaProcesso(i)->custos_energia[solucao->jobs[i]];
     //                                                      menos o custo do job sorteado na maquina inicial                         mais o custo do job analisado na maquina inicial             mais o custo do job sorteado na maquina do job atual                      menos o custo do job analisado na maquina dele
     //cout<<"2.3"<<endl;
     if(melhorCustoEnergetico > novoCustoEnergetico){
@@ -83,17 +121,23 @@ void BL::BuscaLocal2(Solucao *solucao, int id_processo,Instancia* instancia)
                 melhorCustoEnergetico=novoCustoEnergetico;
 
                 maquinaAtual=solucao->jobs[i];
+                mudanca=true;
                 //cout<<"2.9"<<endl;
             }
 
     }
+        }
 
     }
 
+    return mudanca;
+
 }
 
-void BL::BuscaLocal1(Solucao *solucao, int id_processo,Instancia* instancia)
+bool BL::BuscaLocal1(Solucao *solucao, int id_processo,Instancia* instancia)
 {
+
+    bool mudanca=false;
 
     int melhorMakespam=solucao->makespam;
     int melhorCustoEnergetico=solucao->custoEnergia;
@@ -134,7 +178,7 @@ void BL::BuscaLocal1(Solucao *solucao, int id_processo,Instancia* instancia)
                 }
             }
 
-            if(melhorMakespam > maiorMakespam){
+            if(melhorMakespam >= maiorMakespam){
                 //ao final de simular todas as maquinas fazer a troca do processo-maquina e atualizar os parametros
                 solucao->jobs[id_processo]=i;
 
@@ -146,6 +190,8 @@ void BL::BuscaLocal1(Solucao *solucao, int id_processo,Instancia* instancia)
 
                 melhorMaquina=i;
 
+                mudanca=true;
+
             }
 
         }
@@ -154,7 +200,7 @@ void BL::BuscaLocal1(Solucao *solucao, int id_processo,Instancia* instancia)
 
     //ao final de simular todas as maquinas fazer a troca do processo-maquina e atualizar os parametros
     
-
+    return mudanca;
 
     
 }
