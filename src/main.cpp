@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
     srand(time(NULL));
 
 
-    int numDeIter=200;
+    int numDeIter=1000;
     int numDeSol=100;
     float numDeNovasSol=0.05; //porcentagem de novas soluções a cada iteração
     int chanceDeMut=30; //a cada 1000
@@ -88,6 +88,7 @@ int main(int argc, char const *argv[])
     output_file<<"Iteracao "<<i<<endl;
     output_file<<"Tamanho da Fronteira de pareto = "<<novaLista->tamanho<<endl;
     novaLista->ImprimirPython(output_file,i);
+    novaLista->ImprimirHiperVolume(output_file,i);
 
 
     int numDeFilhos= (numDeSol-novaLista->tamanho) * (1-numDeNovasSol);

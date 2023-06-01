@@ -25,6 +25,7 @@ class ListaPopulacao{
     void AdicionaSolucao(Solucao *sol);
     Solucao* BuscaSol(int id);
     void ImprimirPython(ofstream &output_file,int num);
+    void ImprimirHiperVolume(ofstream &output_file,int num);
     //void AnaliseDeFrentes();
     //void ZeraFrentes();
     //void RemoveXsol(int x);

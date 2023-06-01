@@ -55,6 +55,23 @@ void ListaPopulacao::ImprimirPython(ofstream &output_file,int num){
 
 }
 
+void ListaPopulacao::ImprimirHiperVolume(ofstream &output_file,int num){
+
+    output_file << "solution = np.array([";
+    for (Solucao* i = this->primeira_sol;i!=NULL;i=i->get_prox_solucao())
+    {
+        if(i->get_prox_solucao()==NULL){
+            output_file <<"["<<i->makespam<<","<<i->custoEnergia<<"]";
+        }else{
+        output_file <<"["<<i->makespam<<","<<i->custoEnergia<<"],";
+        }
+    }
+    output_file << "])"<<endl;
+
+    
+
+}
+
 
 ListaPopulacao::ListaPopulacao(Instancia *instancia)
 {
